@@ -1,0 +1,92 @@
+
+
+times in msec
+ clock   self+sourced   self:  sourced script
+ clock   elapsed:              other lines
+
+000.037  000.037: --- NVIM STARTING ---
+001.021  000.984: locale set
+001.898  000.877: inits 1
+001.935  000.037: window checked
+001.941  000.006: parsing arguments
+007.288  005.346: init lua interpreter
+007.581  000.294: expanding arguments
+007.635  000.054: inits 2
+008.396  000.761: init highlight
+008.400  000.004: waiting for UI
+010.946  002.546: done waiting for UI
+010.979  000.034: init screen for UI
+011.036  000.056: init default mappings
+011.119  000.083: init default autocommands
+011.958  000.100  000.100: sourcing /usr/share/nvim/runtime/ftplugin.vim
+012.084  000.053  000.053: sourcing /usr/share/nvim/runtime/indent.vim
+012.202  000.023  000.023: sourcing /usr/share/nvim/archlinux.vim
+012.210  000.078  000.054: sourcing /etc/xdg/nvim/sysinit.vim
+015.294  002.469  002.469: sourcing /home/benjamin/.local/share/nvim/site/autoload/plug.vim
+022.287  000.112  000.112: sourcing /usr/share/nvim/runtime/filetype.lua
+034.713  000.024  000.024: sourcing /home/benjamin/.local/share/nvim/plugged/vim-fugitive/ftdetect/fugitive.vim
+035.284  012.947  012.923: sourcing /usr/share/nvim/runtime/filetype.vim
+035.549  000.018  000.018: sourcing /usr/share/nvim/runtime/ftplugin.vim
+035.771  000.014  000.014: sourcing /usr/share/nvim/runtime/indent.vim
+036.148  000.104  000.104: sourcing /usr/share/nvim/runtime/syntax/synload.vim
+036.249  000.396  000.292: sourcing /usr/share/nvim/runtime/syntax/syntax.vim
+047.850  006.219  006.219: sourcing /home/benjamin/.local/share/nvim/plugged/tokyonight.nvim/colors/tokyonight.vim
+047.915  035.659  013.483: sourcing /home/benjamin/.config/nvim/init.vim
+047.925  000.917: sourcing vimrc file(s)
+053.140  004.656  004.656: sourcing /home/benjamin/.local/share/nvim/plugged/nvim-lspconfig/plugin/lspconfig.vim
+053.328  000.045  000.045: sourcing /home/benjamin/.local/share/nvim/plugged/nvim-colorizer.lua/plugin/colorizer.vim
+055.003  001.487  001.487: sourcing /home/benjamin/.local/share/nvim/plugged/vim-fugitive/plugin/fugitive.vim
+055.314  000.164  000.164: sourcing /home/benjamin/.local/share/nvim/plugged/vim-commentary/plugin/commentary.vim
+057.179  000.814  000.814: sourcing /home/benjamin/.local/share/nvim/plugged/vim-vsnip/autoload/vital/vsnip.vim
+057.905  000.249  000.249: sourcing /home/benjamin/.local/share/nvim/plugged/vim-vsnip/autoload/vital/_vsnip/VS/LSP/Position.vim
+058.197  000.040  000.040: sourcing /home/benjamin/.local/share/nvim/plugged/vim-vsnip/autoload/vital/_vsnip.vim
+058.808  002.806  001.703: sourcing /home/benjamin/.local/share/nvim/plugged/vim-vsnip/autoload/vsnip/snippet.vim
+059.750  000.332  000.332: sourcing /home/benjamin/.local/share/nvim/plugged/vim-vsnip/autoload/vital/_vsnip/VS/LSP/TextEdit.vim
+060.244  000.107  000.107: sourcing /home/benjamin/.local/share/nvim/plugged/vim-vsnip/autoload/vital/_vsnip/VS/LSP/Text.vim
+060.819  000.219  000.219: sourcing /home/benjamin/.local/share/nvim/plugged/vim-vsnip/autoload/vital/_vsnip/VS/Vim/Buffer.vim
+061.236  000.066  000.066: sourcing /home/benjamin/.local/share/nvim/plugged/vim-vsnip/autoload/vital/_vsnip/VS/Vim/Option.vim
+061.799  000.194  000.194: sourcing /home/benjamin/.local/share/nvim/plugged/vim-vsnip/autoload/vital/_vsnip/VS/LSP/Diff.vim
+062.046  006.193  002.468: sourcing /home/benjamin/.local/share/nvim/plugged/vim-vsnip/autoload/vsnip/session.vim
+062.297  006.568  000.375: sourcing /home/benjamin/.local/share/nvim/plugged/vim-vsnip/autoload/vsnip.vim
+063.068  007.479  000.911: sourcing /home/benjamin/.local/share/nvim/plugged/vim-vsnip/plugin/vsnip.vim
+063.528  000.222  000.222: sourcing /home/benjamin/.local/share/nvim/plugged/tabular/plugin/Tabular.vim
+063.715  000.043  000.043: sourcing /home/benjamin/.local/share/nvim/plugged/plenary.nvim/plugin/plenary.vim
+063.939  000.048  000.048: sourcing /home/benjamin/.local/share/nvim/plugged/nvim-web-devicons/plugin/nvim-web-devicons.vim
+065.145  000.488  000.488: sourcing /usr/share/nvim/runtime/plugin/gzip.vim
+065.210  000.019  000.019: sourcing /usr/share/nvim/runtime/plugin/health.vim
+065.525  000.253  000.253: sourcing /usr/share/nvim/runtime/plugin/man.vim
+066.592  000.256  000.256: sourcing /usr/share/nvim/runtime/pack/dist/opt/matchit/plugin/matchit.vim
+066.745  001.187  000.931: sourcing /usr/share/nvim/runtime/plugin/matchit.vim
+066.966  000.188  000.188: sourcing /usr/share/nvim/runtime/plugin/matchparen.vim
+067.607  000.606  000.606: sourcing /usr/share/nvim/runtime/plugin/netrwPlugin.vim
+067.861  000.198  000.198: sourcing /usr/share/nvim/runtime/plugin/rplugin.vim
+068.050  000.140  000.140: sourcing /usr/share/nvim/runtime/plugin/shada.vim
+068.140  000.035  000.035: sourcing /usr/share/nvim/runtime/plugin/spellfile.vim
+068.377  000.184  000.184: sourcing /usr/share/nvim/runtime/plugin/tarPlugin.vim
+068.528  000.102  000.102: sourcing /usr/share/nvim/runtime/plugin/tohtml.vim
+068.590  000.026  000.026: sourcing /usr/share/nvim/runtime/plugin/tutor.vim
+068.863  000.238  000.238: sourcing /usr/share/nvim/runtime/plugin/zipPlugin.vim
+073.913  004.680  004.680: sourcing /home/benjamin/.local/share/nvim/plugged/nvim-treesitter/plugin/nvim-treesitter.lua
+076.059  001.704  001.704: sourcing /home/benjamin/.local/share/nvim/plugged/nvim-cmp/plugin/cmp.lua
+076.398  000.123  000.123: sourcing /home/benjamin/.local/share/nvim/plugged/true-zen.nvim/plugin/true-zen.lua
+076.990  000.320  000.320: sourcing /home/benjamin/.local/share/nvim/plugged/telescope.nvim/plugin/telescope.lua
+077.484  004.924: loading rtp plugins
+077.649  000.165: loading packages
+080.509  001.818  001.818: sourcing /home/benjamin/.local/share/nvim/plugged/cmp-vsnip/after/plugin/cmp_vsnip.vim
+081.262  000.240  000.240: sourcing /home/benjamin/.local/share/nvim/plugged/tabular/autoload/tabular.vim
+083.333  002.688  002.448: sourcing /home/benjamin/.local/share/nvim/plugged/tabular/after/plugin/TabularMaps.vim
+083.919  000.444  000.444: sourcing /home/benjamin/.local/share/nvim/plugged/cmp-nvim-lsp/after/plugin/cmp_nvim_lsp.lua
+084.409  000.327  000.327: sourcing /home/benjamin/.local/share/nvim/plugged/cmp-buffer/after/plugin/cmp_buffer.lua
+084.686  000.146  000.146: sourcing /home/benjamin/.local/share/nvim/plugged/cmp-path/after/plugin/cmp_path.lua
+084.972  000.159  000.159: sourcing /home/benjamin/.local/share/nvim/plugged/cmp-cmdline/after/plugin/cmp_cmdline.lua
+085.107  001.877: loading after plugins
+085.123  000.016: inits 3
+088.564  003.441: reading ShaDa
+088.734  000.170: opening buffers
+088.776  000.042: BufEnter autocommands
+088.780  000.004: editing files in windows
+088.911  000.131: VimEnter autocommands
+088.915  000.004: UIEnter autocommands
+088.917  000.002: before starting main loop
+089.516  000.600: first screen update
+089.520  000.004: --- NVIM STARTED ---
