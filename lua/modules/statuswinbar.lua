@@ -14,7 +14,8 @@ local force_inactive_filetypes = {
 }
 local force_inactive_buftypes = {
   'terminal',
-  'toggleterm'
+  'toggleterm',
+  'nofile'
 }
 local function hasvalue(table, value)
     for _, val in ipairs(table) do

@@ -19,13 +19,13 @@ vim.lsp.handlers["textDocument/signatureHelp"] =
 -- See `:help vim.diagnostic.*` for documentation on any of the below functions
 local opts = { noremap=true, silent=true }
 vim.keymap.set('n', '<C-h><C-q>', vim.diagnostic.open_float, opts)
-vim.keymap.set('n', '<C-h><C-k>', vim.diagnostic.goto_prev, opts)
-vim.keymap.set('n', '<C-h><C-j>', vim.diagnostic.goto_next, opts)
-vim.keymap.set('n', '<C-h><C-h>', vim.diagnostic.setloclist, opts)
+vim.keymap.set('n', 'gK', vim.diagnostic.goto_prev, opts)
+vim.keymap.set('n', 'gJ', vim.diagnostic.goto_next, opts)
+vim.keymap.set('n', 'gh', vim.diagnostic.setloclist, opts)
 
 -- Use an on_attach function to only map the following keys
 -- after the language server attaches to the current buffer
-local on_attach = function(client, bufnr)
+local on_attach = function(_, bufnr)
     -- Enable completion triggered by <c-x><c-o>
     vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
 
@@ -59,15 +59,15 @@ require('lspconfig').cmake.setup{
     flags = lsp_flags,
     capabilities = capabilities,
 }
--- require('lspconfig').pyright.setup{
---     on_attach = on_attach,
---     flags = lsp_flags,
---     capabilities = capabilities,
--- }
-require('lspconfig').pylsp.setup{
+require('lspconfig').pyright.setup{
     on_attach = on_attach,
     flags = lsp_flags,
     capabilities = capabilities,
+}
+require('lspconfig').pylsp.setup{
+    on_attach = on_attach,
+    flags = lsp_flags,
+    -- capabilities = capabilities, -- i only want constructive feedback from pylsp
     settings = {
 	pylsp = {
 	    plugins = {
