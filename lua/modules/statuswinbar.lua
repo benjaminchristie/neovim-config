@@ -1,4 +1,5 @@
 require("gitsigns").setup()
+vim.o.showtabline = 1
 local force_inactive_filetypes = {
   'NvimTree',
   'dbui',
@@ -7,11 +8,13 @@ local force_inactive_filetypes = {
   'fugitive',
   'fugitiveblame',
   'nofile',
-  "toggleterm"
+  'toggleterm',
+  'terminal',
+  'starter'
 }
 local force_inactive_buftypes = {
   'terminal',
-  "toggleterm"
+  'toggleterm'
 }
 local function hasvalue(table, value)
     for _, val in ipairs(table) do
@@ -30,6 +33,16 @@ local function winbarstring()
 	    return string.format(path)
     end
 end
+vim.api.nvim_create_autocmd('User', {
+    pattern = 'GitSignsUpdate',
+    callback = function()
+	if hasvalue(force_inactive_buftypes, vim.bo.buftype) or hasvalue(force_inactive_filetypes, vim.bo.filetype) then
+	    return
+	else
+	    vim.opt_local.winbar = winbarstring()
+	end
+    end
+})
 vim.api.nvim_create_autocmd({"BufWinEnter"}, {
     pattern = "*",
     callback = function()

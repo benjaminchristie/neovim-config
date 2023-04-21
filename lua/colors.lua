@@ -9,7 +9,7 @@ require("tokyonight").setup({
 	floats = "transparent",
     },
     sidebars = {"feline"},
-    dim_inactive= true,
+    dim_inactive = true,
 })
 vim.cmd([[
     colorscheme tokyonight-night
