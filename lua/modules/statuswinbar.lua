@@ -1,97 +1,42 @@
-local lsp = require('feline.providers.lsp')
-require('gitsigns').setup()
-local vi_mode_utils = require('feline.providers.vi_mode')
-
-local vi_mode_colors = {
-  NORMAL = 'oceanblue',
-  OP = 'green',
-  INSERT = 'red',
-  CONFIRM = 'red',
-  VISUAL = 'magenta',
-  LINES = 'magenta',
-  BLOCK = 'magenta',
-  REPLACE = 'violet',
-  ['V-REPLACE'] = 'violet',
-  ENTER = 'cyan',
-  MORE = 'cyan',
-  SELECT = 'orange',
-  COMMAND = 'green',
-  SHELL = 'green',
-  TERM = 'green',
-  NONE = 'yellow'
-}
-local components = {
-    active = {{}, {}, {}},
-    inactive = {{}, {}, {}}
-}
-local force_inactive = {
-  filetypes = {},
-  buftypes = {},
-  bufnames = {}
-}
-force_inactive.filetypes = {
+require("gitsigns").setup()
+local force_inactive_filetypes = {
   'NvimTree',
   'dbui',
   'packer',
   'startify',
   'fugitive',
-  'fugitiveblame'
+  'fugitiveblame',
+  'nofile',
+  "toggleterm"
 }
-
-force_inactive.buftypes = {
-  'terminal'
+local force_inactive_buftypes = {
+  'terminal',
+  "toggleterm"
 }
-components.inactive[1][1] = {
-  provider = function()
-    -- return vi_mode_text[vi_mode_utils.get_vim_mode()]
-    return vim.fn.pathshorten(vim.fn.expand('%:~:f'))
-  end,
-  hl = {
-    fg = 'white',
-    bg = 'bg',
-    style = 'bold'
-  },
-  left_sep = {
-    str = '',
-    hl = {
-      fg = 'NONE',
-      bg = 'bg'
-    }
-  },
-  right_sep = {
-    {
-      str = '',
-      hl = {
-        fg = 'NONE',
-        bg = 'bg'
-      }
-    },
-  }
-}
-
-components.active[1][1] = {
-  provider = function()
-    -- return vi_mode_text[vi_mode_utils.get_vim_mode()]
-    return vim.fn.pathshorten(vim.fn.expand('%:~:f'))
-  end,
-  hl = function()
-    local val = {}
-    val.fg = vi_mode_utils.get_mode_color()
-    val.bg = 'bg'
-    val.style = 'bold'
-    return val
-  end,
-  right_sep = 'block',
-  left_sep = 'block'
-}
-
-local colors = require("tokyonight.colors").setup({})
-require('feline').setup({theme=colors, vi_mode_colors=vi_mode_colors, components={}})
-require('feline').winbar.setup({
-    -- theme = nordtheme,
-    colors = colors,
-    -- default_bg = colors.bg,
-    -- default_fg = colors.fg_sidebar,
-    components = components,
-    force_inactive = force_inactive
+local function hasvalue(table, value)
+    for _, val in ipairs(table) do
+    	if val == value then
+    		return true
+    	end
+    end
+    return false
+end
+local function winbarstring()
+    local path = vim.fn.pathshorten(vim.fn.expand("%:~:f"))
+    local branch = vim.g.gitsigns_head
+    if branch ~= nil then
+	    return string.format(path.." : "..branch)
+    else
+	    return string.format(path)
+    end
+end
+vim.api.nvim_create_autocmd({"BufWinEnter"}, {
+    pattern = "*",
+    callback = function()
+	if hasvalue(force_inactive_buftypes, vim.bo.buftype) or hasvalue(force_inactive_filetypes, vim.bo.filetype) then
+	    return
+	else
+	    vim.opt_local.winbar = winbarstring()
+	end
+    end
 })
