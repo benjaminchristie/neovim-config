@@ -17,6 +17,11 @@ local force_inactive_buftypes = {
   'toggleterm',
   'nofile'
 }
+
+local colors = require("tokyonight.colors").setup()
+vim.cmd("highlight WinBar guifg=" .. colors.purple .. " gui=bold guibg=".. colors.bg_float)
+vim.cmd("highlight WinBarNC guifg=" .. colors.fg_float .. " guibg=".. colors.bg_float)
+
 local function hasvalue(table, value)
     for _, val in ipairs(table) do
     	if val == value then
@@ -54,3 +59,4 @@ vim.api.nvim_create_autocmd({"BufWinEnter"}, {
 	end
     end
 })
+vim.o.laststatus = 0

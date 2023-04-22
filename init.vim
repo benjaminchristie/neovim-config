@@ -12,7 +12,6 @@ else
     Plug 'cljoly/telescope-repo.nvim'
     Plug 'echasnovski/mini.pairs'
     Plug 'echasnovski/mini.starter'
-    Plug 'nvimdev/dashboard-nvim'
     Plug 'ThePrimeagen/harpoon'
     "
     " Plug 'Vimjas/vim-python-pep8-indent'
@@ -24,7 +23,6 @@ else
     Plug 'da-moon/telescope-toggleterm.nvim'
     Plug 'debugloop/telescope-undo'
     Plug 'mbbill/undotree'
-    Plug 'feline-nvim/feline.nvim'
     Plug 'lambdalisue/suda.vim'
     Plug 'neovim/nvim-lspconfig'
     Plug 'norcalli/nvim-colorizer.lua'
