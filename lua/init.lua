@@ -33,5 +33,6 @@ require("nvim-surround").buffer_setup {
 -- for some reason, some LSP servers do not attach to files properly if loaded asynchronously 
 
 require("modules/lsp-init")
+require("modules/term")
 require("modules/starter")
 -- -- require('dashboard').setup()

@@ -1,6 +1,4 @@
 require("gitsigns").setup()
-local icons = require("nvim-web-devicons")
-local git_icon = icons.get_icon_by_filetype("git")
 vim.o.showtabline = 1
 local force_inactive_filetypes = {
   'NvimTree',
@@ -13,18 +11,22 @@ local force_inactive_filetypes = {
   'toggleterm',
   'terminal',
   'starter',
-  'qf'
+  'qf',
+  ""
 }
+
 local force_inactive_buftypes = {
   'terminal',
   'toggleterm',
   'nofile',
-  'quickfix'
+  'quickfix',
 }
 
 local colors = require("tokyonight.colors").setup()
 vim.cmd("highlight WinBar guifg=" .. colors.purple .. " gui=bold guibg=".. colors.bg_float)
 vim.cmd("highlight WinBarNC guifg=" .. colors.fg_float .. " guibg=".. colors.bg_float)
+vim.cmd("highlight StatusLine guifg=" .. colors.purple .. " gui=bold guibg=".. colors.bg_float)
+vim.cmd("highlight StatusLineNC guifg=" .. colors.fg_float .. " guibg=".. colors.bg_float)
 
 local function hasvalue(table, value)
     for _, val in ipairs(table) do
@@ -49,7 +51,7 @@ vim.api.nvim_create_autocmd('User', {
     pattern = 'GitSignsUpdate',
     callback = function()
 	if hasvalue(force_inactive_buftypes, vim.bo.buftype) or hasvalue(force_inactive_filetypes, vim.bo.filetype) then
-	    return
+	    vim.opt_local.winbar = nil
 	else
 	    vim.opt_local.winbar = winbarstring()
 	end
@@ -59,10 +61,10 @@ vim.api.nvim_create_autocmd({"BufWinEnter"}, {
     pattern = "*",
     callback = function()
 	if hasvalue(force_inactive_buftypes, vim.bo.buftype) or hasvalue(force_inactive_filetypes, vim.bo.filetype) then
-	    return
+	    vim.opt_local.winbar = nil
 	else
 	    vim.opt_local.winbar = winbarstring()
 	end
     end
 })
-vim.o.laststatus = 0
+vim.o.laststatus = 3

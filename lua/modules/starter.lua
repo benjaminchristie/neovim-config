@@ -8,7 +8,7 @@ local telescope_items = function()
   return function()
     return {
       {action = 'Telescope find_files',      name = 'Workspace files',           section = 'Telescope'},
-      {action = cached_repos,                name = 'Repos',           section = 'Telescope'},
+      {action = cached_repos,                name = 'Projects',           section = 'Telescope'},
       {action = 'Telescope command_history', name = 'Command history', section = 'Telescope'},
       {action = 'Telescope help_tags',       name = 'Help tags',       section = 'Telescope'},
       {action = 'Telescope live_grep',       name = 'Live grep',       section = 'Telescope'},
