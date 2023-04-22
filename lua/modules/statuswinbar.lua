@@ -1,4 +1,6 @@
 require("gitsigns").setup()
+local icons = require("nvim-web-devicons")
+local git_icon = icons.get_icon_by_filetype("git")
 vim.o.showtabline = 1
 local force_inactive_filetypes = {
   'NvimTree',
@@ -10,12 +12,14 @@ local force_inactive_filetypes = {
   'nofile',
   'toggleterm',
   'terminal',
-  'starter'
+  'starter',
+  'qf'
 }
 local force_inactive_buftypes = {
   'terminal',
   'toggleterm',
-  'nofile'
+  'nofile',
+  'quickfix'
 }
 
 local colors = require("tokyonight.colors").setup()
@@ -34,7 +38,9 @@ local function winbarstring()
     local path = vim.fn.pathshorten(vim.fn.expand("%:~:f"))
     local branch = vim.g.gitsigns_head
     if branch ~= nil then
-	    return string.format(path.." : "..branch)
+	    -- return string.format(path .. "    " .. branch)
+	    return string.format(path .. "    " .. branch)
+
     else
 	    return string.format(path)
     end

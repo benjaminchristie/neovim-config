@@ -33,18 +33,5 @@ require("nvim-surround").buffer_setup {
 -- for some reason, some LSP servers do not attach to files properly if loaded asynchronously 
 
 require("modules/lsp-init")
-local starter = require('mini.starter')
-starter.setup({
-    evaluate_single = false,
-    items = {
-      starter.sections.builtin_actions(),
-      starter.sections.recent_files(5, false),
-      starter.sections.telescope(),
-    },
-    content_hooks = {
-      starter.gen_hook.adding_bullet(),
-      starter.gen_hook.aligning("center", "center")
-      -- starter.gen_hook.padding(3, 2),
-    },
-})
+require("modules/starter")
 -- -- require('dashboard').setup()
