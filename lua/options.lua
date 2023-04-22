@@ -27,17 +27,14 @@ vim.o.foldmarker = "{{{,}}}"
 vim.o.tabstop = 8
 vim.o.softtabstop = 8
 vim.o.shiftwidth = 4
-vim.o.expandtab = false
+vim.o.expandtab = true
 vim.o.ls = 0
 vim.o.autoindent = true
 vim.o.mouse = "nv"
+vim.o.splitkeep = "screen"
 
 -- vim.opt.listchars = { eol="", tab = '' }
 -- vim.opt.list = true
-
-vim.g.undotree_WindowLayout = 2
-vim.g.undotree_SetFocusWhenToggle = 1
-vim.g.undotree_ShortIndicators = 1
 
 vim.g.syntastic_auto_jump = 1
 vim.g.term_buf = 0
@@ -52,3 +49,5 @@ vim.g.loaded_netrwPlugin = 1
 vim.g.loaded_matchit = 1
 vim.g.loaded_matchparen = 1
 vim.g.loaded_spec = 1 -- vim.g.tex_conceal = "admgs"
+vim.g.loaded_nvimgdb = 1
+vim.g.nvimgdb_disable_start_keymaps = true

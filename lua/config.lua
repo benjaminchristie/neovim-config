@@ -49,10 +49,6 @@ vim.keymap.set('n', '<A-g>', function() return search_github() end)
 vim.keymap.set('v', '<A-g>', function() return search_github() end)
 
 
---- UndoTree
---
-vim.keymap.set('n', "U", vim.cmd.UndotreeToggle)
-
 vim.api.nvim_create_user_command("Lex", "NvimTreeFindFile", {})
 vim.api.nvim_create_user_command("Ex", "NvimTreeFocus", {})
 

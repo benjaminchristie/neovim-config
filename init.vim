@@ -13,6 +13,7 @@ else
     Plug 'echasnovski/mini.pairs'
     Plug 'echasnovski/mini.starter'
     Plug 'ThePrimeagen/harpoon'
+    Plug 'sakhnik/nvim-gdb', {'do': ':!./install.sh'}
     "
     " Plug 'Vimjas/vim-python-pep8-indent'
     " Plug 'jbyuki/nabla.nvim'
