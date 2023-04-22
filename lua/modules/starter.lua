@@ -28,5 +28,6 @@ starter.setup({
       starter.gen_hook.aligning("center", "center")
       -- starter.gen_hook.padding(3, 2),
     },
+    footer = ""
 })
 

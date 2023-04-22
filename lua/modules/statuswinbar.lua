@@ -38,7 +38,7 @@ local function hasvalue(table, value)
 end
 local function winbarstring()
     local path = vim.fn.pathshorten(vim.fn.expand("%:~:f"))
-    local branch = vim.g.gitsigns_head
+    local branch = vim.b.gitsigns_head
     if branch ~= nil then
 	    -- return string.format(path .. "    " .. branch)
 	    return string.format(path .. "    " .. branch)
