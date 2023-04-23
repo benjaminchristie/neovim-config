@@ -19,8 +19,8 @@ vim.lsp.handlers["textDocument/signatureHelp"] =
 -- See `:help vim.diagnostic.*` for documentation on any of the below functions
 local opts = { noremap=true, silent=true }
 vim.keymap.set('n', '<C-h><C-q>', vim.diagnostic.open_float, opts)
-vim.keymap.set('n', 'gK', vim.diagnostic.goto_prev, opts)
-vim.keymap.set('n', 'gJ', vim.diagnostic.goto_next, opts)
+vim.keymap.set('n', '<C-k>', vim.diagnostic.goto_prev, opts)
+vim.keymap.set('n', '<C-j>', vim.diagnostic.goto_next, opts)
 vim.keymap.set('n', 'gh', vim.diagnostic.setloclist, opts)
 
 -- Use an on_attach function to only map the following keys
