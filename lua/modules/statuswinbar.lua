@@ -40,9 +40,18 @@ local function winbarstring()
     local path = vim.fn.pathshorten(vim.fn.expand("%:~:f"))
     local branch = vim.b.gitsigns_head
     if branch ~= nil then
-	    -- return string.format(path .. "    " .. branch)
-	    return string.format(path .. "    " .. branch)
-
+            local hunks_tb = require("gitsigns").get_hunks(vim.api.nvim_get_current_buf())
+            local added_count = "0"
+            local removed_count = "0"
+            for _, hunks in pairs(hunks_tb) do
+                if hunks["added"] ~= nil then
+                    added_count = hunks["added"]["count"]
+                end
+                if hunks["removed"] ~= nil then
+                    removed_count = hunks["removed"]["count"]
+                end
+            end
+	    return string.format(path .. "    " .. branch .. " +" .. added_count .. " -" .. removed_count)
     else
 	    return string.format(path)
     end

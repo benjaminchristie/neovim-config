@@ -8,8 +8,8 @@ require('telescope').setup({
     }
 })
 require('telescope').load_extension("fzf")
+require('telescope').load_extension("refactoring")
 vim.keymap.set('n', '<C-p><C-p>', function() return require('telescope.builtin').find_files() end )
-vim.keymap.set('n', '<C-p><C-t>', function() return require('telescope-toggleterm').open() end)
 vim.keymap.set('n', '<C-p><C-f>', function() return require('telescope.builtin').live_grep() end)
 vim.keymap.set('n', '<C-p><C-d>', function() return require('telescope.builtin').lsp_document_symbols() end)
 vim.keymap.set('n', '<C-p><C-b>', function() return require('telescope.builtin').buffers() end)
@@ -18,8 +18,25 @@ vim.keymap.set('n', '<C-p><C-a>', function() return require('telescope.builtin')
 vim.keymap.set('n', '<C-p><C-c>', function() return require('telescope.builtin').git_bcommits() end)
 vim.keymap.set('n', '<C-p><C-q>', function() return require('telescope.builtin').current_buffer_fuzzy_find() end)
 vim.keymap.set('n', '<C-p><C-i>', function() return require('telescope.builtin').lsp_dynamic_workspace_symbols() end)
+vim.keymap.set('v', '<C-p><C-t>', function() return require('telescope').extensions.refactoring.refactors() end)
 vim.keymap.set('n', '<C-p><C-u>', function() return require('telescope').extensions.undo.undo() end)
 vim.keymap.set('n', '<C-p><C-g>', function() return require'telescope'.extensions.repo.cached_list{file_ignore_patterns={"/%.cache/", "/%.cargo/", "/%.local/share/", "/%.zsh/"}} end)
 vim.cmd([[
     autocmd User TelescopePreviewerLoaded setlocal wrap
 ]])
+
+-- refactoring, tmp
+--
+-- prompt for a refactor to apply when the remap is triggered
+vim.api.nvim_set_keymap(
+    "v",
+    "<C-p><C-r>",
+    ":lua require('refactoring').select_refactor()<CR>",
+    { noremap = true, silent = true, expr = false }
+)
+vim.api.nvim_set_keymap(
+    "n",
+    "<C-p><C-r>",
+    ":lua require('refactoring').select_refactor()<CR>",
+    { noremap = true, silent = true, expr = false }
+)
