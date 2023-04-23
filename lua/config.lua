@@ -62,10 +62,6 @@ vim.cmd([[
     endif
 
 ]])
-vim.keymap.set('t', '<Esc', '<C-\\><C-n>')
-vim.keymap.set('t', ':q', '<C-\\><C-n>:q!<CR>')
-vim.keymap.set('t', '<C-w>', "<C-\\><C-n>")
-
 
 -- handle harpoon
 
