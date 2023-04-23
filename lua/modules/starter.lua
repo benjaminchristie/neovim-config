@@ -13,9 +13,12 @@ local telescope_items = function()
       {action = 'Telescope help_tags',       name = 'Help tags',       section = 'Telescope'},
       {action = 'Telescope live_grep',       name = 'Live grep',       section = 'Telescope'},
       {action = 'Telescope oldfiles',        name = 'Recent files',       section = 'Telescope'},
+      {action = 'tab G',                     name = 'Status',        section = 'Fugitive'},
+      {action = 'Git difftool -y',                     name = 'Merge tool',        section = 'Fugitive'},
     }
   end
 end
+
 starter.setup({
     evaluate_single = false,
     items = {
