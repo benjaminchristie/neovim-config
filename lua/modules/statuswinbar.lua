@@ -51,7 +51,7 @@ local function winbarstring()
                     removed_count = hunks["removed"]["count"]
                 end
             end
-	    return string.format(path .. "    " .. branch .. " +" .. added_count .. " -" .. removed_count)
+	    return string.format(path .. "    " .. branch .. ": +" .. added_count .. " -" .. removed_count)
     else
 	    return string.format(path)
     end

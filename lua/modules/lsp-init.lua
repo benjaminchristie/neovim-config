@@ -73,7 +73,7 @@ require('lspconfig').pylsp.setup{
 	    plugins = {
 		pycodestyle = {
 		    ignore = {'W391', 'E231', 'E203', 'E731',
-		    'E126', 'E131', 'E128', 'E101', 'W191'},
+		    'E126', 'E131', 'E128', 'E101', 'W191', 'E502'},
 		    maxLineLength = 120
 		}
 	    }
