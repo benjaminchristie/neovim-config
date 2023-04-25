@@ -23,9 +23,9 @@ local force_inactive_buftypes = {
 }
 
 local colors = require("tokyonight.colors").setup()
-vim.cmd("highlight WinBar guifg=" .. colors.purple .. " gui=bold guibg=".. colors.bg_float)
+vim.cmd("highlight WinBar guifg=" .. colors.orange .. " gui=bold guibg=".. colors.bg_float)
 vim.cmd("highlight WinBarNC guifg=" .. colors.fg_float .. " guibg=".. colors.bg_float)
-vim.cmd("highlight StatusLine guifg=" .. colors.purple .. " gui=bold guibg=".. colors.bg_float)
+vim.cmd("highlight StatusLine guifg=" .. colors.orange .. " gui=bold guibg=".. colors.bg_float)
 vim.cmd("highlight StatusLineNC guifg=" .. colors.fg_float .. " guibg=".. colors.bg_float)
 
 local function hasvalue(table, value)
@@ -77,3 +77,4 @@ vim.api.nvim_create_autocmd({"BufWinEnter"}, {
     end
 })
 vim.o.laststatus = 3
+vim.o.statusline = "%S"

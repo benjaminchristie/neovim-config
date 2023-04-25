@@ -49,6 +49,12 @@ vim.g.tokyodark_transparent_background = true
 vim.g.tokyodark_enable_italic_comment = true
 vim.g.tokyodark_enable_italic = true
 vim.g.tokyodark_color_gamma = "1.0"
-vim.cmd("colorscheme tokyodark")
+-- vim.cmd("colorscheme tokyodark")
 -- require('onedark').load()
--- vim.cmd([[color tokyonight-moon]])
+vim.cmd("color tokyonight-moon")
+local colors = require("tokyonight.colors").setup()
+vim.cmd("highlight CursorLineNr guifg="..colors.orange)
+vim.cmd("highlight LineNr guifg="..colors.fg_dark)
+vim.cmd("highlight Comment guifg="..colors.dark5)
+vim.cmd("highlight Tabline guifg="..colors.dark5)
+vim.cmd("highlight TablineSel guibg="..colors.teal)
