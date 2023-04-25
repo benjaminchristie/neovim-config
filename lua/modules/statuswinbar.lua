@@ -20,6 +20,7 @@ local force_inactive_buftypes = {
   'toggleterm',
   'nofile',
   'quickfix',
+  'nowrite'
 }
 
 local function hasvalue(table, value)
@@ -37,12 +38,14 @@ local function winbarstring()
             local hunks_tb = require("gitsigns").get_hunks(vim.api.nvim_get_current_buf())
             local added_count = "0"
             local removed_count = "0"
-            for _, hunks in pairs(hunks_tb) do
-                if hunks["added"] ~= nil then
-                    added_count = hunks["added"]["count"]
-                end
-                if hunks["removed"] ~= nil then
-                    removed_count = hunks["removed"]["count"]
+            if hunks_tb ~= nil then
+                for _, hunks in pairs(hunks_tb) do
+                    if hunks["added"] ~= nil then
+                        added_count = hunks["added"]["count"]
+                    end
+                    if hunks["removed"] ~= nil then
+                        removed_count = hunks["removed"]["count"]
+                    end
                 end
             end
 	    return string.format(path .. "    " .. branch .. ": +" .. added_count .. " -" .. removed_count)
