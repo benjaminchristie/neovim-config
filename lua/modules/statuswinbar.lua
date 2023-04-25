@@ -22,12 +22,6 @@ local force_inactive_buftypes = {
   'quickfix',
 }
 
-local colors = require("tokyonight.colors").setup()
-vim.cmd("highlight WinBar guifg=" .. colors.orange .. " gui=bold guibg=".. colors.bg_float)
-vim.cmd("highlight WinBarNC guifg=" .. colors.fg_float .. " guibg=".. colors.bg_float)
-vim.cmd("highlight StatusLine guifg=" .. colors.orange .. " gui=bold guibg=".. colors.bg_float)
-vim.cmd("highlight StatusLineNC guifg=" .. colors.fg_float .. " guibg=".. colors.bg_float)
-
 local function hasvalue(table, value)
     for _, val in ipairs(table) do
     	if val == value then
@@ -37,7 +31,7 @@ local function hasvalue(table, value)
     return false
 end
 local function winbarstring()
-    local path = vim.fn.pathshorten(vim.fn.expand("%:~:f"))
+    local path = vim.fn.pathshorten(vim.fn.expand("%:f"))
     local branch = vim.b.gitsigns_head
     if branch ~= nil then
             local hunks_tb = require("gitsigns").get_hunks(vim.api.nvim_get_current_buf())
@@ -66,7 +60,7 @@ vim.api.nvim_create_autocmd('User', {
 	end
     end
 })
-vim.api.nvim_create_autocmd({"BufWinEnter"}, {
+vim.api.nvim_create_autocmd({"BufWinEnter", "DirChanged"}, {
     pattern = "*",
     callback = function()
 	if hasvalue(force_inactive_buftypes, vim.bo.buftype) or hasvalue(force_inactive_filetypes, vim.bo.filetype) then
