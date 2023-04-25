@@ -30,7 +30,8 @@ else
     Plug 'norcalli/nvim-colorizer.lua'
     " Plug 'vim-airline/vim-airline'
     " Plug 'vim-airline/vim-airline-themes'
-    Plug 'nvim-treesitter/nvim-treesitter'
+    Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+    Plug 'nvim-treesitter/nvim-treesitter-textobjects'
     Plug 'JellyApple102/easyread.nvim'
     "( Tm Pope plugins
     Plug 'kylechui/nvim-surround'
