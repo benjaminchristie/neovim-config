@@ -63,10 +63,12 @@ else
     Plug 'kyazdani42/nvim-tree.lua'
     Plug 'simrat39/rust-tools.nvim'
     "( Vrious Themes
-    " Plug 'mcchrish/zenbones.nvim'
-    " Plug 'rktjmp/lush.nvim'
-    " Plug 'tanvirtin/monokai.nvim'
+    Plug 'mcchrish/zenbones.nvim'
+    Plug 'rktjmp/lush.nvim'
+    Plug 'tanvirtin/monokai.nvim'
     Plug 'folke/tokyonight.nvim'
+    Plug 'navarasu/onedark.nvim'
+    Plug 'tiagovla/tokyodark.nvim'
     Plug 'https://git.sr.ht/~whynothugo/lsp_lines.nvim'
     " Plug 'Yggdroot/indentLine'
     call plug#end()

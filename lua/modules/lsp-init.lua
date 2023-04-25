@@ -59,15 +59,15 @@ require('lspconfig').cmake.setup{
     flags = lsp_flags,
     capabilities = capabilities,
 }
-require('lspconfig').pyright.setup{
-    on_attach = on_attach,
-    flags = lsp_flags,
-    capabilities = capabilities,
-}
+-- require('lspconfig').pyright.setup{
+--     on_attach = on_attach,
+--     flags = lsp_flags,
+--     capabilities = capabilities,
+-- }
 require('lspconfig').pylsp.setup{
     on_attach = on_attach,
     flags = lsp_flags,
-    -- capabilities = capabilities, -- i only want constructive feedback from pylsp
+    capabilities = capabilities, -- i only want constructive feedback from pylsp
     settings = {
 	pylsp = {
 	    plugins = {
