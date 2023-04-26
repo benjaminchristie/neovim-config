@@ -9,6 +9,8 @@ if exists('g:vscode')
     " VSCode extension
 else
     call plug#begin()
+    Plug 'kevinhwang91/nvim-ufo'
+    Plug 'kevinhwang91/promise-async'
     Plug 'cljoly/telescope-repo.nvim'
     Plug 'echasnovski/mini.pairs'
     Plug 'echasnovski/mini.starter'
@@ -17,8 +19,9 @@ else
     Plug 'sakhnik/nvim-gdb', {'do': ':!./install.sh'}
     "
     " Plug 'Vimjas/vim-python-pep8-indent'
-    " Plug 'jbyuki/nabla.nvim'
     Plug 'benjaminchristie/csgithub.nvim', {'branch': 'master'}
+    Plug 'benjaminchristie/nvim-colorizer.lua'
+    " Plug 'jbyuki/nabla.nvim'
     Plug 'rhysd/vim-clang-format'
     Plug 'Shatur/neovim-tasks'
     Plug 'akinsho/toggleterm.nvim'
@@ -27,7 +30,6 @@ else
     Plug 'mbbill/undotree'
     Plug 'lambdalisue/suda.vim'
     Plug 'neovim/nvim-lspconfig'
-    Plug 'norcalli/nvim-colorizer.lua'
     " Plug 'vim-airline/vim-airline'
     " Plug 'vim-airline/vim-airline-themes'
     Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}

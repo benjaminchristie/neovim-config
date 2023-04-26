@@ -74,4 +74,4 @@ vim.api.nvim_create_autocmd({"BufWinEnter", "DirChanged"}, {
     end
 })
 vim.o.laststatus = 3
-vim.o.statusline = "%S"
+vim.o.statusline = "%y - %l/%L - b%n"

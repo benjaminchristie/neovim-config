@@ -74,3 +74,7 @@ vim.keymap.set('n', "<A-h>", function() return require("harpoon.ui").toggle_quic
 vim.keymap.set('n', "<A-m>", function() return require("harpoon.mark").add_file() end)
 vim.keymap.set('n', "<A-k>", function() return require("harpoon.ui").nav_prev() end)
 vim.keymap.set('n', "<A-j>", function() return require("harpoon.ui").nav_next() end)
+
+-- fugitive stuff
+vim.keymap.set('n', 'gV', ':Git difftool -y<CR>')
+-- vim.keymap.set('n', 'gV', ':Gvdiffsplit<CR>')
