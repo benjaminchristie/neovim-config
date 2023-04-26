@@ -1,5 +1,5 @@
   -- Setup lspconfig.
-  local capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities())
+local capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities())
 vim.lsp.handlers["textDocument/hover"] =
   vim.lsp.with(
   vim.lsp.handlers.hover,
@@ -60,7 +60,11 @@ require('lspconfig').cmake.setup{
     capabilities = capabilities,
 }
 -- require('lspconfig').pyright.setup{
---     on_attach = on_attach,
+--     on_attach = function(client)
+--       client.resolved_capabilities.document_formatting = false
+--       client.resolved_capabilities.document_range_formatting = false
+--       client.server_capabilities.completionProvider = false
+--     end,
 --     flags = lsp_flags,
 --     capabilities = capabilities,
 -- }

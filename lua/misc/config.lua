@@ -10,7 +10,6 @@ syntax on
 set showcmd
 set relativenumber
 set number
-set nofoldenable
 set nobackup
 set signcolumn=number
 "set nocompatible
@@ -66,8 +65,6 @@ nnoremap <Space>CC :sp<bar>terminal<CR>i<C-l>make -k -C `upsearch Makefile`
 "nnoremap zfc zf//} } }<CR> " since my custom pattern for a fold is {{{ ... }}}, this works well outside of typescript and json
 nnoremap zs zMzO 
 " close all folds except the current, which is opened fully
-set foldmethod=marker
-set foldmarker={{{,}}}
 
 "}}}
 "{{{ Helpful Functions
