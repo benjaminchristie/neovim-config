@@ -90,8 +90,8 @@ vim.g.loaded_tar = 0
 vim.g.loaded_tarPlugin = 0
 vim.g.loaded_zipPlugin = 0
 vim.g.loaded_2html_plugin = 0
-vim.g.loaded_netrw = 1
-vim.g.loaded_netrwPlugin = 1
+-- vim.g.loaded_netrw = 1
+-- vim.g.loaded_netrwPlugin = 1
 vim.g.loaded_matchit = 1
 vim.g.loaded_matchparen = 1
 vim.g.loaded_spec = 1 -- vim.g.tex_conceal = "admgs"

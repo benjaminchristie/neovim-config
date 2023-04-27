@@ -38,6 +38,7 @@ else
     "( Tm Pope plugins
     Plug 'kylechui/nvim-surround'
     Plug 'tpope/vim-fugitive'
+    Plug 'tpope/vim-rhubarb'
     Plug 'tpope/vim-commentary'
     Plug 'lewis6991/gitsigns.nvim'
     "( Cmpletion plugins

@@ -1,7 +1,8 @@
 require("nvim-tree").setup{
 
-    hijack_netrw = true,
-    disable_netrw = true,
+    -- hijack_netrw = true,
+    disable_netrw = false,
+    --vim.g.nvim_tree_disable_netrw = 0
     git = {
         ignore = true,
     },
@@ -17,3 +18,4 @@ require("nvim-tree").setup{
 
 }
 
+vim.g.nvim_tree_disable_netrw = 0
