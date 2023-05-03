@@ -1,4 +1,4 @@
---- Set keymappings --- 
+--- set keymappings --- 
 vim.keymap.set('n', '<Up>', '<C-b>')
 vim.keymap.set('n', '<Down>', '<C-f>')
 vim.keymap.set('n', '<Left>', 'gT')
@@ -78,6 +78,26 @@ vim.keymap.set('n', "<A-k>", function() return require("harpoon.ui").nav_prev() 
 vim.keymap.set('n', "<A-j>", function() return require("harpoon.ui").nav_next() end)
 
 -- fugitive stuff
+vim.keymap.set('n', 'gM', ':Git mergetool -y<CR>')
 vim.keymap.set('n', 'gV', ':Git difftool -y<CR>')
 -- vim.keymap.set('n', 'gV', ':Gvdiffsplit<CR>')
 vim.g.editorconfig_trim_trailing_whitespace = true
+
+-- perfanno 
+local perfanno = require("perfanno")
+local util = require("perfanno.util")
+
+perfanno.setup {
+    -- Creates 10-step color gradient between pure black (#000000) and #CC3300
+    line_highlights = util.make_bg_highlights("#1A1B26", "#CC3300", 10),
+    vt_highlight = util.make_fg_highlight("#CC3300"),
+    annotate_after_load = true,
+    annotate_on_open = true,
+    ts_function_patterns = {
+        -- These should work for most languages (at least those used with perf)
+        default = {
+            "function",
+            "method",
+        },
+    },
+}

@@ -9,8 +9,10 @@ if exists('g:vscode')
     " VSCode extension
 else
     call plug#begin()
+    Plug 'jose-elias-alvarez/null-ls.nvim'
     Plug 'kevinhwang91/nvim-ufo'
     Plug 'kevinhwang91/promise-async'
+    Plug 'nvim-lua/popup.nvim'
     Plug 'cljoly/telescope-repo.nvim'
     Plug 'echasnovski/mini.pairs'
     Plug 'echasnovski/mini.starter'
@@ -21,12 +23,14 @@ else
     " Plug 'Vimjas/vim-python-pep8-indent'
     Plug 'benjaminchristie/csgithub.nvim', {'branch': 'master'}
     Plug 'benjaminchristie/nvim-colorizer.lua'
+    Plug 't-troebst/perfanno.nvim'
     " Plug 'jbyuki/nabla.nvim'
     Plug 'rhysd/vim-clang-format'
     Plug 'Shatur/neovim-tasks'
     Plug 'akinsho/toggleterm.nvim'
     Plug 'da-moon/telescope-toggleterm.nvim'
     Plug 'debugloop/telescope-undo'
+    Plug 'nvim-telescope/telescope-media-files.nvim'
     Plug 'mbbill/undotree'
     Plug 'lambdalisue/suda.vim'
     Plug 'neovim/nvim-lspconfig'
@@ -73,7 +77,6 @@ else
     Plug 'folke/tokyonight.nvim'
     Plug 'navarasu/onedark.nvim'
     Plug 'tiagovla/tokyodark.nvim'
-    Plug 'https://git.sr.ht/~whynothugo/lsp_lines.nvim'
     " Plug 'Yggdroot/indentLine'
     call plug#end()
     lua require('init')

@@ -97,3 +97,6 @@ vim.g.loaded_matchparen = 1
 vim.g.loaded_spec = 1 -- vim.g.tex_conceal = "admgs"
 -- vim.g.loaded_nvimgdb = 1
 -- vim.g.nvimgdb_disable_start_keymaps = true
+-- disables autocomment on o, O
+vim.cmd('autocmd BufEnter * set formatoptions-=cro')
+vim.cmd('autocmd BufEnter * setlocal formatoptions-=cro')
