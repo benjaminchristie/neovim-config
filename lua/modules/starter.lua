@@ -9,7 +9,7 @@ local extra_items = function()
     return {
       {action = 'Telescope find_files',      name = 'Workspace files',           section = 'Telescope'},
       {action = cached_repos,                name = 'Projects',                  section = 'Telescope'},
-      {action = 'Telescope help_tags',       name = 'Help tags',                 section = 'Telescope'},
+      {action = 'Telescope help_tags',       name = 'Help',                      section = 'Telescope'},
       {action = 'Telescope oldfiles',        name = 'History',                   section = 'Telescope'},
       {action = 'tab G',                     name = 'Status',                    section = 'Fugitive'},
       {action = 'Git difftool -y',           name = 'Diff tool',                 section = 'Fugitive'},
@@ -21,8 +21,7 @@ end
 starter.setup({
     evaluate_single = false,
     items = {
-      starter.sections.builtin_actions(),
-      starter.sections.recent_files(5, false),
+      starter.sections.recent_files(7, false),
       extra_items(),
     },
     content_hooks = {

@@ -63,7 +63,7 @@ local function winbarstring()
                     end
                 end
             end
-	    return string.format(path .. " 🡕  " .. "-" .. "    " .. branch .. ": +" .. added_count .. " -" .. removed_count)
+	    return string.format(path .. "    " .. branch .. ": +" .. added_count .. " -" .. removed_count)
     elseif branch == nil and harpoon_idx ~= nil then
 	    return string.format(path .. " 🡕  " .. harpoon_idx)
     else
