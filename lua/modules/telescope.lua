@@ -3,9 +3,8 @@ require('telescope').setup({
 	layout_strategy = "bottom_pane",
 	layout_config = {
 	    height = 0.95,
-	    prompt_position = "bottom"
-	}
-    }
+	    prompt_position = "bottom" }
+        }
 })
 require('telescope').load_extension("fzf")
 require('telescope').load_extension("refactoring")
@@ -13,6 +12,7 @@ require('telescope').load_extension('media_files')
 require('telescope').load_extension('perfanno')
 vim.keymap.set('n', '<C-p><C-p>', function() return require('telescope.builtin').find_files() end )
 vim.keymap.set('n', '<C-p><C-f>', function() return require('telescope.builtin').live_grep() end)
+vim.keymap.set('n', '#',          function() return require('telescope.builtin').grep_string() end)
 vim.keymap.set('n', '<C-p><C-d>', function() return require('telescope.builtin').lsp_document_symbols() end)
 vim.keymap.set('n', '<C-p><C-b>', function() return require('telescope.builtin').buffers() end)
 vim.keymap.set('n', '<C-p><C-h>', function() return require('telescope.builtin').help_tags() end)

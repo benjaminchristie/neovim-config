@@ -13,9 +13,7 @@ vim.keymap.set('n', '`1', ':5winc<<CR>')
 vim.keymap.set('n', '`4', ':5winc><CR>')
 vim.keymap.set('n', '`2', ':3winc+<CR>')
 vim.keymap.set('n', '`3', ':3winc-<CR>')
-
 vim.keymap.set('n', ',t', ':tabnew<CR>')
-
 vim.keymap.set('n', 'zs', 'zMzO')
 
 --- cool block commands
@@ -101,3 +99,13 @@ perfanno.setup {
         },
     },
 }
+
+
+-- ROS config 
+
+vim.api.nvim_create_autocmd({"BufEnter"}, {
+    pattern = {"*.launch", ".urdf", "*.xacro"},
+    callback = function() 
+        vim.opt_local.filetype = "html"
+    end
+})
