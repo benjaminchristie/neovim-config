@@ -59,15 +59,15 @@ require('lspconfig').cmake.setup{
     flags = lsp_flags,
     capabilities = capabilities,
 }
-require('lspconfig').pyright.setup{
-    on_attach = function(client)
-      client.resolved_capabilities.document_formatting = false
-      client.resolved_capabilities.document_range_formatting = false
-      client.server_capabilities.completionProvider = false
-    end,
-    flags = lsp_flags,
-    capabilities = capabilities,
-}
+-- require('lspconfig').pyright.setup{
+--     on_attach = function(client)
+--       client.resolved_capabilities.document_formatting = false
+--       client.resolved_capabilities.document_range_formatting = false
+--       client.server_capabilities.completionProvider = false
+--     end,
+--     flags = lsp_flags,
+--     capabilities = capabilities,
+-- }
 require('lspconfig').pylsp.setup{
     on_attach = on_attach,
     flags = lsp_flags,
