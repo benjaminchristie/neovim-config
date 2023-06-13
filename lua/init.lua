@@ -1,4 +1,5 @@
-require("impatient")
+-- require("impatient")
+vim.loader.enable()
 require("colors")
 require("options")
 require("config")

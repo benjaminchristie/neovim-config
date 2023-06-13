@@ -56,7 +56,7 @@ else
     "Plug 'hrsh7th/vim-vsnip'
     "( Msc nice plugins
     " Plug 'Pocco81/true-zen.nvim'
-    Plug 'lewis6991/impatient.nvim'
+    " Plug 'lewis6991/impatient.nvim'
     Plug 'godlygeek/tabular'
     Plug 'ethanholz/nvim-lastplace'
     " Testing
