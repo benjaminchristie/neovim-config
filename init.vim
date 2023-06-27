@@ -51,6 +51,7 @@ else
     Plug 'hrsh7th/cmp-path'
     Plug 'hrsh7th/cmp-cmdline'
     Plug 'hrsh7th/nvim-cmp'
+    Plug 'stevearc/oil.nvim'
     ""( Vnip
     "Plug 'hrsh7th/cmp-vsnip'
     "Plug 'hrsh7th/vim-vsnip'
