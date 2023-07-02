@@ -34,7 +34,16 @@ vim.keymap.set('n', '<A-c>', function ()
     print("Changed cwd to " .. cwd)
 end)
 
+-- find and replace assistance
 
+vim.keymap.set('n', '\\s', function ()
+    local word = vim.fn.expand("<cword>")
+    local line_num = vim.api.nvim_win_get_cursor(0)[1]
+    local change_to = vim.fn.input("Change " .. word .. " to : ")
+    vim.cmd(':%s/' .. word .. "/" .. change_to .. "/g")
+    vim.cmd(":" .. line_num)
+    end
+)
 
 local search_github = function ()
     local csgithub = require("csgithub")
@@ -105,7 +114,7 @@ perfanno.setup {
 
 vim.api.nvim_create_autocmd({"BufEnter"}, {
     pattern = {"*.launch", ".urdf", "*.xacro"},
-    callback = function() 
+    callback = function()
         vim.opt_local.filetype = "html"
     end
 })
