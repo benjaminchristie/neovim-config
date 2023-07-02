@@ -151,6 +151,11 @@ require('lspconfig').marksman.setup{
     flags = lsp_flags,
     capabilities = capabilities,
 }
+require('lspconfig').asm_lsp.setup{
+    on_attach = on_attach,
+    flags = lsp_flags,
+    capabilities = capabilities,
+}
 local rt = require("rust-tools")
 
 rt.setup({
