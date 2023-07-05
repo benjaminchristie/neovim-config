@@ -1,5 +1,6 @@
   -- Setup lspconfig.
 local capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities())
+capabilities.textDocument.completion.completionItem.snippetSupport = true
 vim.lsp.handlers["textDocument/hover"] =
   vim.lsp.with(
   vim.lsp.handlers.hover,
@@ -146,10 +147,39 @@ require('lspconfig')['clangd'].setup{
         "--header-insertion=iwyu",
     },
 }
+require('lspconfig').html.setup{
+    on_attach = on_attach,
+    flags = lsp_flags,
+    capabilities = capabilities,
+}
+require('lspconfig').cssls.setup{
+    on_attach = on_attach,
+    flags = lsp_flags,
+    capabilities = capabilities,
+}
 require('lspconfig').marksman.setup{
     on_attach = on_attach,
     flags = lsp_flags,
     capabilities = capabilities,
+}
+local function get_probe_dir(root_dir)
+  local project_root = require('lspconfig/util').find_node_modules_ancestor(root_dir)
+
+  return project_root and (project_root .. '/node_modules') or ''
+end
+local default_probe_dir = get_probe_dir(vim.fn.getcwd())
+require('lspconfig').angularls.setup{
+    on_attach = on_attach,
+    flags = lsp_flags,
+    capabilities = capabilities,
+    cmd = {
+        'angularls',
+        '--stdio',
+        '--tsProbeLocations', default_probe_dir,
+        '--ngProbeLocations', default_probe_dir
+    },
+    filetypes = {'typescript', 'html', 'typescriptreact', 'typescript.tsx'},
+    root_dir = require('lspconfig/util').root_pattern('angular.json', '.git'),
 }
 require('lspconfig').asm_lsp.setup{
     on_attach = on_attach,

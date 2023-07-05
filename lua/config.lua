@@ -87,6 +87,7 @@ vim.keymap.set('n', "<A-j>", function() return require("harpoon.ui").nav_next() 
 -- fugitive stuff
 vim.keymap.set('n', 'gM', ':Git mergetool -y<CR>')
 vim.keymap.set('n', 'gV', ':Git difftool -y<CR>')
+vim.keymap.set('n', 'gR', ':Git rebase --interactive ')
 -- vim.keymap.set('n', 'gV', ':Gvdiffsplit<CR>')
 vim.g.editorconfig_trim_trailing_whitespace = true
 
