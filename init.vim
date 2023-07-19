@@ -27,7 +27,7 @@ else
     Plug 'neovim/nvim-lspconfig'
     Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
     Plug 'nvim-treesitter/nvim-treesitter-textobjects'
-    Plug 'JellyApple102/easyread.nvim'
+    " Plug 'JellyApple102/easyread.nvim'
     Plug 'kylechui/nvim-surround'
     Plug 'tpope/vim-fugitive'
     Plug 'tpope/vim-rhubarb'

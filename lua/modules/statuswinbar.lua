@@ -1,4 +1,3 @@
-require("gitsigns").setup()
 vim.o.showtabline = 1
 local force_inactive_filetypes = {
   'NvimTree',

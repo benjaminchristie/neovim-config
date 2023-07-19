@@ -64,7 +64,7 @@ vim.api.nvim_create_user_command("Lex", "NvimTreeFindFile", {})
 vim.api.nvim_create_user_command("Ex", "NvimTreeFocus", {})
 
 vim.cmd([[ 
-    hi VertSplit cterm=none
+    hi WinSeparator cterm=none
     hi Folded ctermbg=black
 
     if &t_Co > 2 || has("gui_running")
@@ -119,3 +119,18 @@ vim.api.nvim_create_autocmd({"BufEnter"}, {
         vim.opt_local.filetype = "html"
     end
 })
+
+-- Gitsigns config
+local gitsigns = require("gitsigns")
+vim.keymap.set('n', 'gst', function()
+    gitsigns.toggle_linehl(true)
+    gitsigns.toggle_deleted(true)
+    gitsigns.toggle_numhl(true)
+    gitsigns.toggle_current_line_blame(true)
+end)
+vim.keymap.set('n', 'gsf', function()
+    gitsigns.toggle_linehl(false)
+    gitsigns.toggle_deleted(false)
+    gitsigns.toggle_numhl(false)
+    gitsigns.toggle_current_line_blame(false)
+end)

@@ -1,5 +1,6 @@
 -- require("impatient")
 vim.loader.enable()
+require("modules/starter")
 require("colors")
 require("options")
 require("config")
@@ -13,13 +14,19 @@ require("modules/telescope")
 require("modules/undotree")
 require("plugins.make-flow")
 require('colorizer').setup({}, { css = true; })
-require('easyread').setup({})
 require('mini.pairs').setup()
 require("modules/statuswinbar")
 require("modules/surround")
 require("modules/lsp-init")
 require("modules/term")
 require("modules/gdb")
--- require("modules/null")
-require("modules/starter")
 require("oil").setup()
+require("gitsigns").setup({
+    numhl = false,
+    current_line_blame = false,
+    current_line_blame_opts = {
+        delay = 0,
+        virt_text_pos = "right_align",
+        ignore_whitespace = true,
+    }
+})
