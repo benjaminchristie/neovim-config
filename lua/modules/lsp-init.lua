@@ -157,6 +157,11 @@ require('lspconfig').cssls.setup{
     flags = lsp_flags,
     capabilities = capabilities,
 }
+require('lspconfig').dockerls.setup{
+    on_attach = on_attach,
+    flags = lsp_flags,
+    capabilities = capabilities,
+}
 require('lspconfig').marksman.setup{
     on_attach = on_attach,
     flags = lsp_flags,

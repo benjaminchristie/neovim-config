@@ -1,12 +1,6 @@
 if exists('g:vscode')
-
-    call plug#begin()
-    Plug 'kylechui/nvim-surround'
-    Plug 'tpope/vim-fugitive'
-    Plug 'tpope/vim-commentary'
-
-    call plug#end()
     " VSCode extension
+    lua require("vscode-init")
 else
     call plug#begin()
     Plug 'jose-elias-alvarez/null-ls.nvim'
