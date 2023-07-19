@@ -1,7 +1,17 @@
 local starter = require('mini.starter')
 
-local cached_repos = function ()
+local function cached_repos()
     return require("telescope").extensions.repo.cached_list{file_ignore_patterns={"/%.cache/", "/%.cargo/", "/%.local/share/", "/%.zsh/"}}
+end
+
+local function difftool()
+    local branch = vim.fn.input("Perform difftool on : ")
+    vim.cmd("Git difftool -y " .. branch)
+end
+
+local function mergetool()
+    local branch = vim.fn.input("Perform mergetool on : ")
+    vim.cmd("Git mergetool -y " .. branch)
 end
 
 local extra_items = function()
@@ -12,8 +22,8 @@ local extra_items = function()
       {action = 'Telescope help_tags',       name = 'Help',                      section = 'Telescope'},
       {action = 'Telescope oldfiles',        name = 'History',                   section = 'Telescope'},
       {action = 'tab G',                     name = 'Status',                    section = 'Fugitive'},
-      {action = 'Git difftool -y',           name = 'Diff tool',                 section = 'Fugitive'},
-      {action = 'Git mergetool -y',          name = 'Merge tool',                section = 'Fugitive'},
+      {action = difftool,                    name = 'Diff tool',                 section = 'Fugitive'},
+      {action = mergetool,                   name = 'Merge tool',                section = 'Fugitive'},
     }
   end
 end
