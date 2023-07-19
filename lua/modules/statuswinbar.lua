@@ -11,6 +11,8 @@ local force_inactive_filetypes = {
   'terminal',
   'starter',
   'qf',
+  'harpoon-menu',
+  'harpoon'
 }
 
 local force_inactive_buftypes = {
@@ -18,7 +20,9 @@ local force_inactive_buftypes = {
   'toggleterm',
   'nofile',
   'quickfix',
-  'nowrite'
+  'nowrite',
+  'harpoon-menu',
+  'harpoon'
 }
 
 local function hasvalue(table, value)
