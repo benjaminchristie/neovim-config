@@ -5,7 +5,6 @@ vim.o.hlsearch = true
 vim.o.incsearch = true
 vim.o.ch = 1
 vim.cmd([[syntax on]])
-vim.cmd([[hi SpellBad guibg=#ff2929 ctermbg=224]])
 vim.o.spell = false
 vim.o.showcmd = true
 vim.o.relativenumber = true
@@ -44,6 +43,7 @@ vim.o.foldcolumn = '0' -- '0' is not bad
 vim.o.foldlevel = 99 -- Using ufo provider need a large value, feel free to decrease the value
 vim.o.foldlevelstart = 99
 require('ufo').setup({
+    enable_get_fold_virt_text = true,
     fold_virt_text_handler = handler,
     provider_selector = function(_, _, _)
         return {'treesitter', 'indent'}

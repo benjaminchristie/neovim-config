@@ -1,4 +1,3 @@
--- require("impatient")
 vim.loader.enable()
 require("modules/starter")
 require("colors")
