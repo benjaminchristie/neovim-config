@@ -38,24 +38,6 @@ vim.keymap.set('n', '\\s', function ()
     end
 )
 
-local search_github = function ()
-    local csgithub = require("csgithub")
-    local url = csgithub.search({
-	includeFilename=false,
-	includeExtension=true,
-    })
-    if url == nil then
-    	return
-    end
-    csgithub.open(url)
-end
-vim.keymap.set('n', '<A-g>', function() return search_github() end)
-vim.keymap.set('v', '<A-g>', function() return search_github() end)
-
-
-vim.api.nvim_create_user_command("Lex", "NvimTreeFindFile", {})
-vim.api.nvim_create_user_command("Ex", "NvimTreeFocus", {})
-
 -- handle harpoon
 for i = 0, 9, 1 do
    vim.keymap.set('n', '<A-'..i..">", function() return require("harpoon.ui").nav_file(i) end)
@@ -65,12 +47,6 @@ vim.keymap.set('n', "<A-m>", function() return require("harpoon.mark").add_file(
 vim.keymap.set('n', "<A-k>", function() return require("harpoon.ui").nav_prev() end)
 vim.keymap.set('n', "<A-j>", function() return require("harpoon.ui").nav_next() end)
 
--- fugitive stuff
-vim.keymap.set('n', 'gM', ':Git mergetool -y ')
-vim.keymap.set('n', 'gV', ':Git difftool -y ')
-vim.keymap.set('n', 'gR', ':Git rebase --interactive -i HEAD~')
--- vim.keymap.set('n', 'gV', ':Gvdiffsplit<CR>')
-vim.g.editorconfig_trim_trailing_whitespace = true
 
 -- perfanno 
 local perfanno = require("perfanno")
@@ -91,9 +67,7 @@ perfanno.setup {
     },
 }
 
-
 -- ROS config 
-
 vim.api.nvim_create_autocmd({"BufEnter"}, {
     pattern = {"*.launch", ".urdf", "*.xacro"},
     callback = function()
@@ -101,6 +75,7 @@ vim.api.nvim_create_autocmd({"BufEnter"}, {
     end
 })
 
+-- user commands
 -- Gitsigns config
 local gitsigns = require("gitsigns")
 vim.keymap.set('n', 'gst', function()
@@ -115,11 +90,8 @@ vim.keymap.set('n', 'gsf', function()
     gitsigns.toggle_deleted(false)
     gitsigns.toggle_numhl(false)
 end)
-
-
 -- Where am i config
 local function whereami()
-    -- colors from bg to fg
     local uptime = 7
     local downtime = 3
     local cursor_colors = {
@@ -151,3 +123,24 @@ local function whereami()
     vim.api.nvim_win_set_hl_ns(vim.api.nvim_get_current_win(), 0)
 end
 vim.api.nvim_create_user_command("Where", whereami, {})
+vim.api.nvim_create_user_command("Lex", "NvimTreeFindFile", {})
+vim.api.nvim_create_user_command("Ex", "NvimTreeFocus", {})
+
+local search_github = function ()
+    local csgithub = require("csgithub")
+    local url = csgithub.search({
+	includeFilename=false,
+	includeExtension=true,
+    })
+    if url == nil then
+    	return
+    end
+    csgithub.open(url)
+end
+vim.keymap.set('n', '<A-g>', function() return search_github() end)
+vim.keymap.set('v', '<A-g>', function() return search_github() end)
+-- fugitive stuff
+vim.keymap.set('n', 'gM', ':Git mergetool -y ')
+vim.keymap.set('n', 'gV', ':Git difftool -y ')
+vim.keymap.set('n', 'gR', ':Git rebase --interactive -i HEAD~')
+vim.g.editorconfig_trim_trailing_whitespace = true
