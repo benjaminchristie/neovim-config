@@ -53,7 +53,7 @@ vim.g.tokyodark_color_gamma = "1.0"
 -- require('onedark').load()
 vim.cmd("color tokyonight-moon")
 local colors = require("tokyonight.colors").setup()
-vim.cmd("highlight CursorLine guibg="..colors.bg_highlight)
+vim.cmd("highlight CursorLine guibg="..colors.bg_float)
 vim.cmd("highlight CursorLineNr guifg="..colors.orange)
 vim.cmd("highlight LineNr guifg="..colors.fg_dark)
 vim.cmd("highlight Comment guifg="..colors.dark5)
