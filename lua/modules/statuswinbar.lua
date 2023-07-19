@@ -1,5 +1,4 @@
 local gitsigns = require("gitsigns")
-vim.o.showtabline = 1
 local force_inactive_filetypes = {
   'NvimTree',
   'dbui',
@@ -91,5 +90,6 @@ vim.api.nvim_create_autocmd({"BufEnter", "DirChanged"}, {
 	end
     end
 })
+vim.o.showtabline = 1
 vim.o.laststatus = 3
 vim.o.statusline = "%y - %l/%L - b%n"
