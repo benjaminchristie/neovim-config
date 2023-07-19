@@ -1,3 +1,4 @@
+local gitsigns = require("gitsigns")
 vim.o.showtabline = 1
 local force_inactive_filetypes = {
   'NvimTree',
@@ -34,7 +35,7 @@ local function winbarstring()
     local branch = vim.b.gitsigns_head
     local harpoon_idx = require("harpoon.mark").get_current_index()
     if branch ~= nil and harpoon_idx ~= nil then
-            local hunks_tb = require("gitsigns").get_hunks(vim.api.nvim_get_current_buf())
+            local hunks_tb = gitsigns.get_hunks(vim.api.nvim_get_current_buf())
             local added_count = "0"
             local removed_count = "0"
             if hunks_tb ~= nil then
@@ -49,7 +50,7 @@ local function winbarstring()
             end
 	    return string.format(path .. " 🡕  " .. harpoon_idx .. "    " .. branch .. ": +" .. added_count .. " -" .. removed_count)
     elseif branch ~= nil and harpoon_idx == nil then
-            local hunks_tb = require("gitsigns").get_hunks(vim.api.nvim_get_current_buf())
+            local hunks_tb = gitsigns.get_hunks(vim.api.nvim_get_current_buf())
             local added_count = "0"
             local removed_count = "0"
             if hunks_tb ~= nil then
@@ -79,9 +80,10 @@ vim.api.nvim_create_autocmd('User', {
 	end
     end
 })
-vim.api.nvim_create_autocmd({"BufWinEnter", "DirChanged"}, {
+vim.api.nvim_create_autocmd({"BufEnter", "DirChanged"}, {
     pattern = "*",
     callback = function()
+        gitsigns.refresh()
 	if hasvalue(force_inactive_buftypes, vim.bo.buftype) or hasvalue(force_inactive_filetypes, vim.bo.filetype) then
 	    vim.opt_local.winbar = nil
 	else

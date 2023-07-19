@@ -52,23 +52,36 @@ vim.g.tokyodark_color_gamma = "1.0"
 -- vim.cmd("colorscheme tokyodark")
 -- require('onedark').load()
 vim.cmd("color tokyonight-moon")
-local colors = require("tokyonight.colors").setup()
-vim.cmd("highlight CursorLine guibg="..colors.bg_float)
-vim.cmd("highlight CursorLineNr guifg="..colors.orange)
-vim.cmd("highlight LineNr guifg="..colors.fg_dark)
-vim.cmd("highlight Comment guifg="..colors.dark5)
-vim.cmd("highlight Tabline guifg="..colors.dark5)
-vim.cmd("highlight TablineSel guibg="..colors.teal)
-vim.cmd("highlight WinBar guifg=" .. colors.orange .. " gui=bold guibg=".. colors.bg_float)
-vim.cmd("highlight WinBarNC guifg=" .. colors.fg_float .. " guibg=".. colors.bg_float)
-vim.cmd("highlight StatusLine guibg=".. colors.bg_float)
-vim.cmd("highlight StatusLineNC guibg=".. colors.bg_float)
 vim.cmd('let g:line_number_interval_enable_at_startup = 1')
 vim.cmd('let g:line_number_interval#use_custom = 1')
 vim.cmd('let g:line_number_interval#custom_interval = [1,2,3,4,5]')
-vim.cmd('highlight DimLineNr          guifg='..colors.fg_dark)
-vim.cmd('highlight HighlightedLineNr1 guifg=#7ac2ca')
-vim.cmd('highlight HighlightedLineNr2 guifg=#7cb4c6')
-vim.cmd('highlight HighlightedLineNr3 guifg=#7da8c3')
-vim.cmd('highlight HighlightedLineNr4 guifg=#7f9bdf')
-vim.cmd('highlight HighlightedLineNr5 guifg=#8093bc')
+local colors = require("tokyonight.colors").setup()
+vim.api.nvim_set_hl(0, "CursorLine", {bg = colors.bg_float})
+vim.api.nvim_set_hl(0, "CursorLineNr", {fg = colors.orange})
+vim.api.nvim_set_hl(0, "LineNr", {fg = colors.fg_dark})
+vim.api.nvim_set_hl(0, "Comment", {fg = colors.dark5})
+vim.api.nvim_set_hl(0, "Tabline", {fg = colors.dark5})
+vim.api.nvim_set_hl(0, "TablineSel", {bg = colors.teal})
+vim.api.nvim_set_hl(0, "WinBar", {
+    fg = colors.orange,
+    bg = colors.bg_float,
+    bold = true,
+})
+vim.api.nvim_set_hl(0, "WinBarNC", {
+    fg = colors.fg_float,
+    bg = colors.bg_float,
+})
+vim.api.nvim_set_hl(0, "StatusLine", {
+    bg = colors.bg_float,
+})
+-- idk why, but this must be done this way
+vim.cmd("highlight StatusLineNC guibg=".. colors.bg_float)
+-- vim.api.nvim_set_hl(0, "StatusLineNC", {
+--     bg = colors.bg_float,
+-- })
+vim.api.nvim_set_hl(0, "DimLineNr", {fg = colors.fg_dark})
+vim.api.nvim_set_hl(0, 'HighlightedLineNr1', {fg='#7ac2ca'})
+vim.api.nvim_set_hl(0, 'HighlightedLineNr2', {fg='#7cb4c6'})
+vim.api.nvim_set_hl(0, 'HighlightedLineNr3', {fg='#7da8c3'})
+vim.api.nvim_set_hl(0, 'HighlightedLineNr4', {fg='#7f9bdf'})
+vim.api.nvim_set_hl(0, 'HighlightedLineNr5', {fg='#8093bc'})
