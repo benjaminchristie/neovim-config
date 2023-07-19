@@ -16,7 +16,9 @@ vim.g.tokyodark_enable_italic_comment = true
 vim.g.tokyodark_enable_italic = true
 vim.g.tokyodark_color_gamma = "1.0"
 vim.cmd("color tokyonight-moon")
-vim.cmd('let g:line_number_interval_enable_at_startup = 1')
+vim.g.line_number_interval_enable_at_startup = 1
+-- vim.g.line_number_interval.use_custom = 1
+-- vim.g.line_number_interval.custom_interval = {1, 2, 3, 4, 5}
 vim.cmd('let g:line_number_interval#use_custom = 1')
 vim.cmd('let g:line_number_interval#custom_interval = [1,2,3,4,5]')
 local colors = require("tokyonight.colors").setup()
