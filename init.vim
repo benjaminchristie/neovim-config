@@ -55,6 +55,7 @@ else
     Plug 'folke/tokyonight.nvim'
     Plug 'navarasu/onedark.nvim'
     Plug 'tiagovla/tokyodark.nvim'
+    Plug 'IMOKURI/line-number-interval.nvim'
     call plug#end()
     lua require('init')
 endif

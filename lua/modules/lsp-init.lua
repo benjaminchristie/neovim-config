@@ -141,10 +141,13 @@ require('lspconfig')['clangd'].setup{
         -- to add more checks, create .clang-tidy file in the root directory
         -- and add Checks key, see https://clang.llvm.org/extra/clang-tidy/
         "--clang-tidy",
+        "--clang-tidy-checks='clang-analyzer-core*,clang-analyzer-unix*,bugprone*,modernize*'",
         -- '--clang-tidy-checks="clang-diagnostic-*,clang-analyzer-*,modernize*,performance*,readability*"',
         "--completion-style=bundled",
         "--cross-file-rename",
         "--header-insertion=iwyu",
+        "--suggest-missing-includes",
+        -- "--compile-commands-dir='/home/benjamin/.config/nvim/lua/lsp-info/'",
     },
 }
 require('lspconfig').html.setup{

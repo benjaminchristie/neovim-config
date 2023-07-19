@@ -8,7 +8,6 @@ local extra_items = function()
   return function()
     return {
       {action = 'Telescope find_files',      name = 'Workspace files',           section = 'Telescope'},
-      {action = 'Telescope live_grep',       name = 'Grep files',                section = 'Telescope'},
       {action = cached_repos,                name = 'Projects',                  section = 'Telescope'},
       {action = 'Telescope help_tags',       name = 'Help',                      section = 'Telescope'},
       {action = 'Telescope oldfiles',        name = 'History',                   section = 'Telescope'},
