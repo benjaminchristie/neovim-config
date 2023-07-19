@@ -56,19 +56,7 @@ vim.keymap.set('v', '<A-g>', function() return search_github() end)
 vim.api.nvim_create_user_command("Lex", "NvimTreeFindFile", {})
 vim.api.nvim_create_user_command("Ex", "NvimTreeFocus", {})
 
-vim.cmd([[ 
-    hi WinSeparator cterm=none
-    hi Folded ctermbg=black
-
-    if &t_Co > 2 || has("gui_running")
-        " Switch on highlighting the last used search pattern.
-        set hlsearch
-    endif
-
-]])
-
 -- handle harpoon
-
 for i = 0, 9, 1 do
    vim.keymap.set('n', '<A-'..i..">", function() return require("harpoon.ui").nav_file(i) end)
 end

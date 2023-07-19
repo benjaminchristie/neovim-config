@@ -24,6 +24,7 @@ vim.api.nvim_set_hl(0, "CursorLine", {bg = colors.bg_float})
 vim.api.nvim_set_hl(0, "CursorLineNr", {fg = colors.orange})
 vim.api.nvim_set_hl(0, "LineNr", {fg = colors.fg_dark})
 vim.api.nvim_set_hl(0, "Comment", {fg = colors.dark5})
+vim.api.nvim_set_hl(0, "Folded", {bg = colors.black})
 vim.api.nvim_set_hl(0, "Tabline", {
     fg = colors.teal,
     bg = colors.bg_float,

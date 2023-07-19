@@ -10,6 +10,7 @@ vim.o.spell = false
 vim.o.showcmd = true
 vim.o.relativenumber = true
 vim.o.number = true
+vim.o.hlsearch = true
 -- folds
 local handler = function(virtText, lnum, endLnum, width, truncate)
     local newVirtText = {}
