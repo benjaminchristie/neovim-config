@@ -4,16 +4,10 @@ vim.keymap.set('n', '<Down>', '<C-f>')
 vim.keymap.set('n', '<Left>', 'gT')
 vim.keymap.set('n', '<Right>', 'gt')
 
-vim.keymap.set('i', '<C-b>', '\\textbf{}<C-O>F{<C-O>l')
-vim.keymap.set('i', '<C-l>', '\\textit{}<C-O>F{<C-O>l')
-vim.keymap.set('i', '<C-e>', '\\emph{}<C-O>F{<C-O>l')
-vim.keymap.set('i', '<C-u>', '\\underline{}<C-O>F{<C-O>l')
-
 vim.keymap.set('n', '`1', ':5winc<<CR>')
 vim.keymap.set('n', '`4', ':5winc><CR>')
 vim.keymap.set('n', '`2', ':3winc+<CR>')
 vim.keymap.set('n', '`3', ':3winc-<CR>')
-vim.keymap.set('n', ',t', ':tabnew<CR>')
 vim.keymap.set('n', 'zs', 'zMzO')
 
 --- cool block commands
@@ -35,7 +29,6 @@ vim.keymap.set('n', '<A-c>', function ()
 end)
 
 -- find and replace assistance
-
 vim.keymap.set('n', '\\s', function ()
     local word = vim.fn.expand("<cword>")
     local line_num = vim.api.nvim_win_get_cursor(0)[1]
@@ -134,3 +127,39 @@ vim.keymap.set('n', 'gsf', function()
     gitsigns.toggle_deleted(false)
     gitsigns.toggle_numhl(false)
 end)
+
+
+-- Where am i config
+local function whereami()
+    -- colors from bg to fg
+    local uptime = 7
+    local downtime = 3
+    local cursor_colors = {
+         "#24283b",  "#262b40",  "#282d45",  "#2a304a",  "#2c324f",  "#2e3554",  "#303759",  "#32395e",  "#333c64",
+ "#353e69",  "#36406e",  "#384274",  "#39457a",  "#3a477f",  "#3c4985",  "#3d4b8b",  "#3e4d91",  "#3f4f97",
+ "#40519d",  "#4152a3",  "#4254a9",  "#4256af",  "#4358b5",  "#445abb",  "#485dbf",  "#4c61c2",  "#5065c4", "#5469c7",  "#586dca",  "#5d71cd",  "#6175d0",  "#6579d2",  "#6a7dd5",  "#6e82d7",  "#7386d9",  "#778adc", "#7c8ede",  "#8193e0",  "#8697e2",  "#8b9be4",  "#90a0e6",  "#95a4e8",  "#9aa9ea",  "#9faeec",  "#a5b2ee", "#aab7ef",  "#afbcf1",  "#b5c0f2",  "#bac5f4",  "#c0caf5"
+    }
+    local length = #cursor_colors
+    for i = 0, length, 1 do
+        vim.fn.timer_start((i + 1) * uptime, function ()
+            vim.wo.cursorline = true
+            vim.wo.cursorcolumn = true
+            vim.api.nvim_set_hl(1, "CursorLine", {bg=cursor_colors[i]})
+            vim.api.nvim_set_hl(1, "CursorColumn", {bg=cursor_colors[i]})
+            vim.api.nvim_win_set_hl_ns(vim.api.nvim_get_current_win(), 1)
+        end)
+        vim.fn.timer_start((length) * uptime + (i + 1) * downtime, function ()
+            vim.wo.cursorline = true
+            vim.wo.cursorcolumn = true
+            vim.api.nvim_set_hl(1, "CursorLine", {bg=cursor_colors[length - i - 1]})
+            vim.api.nvim_set_hl(1, "CursorColumn", {bg=cursor_colors[length - i - 1]})
+            vim.api.nvim_win_set_hl_ns(vim.api.nvim_get_current_win(), 1)
+        end)
+        vim.fn.timer_start((length + 1) * (uptime + downtime), function ()
+            vim.wo.cursorcolumn = false
+            vim.o.cursorcolumn = false
+        end)
+    end
+    vim.api.nvim_win_set_hl_ns(vim.api.nvim_get_current_win(), 0)
+end
+vim.api.nvim_create_user_command("Where", whereami, {})
