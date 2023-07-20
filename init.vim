@@ -33,6 +33,7 @@ else
     Plug 'tpope/vim-rhubarb'
     Plug 'tpope/vim-commentary'
     Plug 'lewis6991/gitsigns.nvim'
+    " Plug 'lewis6991/satellite.nvim'
     Plug 'hrsh7th/cmp-nvim-lsp'
     Plug 'hrsh7th/cmp-buffer'
     Plug 'hrsh7th/cmp-path'
@@ -56,6 +57,7 @@ else
     Plug 'navarasu/onedark.nvim'
     Plug 'tiagovla/tokyodark.nvim'
     Plug 'IMOKURI/line-number-interval.nvim'
+    Plug 'lukas-reineke/indent-blankline.nvim'
     call plug#end()
     lua require('init')
 endif
