@@ -10,10 +10,6 @@ require("tokyonight").setup({
     dim_inactive = true,
 })
 vim.g.tokyonight_italic_functions = true
-vim.g.tokyodark_transparent_background = true
-vim.g.tokyodark_enable_italic_comment = true
-vim.g.tokyodark_enable_italic = true
-vim.g.tokyodark_color_gamma = "1.0"
 vim.cmd("color tokyonight-moon")
 vim.g.line_number_interval_enable_at_startup = 1
 vim.cmd('let g:line_number_interval#use_custom = 1')
