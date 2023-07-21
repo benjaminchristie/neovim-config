@@ -34,7 +34,7 @@ local function hasvalue(table, value)
     return false
 end
 local function winbarstring()
-    local path = vim.fn.pathshorten(vim.fn.expand("%:f"))
+    local path = vim.fn.expand("%:f")
     local branch = vim.b.gitsigns_head
     local harpoon_idx = require("harpoon.mark").get_current_index()
     if branch ~= nil and harpoon_idx ~= nil then

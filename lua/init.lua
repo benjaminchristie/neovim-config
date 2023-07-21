@@ -13,7 +13,6 @@ require("modules/telescope")
 require("modules/undotree")
 require("plugins.make-flow")
 require('colorizer').setup({}, { css = true; })
--- require('mini.pairs').setup()
 require('nvim-autopairs').setup({
     ignored_next_char = "[%w%.]",
     enable_check_bracket_line = false,
@@ -25,6 +24,10 @@ require("modules/lsp-init")
 require("modules/term")
 require("modules/gdb")
 require("oil").setup()
+require("indent_blankline").setup {
+    show_current_context = true,
+    show_current_context_start = false,
+}
 require("gitsigns").setup({
     numhl = false,
     current_line_blame = false,

@@ -1,8 +1,15 @@
+local gitsigns = require("gitsigns")
+local perfanno = require("perfanno")
+local util = require("perfanno.util")
 --- set keymappings --- 
 vim.keymap.set('n', '<Up>', '<C-b>')
 vim.keymap.set('n', '<Down>', '<C-f>')
 vim.keymap.set('n', '<Left>', 'gT')
 vim.keymap.set('n', '<Right>', 'gt')
+vim.keymap.set('i', '<Up>', '<Esc><C-b>')
+vim.keymap.set('i', '<Down>', '<Esc><C-f>')
+vim.keymap.set('i', '<Left>', '<Esc>gT')
+vim.keymap.set('i', '<Right>', '<Esc>gt')
 
 vim.keymap.set('n', '`1', ':5winc<<CR>')
 vim.keymap.set('n', '`4', ':5winc><CR>')
@@ -19,11 +26,52 @@ vim.keymap.set('n', '<C-d>', '<C-d>zz')
 vim.keymap.set('n', '<C-u>', '<C-u>zz')
 vim.keymap.set('n', '}', '}zz')
 vim.keymap.set('n', '{', '{zz')
-require("indent_blankline").setup {
-    -- for example, context is off by default, use this to turn it on
-    show_current_context = true,
-    show_current_context_start = false,
-}
+local search_github = function ()
+    local csgithub = require("csgithub")
+    local url = csgithub.search({
+	includeFilename=false,
+	includeExtension=true,
+    })
+    if url == nil then
+    	return
+    end
+    csgithub.open(url)
+end
+vim.keymap.set('n', '<A-g>', function() return search_github() end)
+vim.keymap.set('v', '<A-g>', function() return search_github() end)
+-- git stuff
+vim.keymap.set('n', 'gM', ':Git mergetool -y ')
+vim.keymap.set('n', 'gV', ':Git difftool -y ')
+vim.keymap.set('n', 'gR', ':Git rebase --interactive -i HEAD~')
+vim.keymap.set('n', 'gst', function()
+    gitsigns.toggle_current_line_blame(true)
+    gitsigns.toggle_linehl(true)
+    gitsigns.toggle_deleted(true)
+    gitsigns.toggle_numhl(true)
+end)
+vim.keymap.set('n', 'gsf', function()
+    gitsigns.toggle_current_line_blame(false)
+    gitsigns.toggle_linehl(false)
+    gitsigns.toggle_deleted(false)
+    gitsigns.toggle_numhl(false)
+end)
+
+-- cd to current working file
+vim.keymap.set('n', '<A-c>', function ()
+    local cwd = vim.fn.expand("%:p:h")
+    vim.api.nvim_set_current_dir(cwd)
+    print("Changed cwd to " .. cwd)
+end)
+
+-- find and replace assistance
+vim.keymap.set('n', '\\s', function ()
+    local word = vim.fn.expand("<cword>")
+    local line_num = vim.api.nvim_win_get_cursor(0)[1]
+    local change_to = vim.fn.input("Change " .. word .. " to : ")
+    vim.cmd(':%s/' .. word .. "/" .. change_to .. "/g")
+    vim.cmd(":" .. line_num)
+    end
+)
 
 -- ufo
 
@@ -72,22 +120,6 @@ vim.keymap.set('n', 'K', function()
     end
 end)
 
--- cd to current working file
-vim.keymap.set('n', '<A-c>', function ()
-    local cwd = vim.fn.expand("%:p:h")
-    vim.api.nvim_set_current_dir(cwd)
-    print("Changed cwd to " .. cwd)
-end)
-
--- find and replace assistance
-vim.keymap.set('n', '\\s', function ()
-    local word = vim.fn.expand("<cword>")
-    local line_num = vim.api.nvim_win_get_cursor(0)[1]
-    local change_to = vim.fn.input("Change " .. word .. " to : ")
-    vim.cmd(':%s/' .. word .. "/" .. change_to .. "/g")
-    vim.cmd(":" .. line_num)
-    end
-)
 
 -- handle harpoon
 for i = 0, 9, 1 do
@@ -100,17 +132,13 @@ vim.keymap.set('n', "<A-j>", function() return require("harpoon.ui").nav_next() 
 
 
 -- perfanno 
-local perfanno = require("perfanno")
-local util = require("perfanno.util")
 
 perfanno.setup {
-    -- Creates 10-step color gradient between pure black (#000000) and #CC3300
     line_highlights = util.make_bg_highlights("#1A1B26", "#CC3300", 10),
     vt_highlight = util.make_fg_highlight("#CC3300"),
     annotate_after_load = true,
     annotate_on_open = true,
     ts_function_patterns = {
-        -- These should work for most languages (at least those used with perf)
         default = {
             "function",
             "method",
@@ -126,27 +154,18 @@ vim.api.nvim_create_autocmd({"BufEnter"}, {
     end
 })
 
--- user commands
--- Gitsigns config
-local gitsigns = require("gitsigns")
-vim.keymap.set('n', 'gst', function()
-    gitsigns.toggle_current_line_blame(true)
-    gitsigns.toggle_linehl(true)
-    gitsigns.toggle_deleted(true)
-    gitsigns.toggle_numhl(true)
-end)
-vim.keymap.set('n', 'gsf', function()
-    gitsigns.toggle_current_line_blame(false)
-    gitsigns.toggle_linehl(false)
-    gitsigns.toggle_deleted(false)
-    gitsigns.toggle_numhl(false)
-end)
+vim.api.nvim_create_user_command("Lex", "NvimTreeFindFile", {})
+vim.api.nvim_create_user_command("Ex", "NvimTreeFocus", {})
 -- Where am i config
 local function whereami()
     local uptime = 7
     local downtime = 3
     local cursor_colors = {
-         "#24283b",  "#262b40",  "#282d45",  "#2a304a",  "#2c324f",  "#2e3554",  "#303759",  "#32395e",  "#333c64", "#353e69",  "#36406e",  "#384274",  "#39457a",  "#3a477f",  "#3c4985",  "#3d4b8b",  "#3e4d91",  "#3f4f97", "#40519d",  "#4152a3",  "#4254a9",  "#4256af",  "#4358b5",  "#445abb",  "#485dbf",  "#4c61c2",  "#5065c4", "#5469c7",  "#586dca",  "#5d71cd",  "#6175d0",  "#6579d2",  "#6a7dd5",  "#6e82d7",  "#7386d9",  "#778adc", "#7c8ede",  "#8193e0",  "#8697e2",  "#8b9be4",  "#90a0e6",  "#95a4e8",  "#9aa9ea",  "#9faeec",  "#a5b2ee", "#aab7ef",  "#afbcf1",  "#b5c0f2",  "#bac5f4",  "#c0caf5"
+        "#24283b", "#262b40", "#282d45", "#2a304a", "#2c324f", "#2e3554", "#303759", "#32395e", "#333c64", "#353e69",
+        "#36406e", "#384274", "#39457a", "#3a477f", "#3c4985", "#3d4b8b", "#3e4d91", "#3f4f97", "#40519d", "#4152a3",
+        "#4254a9", "#4256af", "#4358b5", "#445abb", "#485dbf", "#4c61c2", "#5065c4", "#5469c7", "#586dca", "#5d71cd",
+        "#6175d0", "#6579d2", "#6a7dd5", "#6e82d7", "#7386d9", "#778adc", "#7c8ede", "#8193e0", "#8697e2", "#8b9be4",
+        "#90a0e6", "#95a4e8", "#9aa9ea", "#9faeec", "#a5b2ee", "#aab7ef", "#afbcf1", "#b5c0f2", "#bac5f4", "#c0caf5"
     }
     local length = #cursor_colors
     for i = 0, length, 1 do
@@ -174,24 +193,8 @@ local function whereami()
     end
 end
 vim.api.nvim_create_user_command("Where", whereami, {})
-vim.api.nvim_create_user_command("Lex", "NvimTreeFindFile", {})
-vim.api.nvim_create_user_command("Ex", "NvimTreeFocus", {})
 
-local search_github = function ()
-    local csgithub = require("csgithub")
-    local url = csgithub.search({
-	includeFilename=false,
-	includeExtension=true,
-    })
-    if url == nil then
-    	return
-    end
-    csgithub.open(url)
-end
-vim.keymap.set('n', '<A-g>', function() return search_github() end)
-vim.keymap.set('v', '<A-g>', function() return search_github() end)
--- fugitive stuff
-vim.keymap.set('n', 'gM', ':Git mergetool -y ')
-vim.keymap.set('n', 'gV', ':Git difftool -y ')
-vim.keymap.set('n', 'gR', ':Git rebase --interactive -i HEAD~')
-vim.g.editorconfig_trim_trailing_whitespace = true
+vim.api.nvim_create_user_command("TmpLua", function ()
+    vim.cmd("new")
+    vim.bo.filetype = "lua"
+end, {})

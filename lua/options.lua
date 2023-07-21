@@ -9,6 +9,7 @@ vim.g.loaded_zipPlugin = 0
 vim.g.syntastic_auto_jump = 1
 vim.g.term_buf = 0
 vim.g.term_win = 0
+vim.g.editorconfig_trim_trailing_whitespace = true
 vim.o.autoindent = true
 vim.o.backup = false
 vim.o.ch = 1
@@ -45,6 +46,6 @@ vim.o.undofile = true
 vim.o.wildmenu = true
 vim.o.wrap = true
 vim.opt.list = false
-vim.opt.listchars = { eol="", tab = '' }
+vim.opt.listchars = { eol="", trail = "▓", extends = ''}
 vim.cmd('autocmd BufEnter * set formatoptions-=cro')
 vim.cmd('autocmd BufEnter * setlocal formatoptions-=cro')
