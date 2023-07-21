@@ -13,7 +13,12 @@ require("modules/telescope")
 require("modules/undotree")
 require("plugins.make-flow")
 require('colorizer').setup({}, { css = true; })
-require('mini.pairs').setup()
+-- require('mini.pairs').setup()
+require('nvim-autopairs').setup({
+    ignored_next_char = "[%w%.]",
+    enable_check_bracket_line = false,
+})
+require('nvim-ts-autotag').setup()
 require("modules/statuswinbar")
 require("modules/surround")
 require("modules/lsp-init")
@@ -28,5 +33,5 @@ require("gitsigns").setup({
         virt_text_pos = "right_align",
         ignore_whitespace = true,
     },
-    current_line_blame_formatter = " <author>, <author_time> - <abbrev_sha> - <summary>"
+    current_line_blame_formatter = " <author>, <author_time> - <abbrev_sha> - <summary>  "
 })

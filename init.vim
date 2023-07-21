@@ -9,7 +9,6 @@ else
     Plug 'cljoly/telescope-repo.nvim'
     Plug 'da-moon/telescope-toggleterm.nvim'
     Plug 'debugloop/telescope-undo'
-    Plug 'echasnovski/mini.pairs'
     Plug 'echasnovski/mini.starter'
     Plug 'ethanholz/nvim-lastplace'
     Plug 'folke/tokyonight.nvim'
@@ -49,6 +48,8 @@ else
     Plug 'ThePrimeagen/refactoring.nvim'
     Plug 'tpope/vim-commentary'
     Plug 'tpope/vim-fugitive'
+    Plug 'windwp/nvim-autopairs'
+    Plug 'windwp/nvim-ts-autotag'
     call plug#end()
     lua require('init')
 endif

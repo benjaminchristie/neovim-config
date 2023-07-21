@@ -24,6 +24,7 @@ vim.keymap.set('n', '<C-p><C-i>', function() return builtins.lsp_dynamic_workspa
 vim.keymap.set('n', '<C-p><C-u>', function() return extensions.undo.undo() end)
 vim.keymap.set('n', '<C-p><C-g><C-p>', function() return extensions.repo.cached_list{file_ignore_patterns={"/%.cache/", "/%.cargo/", "/%.local/share/", "/%.zsh/"}} end)
 vim.keymap.set('n', '<C-p><C-g><C-b>', function() return builtins.git_branches() end)
+vim.keymap.set('n', '<C-p><C-g><C-g>', function() return builtins.commands() end)
 vim.keymap.set('n', '<C-p><C-g><C-d>', function() return builtins.git_commits()  end)
 vim.keymap.set('n', '<C-p><C-1>', function() return extensions.perfanno.actions.hottest_callers() end)
 vim.keymap.set('n', '<C-p><C-0>', function() return extensions.perfanno.actions.hottest_callees() end)
