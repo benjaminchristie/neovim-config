@@ -39,7 +39,6 @@ vim.o.spell = false
 vim.o.splitkeep = "screen"
 vim.o.splitright = true
 vim.o.sw = 4
-vim.o.syntax = true
 vim.o.tabstop = 8
 vim.o.ts = 4
 vim.o.undofile = true
