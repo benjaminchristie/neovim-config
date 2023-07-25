@@ -191,7 +191,6 @@ starter.setup({
       extra_items(),
     },
     content_hooks = {
-      starter.gen_hook.adding_bullet("⚪", true),
       starter.gen_hook.aligning("center", "center"),
       starter.gen_hook.padding(0, 0),
     },
