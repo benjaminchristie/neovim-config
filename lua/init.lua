@@ -17,7 +17,9 @@ require('nvim-autopairs').setup({
     ignored_next_char = "[%w%.]",
     enable_check_bracket_line = false,
 })
-require('nvim-ts-autotag').setup()
+require('nvim-ts-autotag').setup({
+    filetypes = {"html", "xml"}
+})
 require("modules/statuswinbar")
 require("modules/surround")
 require("modules/lsp-init")
