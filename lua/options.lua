@@ -46,5 +46,6 @@ vim.o.wildmenu = true
 vim.o.wrap = true
 vim.opt.list = false
 vim.opt.listchars = { eol="", trail = "▓", extends = ''}
+vim.opt.fillchars = ""
 vim.cmd('autocmd BufEnter * set formatoptions-=cro')
 vim.cmd('autocmd BufEnter * setlocal formatoptions-=cro')
