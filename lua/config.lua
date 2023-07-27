@@ -207,6 +207,16 @@ vim.api.nvim_create_user_command("Lex", function ()
     vim.api.nvim_win_set_width(0, WIDTH)
 end, {})
 
+
+vim.api.nvim_create_augroup("FormatGroup", {clear = false})
+vim.api.nvim_create_autocmd({"BufEnter"}, {
+    group = "FormatGroup",
+    pattern = "*",
+    callback = function()
+        vim.cmd('set formatoptions-=cro')
+        vim.cmd('setlocal formatoptions-=cro')
+    end
+})
 vim.api.nvim_create_augroup("LaunchEnterGroup", {clear = false})
 vim.api.nvim_create_autocmd({"BufEnter"}, {
     group = "LaunchEnterGroup",
