@@ -1,5 +1,5 @@
 #!/bin/sh
-x=$(cat $1 | sed 's/$3/\n/g')
-cat << EOF
+x=$(echo $1 | sed "s/$3/\n/g")
+gpg -c --quiet --yes -o $2 <<HEREDOC
 $x
-EOF | gpg -c --quiet > $2
+HEREDOC
