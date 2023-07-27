@@ -17,6 +17,8 @@ vim.keymap.set('n', '`2', ':3winc+<CR>')
 vim.keymap.set('n', '`3', ':3winc-<CR>')
 vim.keymap.set('n', 'zs', 'zMzO')
 
+-- vim.keymap.set('n', '<C-l><C-d>', ':ClangFormat<CR>')
+
 --- cool block commands
 vim.keymap.set('v', "J", ":m '>+1<CR>gv=gv")
 vim.keymap.set('v', "K", ":m '<-2<CR>gv=gv")
