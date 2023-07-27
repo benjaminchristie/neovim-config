@@ -2,27 +2,28 @@ local gitsigns = require("gitsigns")
 local force_inactive_filetypes = {
   'NvimTree',
   'dbui',
-  'packer',
-  'startify',
   'fugitive',
   'fugitiveblame',
-  'nofile',
-  'toggleterm',
-  'terminal',
-  'starter',
-  'qf',
+  'harpoon',
   'harpoon-menu',
-  'harpoon'
+  'nofile',
+  'oil',
+  'packer',
+  'qf',
+  'starter',
+  'startify',
+  'terminal',
+  'toggleterm',
 }
 
 local force_inactive_buftypes = {
+  'harpoon',
+  'harpoon-menu',
+  'nofile',
+  'nowrite',
+  'quickfix',
   'terminal',
   'toggleterm',
-  'nofile',
-  'quickfix',
-  'nowrite',
-  'harpoon-menu',
-  'harpoon'
 }
 
 local function hasvalue(table, value)

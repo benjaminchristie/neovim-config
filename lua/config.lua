@@ -147,15 +147,6 @@ perfanno.setup {
 }
 
 -- ROS config 
-vim.api.nvim_create_autocmd({"BufEnter"}, {
-    pattern = {"*.launch", ".urdf", "*.xacro"},
-    callback = function()
-        vim.opt_local.filetype = "html"
-    end
-})
-
-vim.api.nvim_create_user_command("Lex", "NvimTreeFindFile", {})
-vim.api.nvim_create_user_command("Ex", "NvimTreeFocus", {})
 -- Where am i config
 local function whereami()
     local uptime = 7
@@ -195,6 +186,38 @@ end
 vim.api.nvim_create_user_command("Where", whereami, {})
 
 vim.api.nvim_create_user_command("TmpLua", function ()
-    vim.cmd("new")
+    vim.cmd("e /tmp/tmp" .. vim.fn.reltimestr(vim.fn.reltime()))
     vim.bo.filetype = "lua"
 end, {})
+
+vim.api.nvim_create_user_command("Ex", function ()
+    local HEIGHT = 12
+    vim.cmd("topleft Oil")
+    vim.wo.number = false
+    vim.wo.relativenumber = false
+    vim.api.nvim_win_set_height(0, HEIGHT)
+end, {})
+vim.api.nvim_create_user_command("Lex", function ()
+    local WIDTH = 45
+    vim.cmd("vertical Oil")
+    vim.wo.number = false
+    vim.wo.relativenumber = false
+    vim.api.nvim_win_set_width(0, WIDTH)
+end, {})
+
+vim.api.nvim_create_augroup("LaunchEnterGroup", {clear = false})
+vim.api.nvim_create_autocmd({"BufEnter"}, {
+    group = "LaunchEnterGroup",
+    pattern = {"*.launch", ".urdf", "*.xacro", "*.xml"},
+    callback = function()
+        vim.opt_local.filetype = "html"
+    end
+})
+vim.api.nvim_create_augroup("ClangFormatGroup", {clear = false})
+vim.api.nvim_create_autocmd({"BufWritePre"}, {
+    group = "ClangFormatGroup",
+    pattern = {"*.cpp", "*.h", "*.hpp", "*.c"},
+    callback = function()
+        vim.cmd("ClangFormat")
+    end
+})
