@@ -3,3 +3,5 @@ lua/projects
 lua/plugins/gdb-nvim
 lua/plugins/nvim-make
 logs/
+colors/
+spell/
