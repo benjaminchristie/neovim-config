@@ -187,6 +187,18 @@ local function whereami()
 end
 vim.api.nvim_create_user_command("Where", whereami, {})
 
+Copygpg_filename = "" -- not proud of this
+local function copygpg()
+    local _use_saved = vim.fn.input("Use cached filename? [Y/n] : ")
+    local use_saved = (_use_saved ~= "n")
+    if ((Copygpg_filename == "") or (not use_saved)) then
+        Copygpg_filename = vim.fn.input("Enter path to gpg file : ")
+    end
+    vim.cmd("silent !copygpg " .. Copygpg_filename)
+end
+
+vim.api.nvim_create_user_command("Copygpg", copygpg, {})
+
 vim.api.nvim_create_user_command("TmpLua", function ()
     vim.cmd("e /tmp/tmp" .. vim.fn.reltimestr(vim.fn.reltime()))
     vim.bo.filetype = "lua"
