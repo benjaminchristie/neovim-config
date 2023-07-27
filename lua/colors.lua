@@ -21,6 +21,7 @@ vim.api.nvim_set_hl(0, "CursorLineNr", {fg = colors.orange})
 vim.api.nvim_set_hl(0, "LineNr",       {fg = colors.fg_dark})
 vim.api.nvim_set_hl(0, "Comment",      {fg = colors.dark5})
 vim.api.nvim_set_hl(0, "Folded",       {bg = colors.black})
+vim.api.nvim_set_hl(0, 'WinSeparator', {fg = colors.fg_dark})
 vim.api.nvim_set_hl(0, "Tabline", {
     fg = colors.orange,
     bg = colors.bg_float,
@@ -49,4 +50,4 @@ vim.api.nvim_set_hl(0, 'HighlightedLineNr1',         {fg='#7ac2ca'})
 vim.api.nvim_set_hl(0, 'HighlightedLineNr2',         {fg='#7cb4c6'})
 vim.api.nvim_set_hl(0, 'HighlightedLineNr3',         {fg='#7da8c3'})
 vim.api.nvim_set_hl(0, 'HighlightedLineNr4',         {fg='#7f9bdf'})
-vim.api.nvim_set_hl(0, 'HighlightedLineNr5', {fg='#8093bc'})
+vim.api.nvim_set_hl(0, 'HighlightedLineNr5',         {fg='#8093bc'})
