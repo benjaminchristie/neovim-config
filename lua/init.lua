@@ -11,7 +11,6 @@ require("modules/stay-init")
 require("modules/task-init")
 require("modules/telescope")
 require("modules/undotree")
-require("plugins.make-flow")
 require('colorizer').setup({}, { css = true; })
 require('nvim-autopairs').setup({
     ignored_next_char = "[%w%.]",
@@ -40,3 +39,5 @@ require("gitsigns").setup({
     },
     current_line_blame_formatter = " <author>, <author_time> - <abbrev_sha> - <summary>  "
 })
+require("plugins.nvim-gpg")
+require("plugins.make-flow")

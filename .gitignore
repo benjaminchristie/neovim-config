@@ -2,7 +2,6 @@ lua/projects
 **/test.lua
 lua/plugins/gdb-nvim
 lua/plugins/nvim-make
-lua/plugins/nvim-gpg
 logs/
 colors/
 spell/
