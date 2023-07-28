@@ -24,17 +24,10 @@ vim.keymap.set('n', '<C-k>', vim.diagnostic.goto_prev, opts)
 vim.keymap.set('n', '<C-j>', vim.diagnostic.goto_next, opts)
 vim.keymap.set('n', 'gh', vim.diagnostic.setloclist, opts)
 
-local function pyright_order_imports()
-    local params = {
-        command = 'pyright.organizeimports',
-        arguments = { vim.uri_from_bufnr(0) },
-    }
-    vim.lsp.buf.execute_command(params)
-end
 
 -- Use an on_attach function to only map the following keys
 -- after the language server attaches to the current buffer
-local on_attach = function(client, bufnr)
+local on_attach = function(_, bufnr)
     -- Enable completion triggered by <c-x><c-o>
     vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
 
@@ -57,14 +50,6 @@ local on_attach = function(client, bufnr)
     vim.keymap.set('n', '<C-h><C-e>', vim.lsp.buf.code_action, bufopts)
     vim.keymap.set('n', 'gr', vim.lsp.buf.references, bufopts)
     -- vim.keymap.set('n', '<C-h><C-/>', vim.diagnostic.open_float, bufopts)
-    if client.name == "pyright" then
-        vim.api.nvim_create_augroup("Pyright", {clear = false})
-        vim.api.nvim_create_autocmd({"BufWritePre"}, {
-            group = "Pyright",
-            pattern = "*.py",
-            callback = pyright_order_imports,
-        })
-    end
 end
 
 local lsp_flags = {
