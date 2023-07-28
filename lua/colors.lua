@@ -39,6 +39,9 @@ vim.api.nvim_set_hl(0, "StatusLine", {
     fg = colors.orange,
     bg = colors.bg_float,
 })
+vim.api.nvim_set_hl(0, 'DiagnosticUnnecessary', {
+    fg=colors.dark5,
+})
 vim.api.nvim_set_hl(0, "IndentBlanklineContextChar", {fg = colors.blue})
 vim.api.nvim_set_hl(0, "DimLineNr",                  {fg = colors.fg_dark})
 vim.api.nvim_set_hl(0, 'HighlightedLineNr1',         {fg='#7ac2ca'})
