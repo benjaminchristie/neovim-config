@@ -18,15 +18,9 @@ function M.read_encrypted_file_lines()
                 print("No data read from decrypted file")
             end
         end,
-        on_stderr = function (_, data)
-            for i = 1, #data, 1 do
-                print(data[i])
-            end
+        on_stderr = function (_, _)
             print("Error decrypting file")
         end,
-        on_exit = function(_, c, _)
-            print(c)
-        end
     })
 end
 function M.write_encrypted_file_lines()
@@ -39,7 +33,6 @@ function M.write_encrypted_file_lines()
     raw = raw .. lines[#lines]
     vim.cmd("silent !/home/benjamin/.config/nvim/lua/plugins/nvim-gpg/test.sh ".. raw .. " " .. vim.api.nvim_buf_get_name(0) .. " " .. newline_hash)
     vim.cmd("e!")
-    vim.fn.input(raw)
 end
 function M.GpgRead()
     M.read_encrypted_file_lines()
@@ -47,25 +40,27 @@ end
 function M.GpgWrite()
     M.write_encrypted_file_lines()
 end
--- vim.api.nvim_create_autocmd({"BufReadPre, FileReadPre"}, {
---     group = M.augroup,
---     pattern = "*.gpg",
---     callback = function ()
---         vim.bo.buftype = "nowrite"
---         vim.o.shada = false
---         vim.bo.swapfile = false
---         vim.bo.undofile = false
---         vim.o.backup = false
---         vim.bo.binary = true
---         vim.bo.autoread = true
---         M.GpgRead()
---     end
--- })
+vim.api.nvim_create_autocmd({"BufReadPre, FileReadPre"}, {
+    group = M.augroup,
+    pattern = "*.gpg",
+    callback = function ()
+        vim.bo.buftype = "nowrite"
+        vim.o.winbar = "GPG File : " .. vim.fn.expand("%:f")
+        vim.o.shada = false
+        vim.bo.swapfile = false
+        vim.bo.undofile = false
+        vim.o.backup = false
+        vim.bo.binary = true
+        vim.bo.autoread = true
+        M.GpgRead()
+    end
+})
 vim.api.nvim_create_autocmd({"BufWritePre", "FileWritePre"}, {
     group = M.augroup,
     pattern = "*.gpg",
     callback = function ()
         vim.bo.buftype = "nowrite"
+        vim.o.winbar = "GPG File : " .. vim.fn.expand("%:f")
         vim.o.shada = false
         vim.bo.swapfile = false
         vim.bo.undofile = false
