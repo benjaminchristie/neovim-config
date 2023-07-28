@@ -24,9 +24,17 @@ vim.keymap.set('n', '<C-k>', vim.diagnostic.goto_prev, opts)
 vim.keymap.set('n', '<C-j>', vim.diagnostic.goto_next, opts)
 vim.keymap.set('n', 'gh', vim.diagnostic.setloclist, opts)
 
+local function pyright_order_imports()
+    local params = {
+        command = 'pyright.organizeimports',
+        arguments = { vim.uri_from_bufnr(0) },
+    }
+    vim.lsp.buf.execute_command(params)
+end
+
 -- Use an on_attach function to only map the following keys
 -- after the language server attaches to the current buffer
-local on_attach = function(_, bufnr)
+local on_attach = function(client, bufnr)
     -- Enable completion triggered by <c-x><c-o>
     vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
 
@@ -49,6 +57,14 @@ local on_attach = function(_, bufnr)
     vim.keymap.set('n', '<C-h><C-e>', vim.lsp.buf.code_action, bufopts)
     vim.keymap.set('n', 'gr', vim.lsp.buf.references, bufopts)
     -- vim.keymap.set('n', '<C-h><C-/>', vim.diagnostic.open_float, bufopts)
+    if client.name == "pyright" then
+        vim.api.nvim_create_augroup("Pyright", {clear = false})
+        vim.api.nvim_create_autocmd({"BufWritePre"}, {
+            group = "Pyright",
+            pattern = "*.py",
+            callback = pyright_order_imports,
+        })
+    end
 end
 
 local lsp_flags = {
@@ -60,29 +76,32 @@ require('lspconfig').cmake.setup{
     flags = lsp_flags,
     capabilities = capabilities,
 }
--- require('lspconfig').pyright.setup{
---     on_attach = function(client)
---       client.resolved_capabilities.document_formatting = false
---       client.resolved_capabilities.document_range_formatting = false
---       client.server_capabilities.completionProvider = false
---     end,
---     flags = lsp_flags,
---     capabilities = capabilities,
--- }
-require('lspconfig').pylsp.setup{
+require('lspconfig').pyright.setup{
     on_attach = on_attach,
+    flags = lsp_flags,
+    capabilities = capabilities,
+}
+require('lspconfig').pylsp.setup{
+    on_attach = function(client)
+      client.resolved_capabilities.document_formatting = false
+      client.resolved_capabilities.document_range_formatting = false
+      client.server_capabilities.completionProvider = false
+    end,
     flags = lsp_flags,
     capabilities = capabilities, -- i only want constructive feedback from pylsp
     settings = {
-	pylsp = {
-	    plugins = {
-		pycodestyle = {
-		    ignore = {'W391', 'E231', 'E203', 'E731',
-		    'E126', 'E131', 'E128', 'E101', 'W191', 'E502'},
-		    maxLineLength = 120
-		}
-	    }
-	}
+        pylsp = {
+            plugins = {
+                pycodestyle = {
+                    ignore = {
+                       'W391', 'E231', 'E203', 'E731',
+                       'E126', 'E131', 'E128', 'E101',
+                       'W191', 'E502', 'E226'
+                    },
+                    maxLineLength = 120
+                }
+            }
+        }
     }
 }
 require('lspconfig')['tsserver'].setup{
