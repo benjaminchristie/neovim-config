@@ -256,16 +256,22 @@ if vim.fn.executable("black-macchiato") then
         pattern = "*.py",
         callback = function ()
             local line_num = vim.api.nvim_win_get_cursor(0)[1]
+            local _pre = vim.api.nvim_buf_get_lines(0, 0, -1, false)
             vim.fn.jobstart("cat ".. vim.api.nvim_buf_get_name(0) .." | black-macchiato",
                 {
                     stdout_buffered = true,
                     stderr_buffered = true,
+                    on_exit = function(_, code, _)
+                        if code ~= 0 then  -- ERROR, reset lines
+                            vim.api.nvim_buf_set_lines(0, 0, -1, false, _pre)
+                        end
+                        vim.lsp.buf.execute_command(params)
+                        vim.cmd(":" .. line_num)
+                    end,
                     on_stdout = function(_, data)
                         if data then
                             table.remove(data, #data)  -- black-macchiato adds an extra newline for some reason
                             vim.api.nvim_buf_set_lines(0, 0, -1, false, data)
-                            vim.cmd(":" .. line_num)
-                            vim.lsp.buf.execute_command(params)
                         end
                     end,
                 }

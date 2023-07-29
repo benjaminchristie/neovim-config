@@ -66,29 +66,29 @@ require('lspconfig').pyright.setup{
     flags = lsp_flags,
     capabilities = capabilities,
 }
-require('lspconfig').pylsp.setup{
-    on_attach = function(client)
-      client.resolved_capabilities.document_formatting = false
-      client.resolved_capabilities.document_range_formatting = false
-      client.server_capabilities.completionProvider = false
-    end,
-    flags = lsp_flags,
-    capabilities = capabilities, -- i only want constructive feedback from pylsp
-    settings = {
-        pylsp = {
-            plugins = {
-                pycodestyle = {
-                    ignore = {
-                       'W391', 'E231', 'E203', 'E731',
-                       'E126', 'E131', 'E128', 'E101',
-                       'W191', 'E502', 'E226'
-                    },
-                    maxLineLength = 120
-                }
-            }
-        }
-    }
-}
+-- require('lspconfig').pylsp.setup{
+--     on_attach = function(client)
+--       client.resolved_capabilities.document_formatting = false
+--       client.resolved_capabilities.document_range_formatting = false
+--       client.server_capabilities.completionProvider = false
+--     end,
+--     flags = lsp_flags,
+--     capabilities = capabilities, -- i only want constructive feedback from pylsp
+--     settings = {
+--         pylsp = {
+--             plugins = {
+--                 pycodestyle = {
+--                     ignore = {
+--                        'W391', 'E231', 'E203', 'E731',
+--                        'E126', 'E131', 'E128', 'E101',
+--                        'W191', 'E502', 'E226'
+--                     },
+--                     maxLineLength = 120
+--                 }
+--             }
+--         }
+--     }
+-- }
 require('lspconfig')['tsserver'].setup{
     on_attach = on_attach,
     flags = lsp_flags,
