@@ -1,4 +1,5 @@
   -- Setup lspconfig.
+local lspconfig = require("lspconfig")
 local capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities())
 capabilities.textDocument.completion.completionItem.snippetSupport = true
 vim.lsp.handlers["textDocument/hover"] =
@@ -18,11 +19,6 @@ vim.lsp.handlers["textDocument/signatureHelp"] =
 )
 -- Mappings.
 -- See `:help vim.diagnostic.*` for documentation on any of the below functions
-local opts = { noremap=true, silent=true }
-vim.keymap.set('n', '<C-h><C-q>', vim.diagnostic.open_float, opts)
-vim.keymap.set('n', '<C-k>', vim.diagnostic.goto_prev, opts)
-vim.keymap.set('n', '<C-j>', vim.diagnostic.goto_next, opts)
-vim.keymap.set('n', 'gh', vim.diagnostic.setloclist, opts)
 
 
 -- Use an on_attach function to only map the following keys
@@ -56,17 +52,17 @@ local lsp_flags = {
     -- This is the default in Nvim 0.7+
     debounce_text_changes = 150,
 }
-require('lspconfig').cmake.setup{
+lspconfig.cmake.setup{
     on_attach = on_attach,
     flags = lsp_flags,
     capabilities = capabilities,
 }
-require('lspconfig').pyright.setup{
+lspconfig.pyright.setup{
     on_attach = on_attach,
     flags = lsp_flags,
     capabilities = capabilities,
 }
--- require('lspconfig').pylsp.setup{
+-- lspconfig.pylsp.setup{
 --     on_attach = function(client)
 --       client.resolved_capabilities.document_formatting = false
 --       client.resolved_capabilities.document_range_formatting = false
@@ -89,27 +85,27 @@ require('lspconfig').pyright.setup{
 --         }
 --     }
 -- }
-require('lspconfig')['tsserver'].setup{
+lspconfig['tsserver'].setup{
     on_attach = on_attach,
     flags = lsp_flags,
     capabilities = capabilities,
 }
-require('lspconfig')['gopls'].setup{
+lspconfig['gopls'].setup{
     on_attach = on_attach,
     flags = lsp_flags,
     capabilities = capabilities,
 }
-require('lspconfig')['texlab'].setup{
+lspconfig['texlab'].setup{
     on_attach = on_attach,
     flags = lsp_flags,
     capabilities = capabilities,
 }
-require('lspconfig').bashls.setup{
+lspconfig.bashls.setup{
     on_attach = on_attach,
     flags = lsp_flags,
     capabilities = capabilities,
 }
-require'lspconfig'.lua_ls.setup {
+lspconfig.lua_ls.setup {
   settings = {
     Lua = {
       runtime = {
@@ -134,44 +130,22 @@ require'lspconfig'.lua_ls.setup {
   },
   on_attach = on_attach,
 }
-require('lspconfig')['clangd'].setup{
-    on_attach = on_attach,
-    flags = lsp_flags,
-    capabilities = capabilities,
-    autostart = true,
-    cmd = {
-        -- see clangd --help-hidden
-        "clangd",
-        "--background-index",
-        -- by default, clang-tidy use -checks=clang-diagnostic-*,clang-analyzer-*
-        -- to add more checks, create .clang-tidy file in the root directory
-        -- and add Checks key, see https://clang.llvm.org/extra/clang-tidy/
-        "--clang-tidy",
-        "--clang-tidy-checks='clang-analyzer-core*,clang-analyzer-unix*,bugprone*,modernize*'",
-        -- '--clang-tidy-checks="clang-diagnostic-*,clang-analyzer-*,modernize*,performance*,readability*"',
-        "--completion-style=bundled",
-        "--cross-file-rename",
-        "--header-insertion=iwyu",
-        "--suggest-missing-includes",
-        -- "--compile-commands-dir='/home/benjamin/.config/nvim/lua/lsp-info/'",
-    },
-}
-require('lspconfig').html.setup{
+lspconfig.html.setup{
     on_attach = on_attach,
     flags = lsp_flags,
     capabilities = capabilities,
 }
-require('lspconfig').cssls.setup{
+lspconfig.cssls.setup{
     on_attach = on_attach,
     flags = lsp_flags,
     capabilities = capabilities,
 }
-require('lspconfig').dockerls.setup{
+lspconfig.dockerls.setup{
     on_attach = on_attach,
     flags = lsp_flags,
     capabilities = capabilities,
 }
-require('lspconfig').marksman.setup{
+lspconfig.marksman.setup{
     on_attach = on_attach,
     flags = lsp_flags,
     capabilities = capabilities,
@@ -182,7 +156,7 @@ local function get_probe_dir(root_dir)
   return project_root and (project_root .. '/node_modules') or ''
 end
 local default_probe_dir = get_probe_dir(vim.fn.getcwd())
-require('lspconfig').angularls.setup{
+lspconfig.angularls.setup{
     on_attach = on_attach,
     flags = lsp_flags,
     capabilities = capabilities,
@@ -195,17 +169,68 @@ require('lspconfig').angularls.setup{
     filetypes = {'typescript', 'html', 'typescriptreact', 'typescript.tsx'},
     root_dir = require('lspconfig/util').root_pattern('angular.json', '.git'),
 }
-require('lspconfig').asm_lsp.setup{
+lspconfig.asm_lsp.setup{
     on_attach = on_attach,
     flags = lsp_flags,
     capabilities = capabilities,
 }
-local rt = require("rust-tools")
-
-rt.setup({
+require("rust-tools").setup({
   server = {
       on_attach = on_attach,
       flags = lsp_flags,
       capabilities = capabilities,
   }
+})
+local function find_cc_json(fn)
+    local _, e = string.find(fn, "_ws/src/[^/]*/")
+    local project_path = string.sub(fn, 0, e)
+    local project_build_path = string.gsub(project_path, "src", "build", 1)
+    return project_build_path
+end
+
+vim.api.nvim_create_autocmd({"BufAdd"}, {
+    pattern = {"*.cpp", "*.h", "*.hpp", "*.c"},
+    callback = function ()
+        local fn = vim.api.nvim_buf_get_name(0)
+        local active_clangd_clients = vim.lsp.get_active_clients({name="clangd"})
+        if string.find(fn, "_ws/src/") and (#active_clangd_clients == 0) then
+            -- possibly in catkin_ws
+            local pbp = find_cc_json(fn)
+            local use_generated_json = vim.fn.input("Use " .. pbp .. " as project build path? [y/n] : ")
+            if use_generated_json == "y" then
+                lspconfig['clangd'].setup{
+                    on_attach = on_attach,
+                    flags = lsp_flags,
+                    capabilities = capabilities,
+                    autostart = true,
+                    cmd = {
+                        "clangd",
+                        "--background-index",
+                        "--clang-tidy",
+                        "--clang-tidy-checks='clang-analyzer-core*,clang-analyzer-unix*,bugprone*,modernize*'",
+                        "--cross-file-rename",
+                        "--header-insertion=iwyu",
+                        "--suggest-missing-includes",
+                        "--compile-commands-dir='"..pbp.."'",
+                    }
+                }
+                return
+            end
+        end
+        lspconfig['clangd'].setup{
+            on_attach = on_attach,
+            flags = lsp_flags,
+            capabilities = capabilities,
+            autostart = true,
+            cmd = {
+                "clangd",
+                "--background-index",
+                "--clang-tidy",
+                "--clang-tidy-checks='clang-analyzer-core*,clang-analyzer-unix*,bugprone*,modernize*'",
+                "--cross-file-rename",
+                "--header-insertion=iwyu",
+                "--suggest-missing-includes",
+            }
+        }
+    end
 })

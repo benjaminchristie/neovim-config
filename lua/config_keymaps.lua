@@ -21,6 +21,11 @@ vim.keymap.set('n', '<C-d>', '<C-d>zz')
 vim.keymap.set('n', '<C-u>', '<C-u>zz')
 vim.keymap.set('n', '}', '}zz')
 vim.keymap.set('n', '{', '{zz')
+local opts = { noremap=true, silent=true }
+vim.keymap.set('n', '<C-h><C-q>', vim.diagnostic.open_float, opts)
+vim.keymap.set('n', '<C-k>', vim.diagnostic.goto_prev, opts)
+vim.keymap.set('n', '<C-j>', vim.diagnostic.goto_next, opts)
+vim.keymap.set('n', 'gh', vim.diagnostic.setloclist, opts)
 
 local search_github = function ()
     local csgithub = require("csgithub")
@@ -96,19 +101,20 @@ local handler = function(virtText, lnum, endLnum, width, truncate)
     table.insert(newVirtText, {suffix, 'MoreMsg'})
     return newVirtText
 end
-require('ufo').setup({
+local ufo = require("ufo")
+ufo.setup({
     enable_get_fold_virt_text = true,
     fold_virt_text_handler = handler,
     provider_selector = function(_, _, _)
         return {'treesitter', 'indent'}
     end
 })
-vim.keymap.set('n', 'zR', require('ufo').openAllFolds)
-vim.keymap.set('n', 'zM', require('ufo').closeAllFolds)
-vim.keymap.set('n', 'zr', require('ufo').openFoldsExceptKinds)
-vim.keymap.set('n', 'zm', require('ufo').closeFoldsWith) -- closeAllFolds == closeFoldsWith(0)
+vim.keymap.set('n', 'zR', ufo.openAllFolds)
+vim.keymap.set('n', 'zM', ufo.closeAllFolds)
+vim.keymap.set('n', 'zr', ufo.openFoldsExceptKinds)
+vim.keymap.set('n', 'zm', ufo.closeFoldsWith) -- closeAllFolds == closeFoldsWith(0)
 vim.keymap.set('n', 'K', function()
-    local winid = require('ufo').peekFoldedLinesUnderCursor()
+    local winid = ufo.peekFoldedLinesUnderCursor()
     if not winid then
         vim.lsp.buf.hover()
     end
