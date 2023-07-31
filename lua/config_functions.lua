@@ -1,3 +1,5 @@
+vim.api.nvim_create_user_command("W", "w", {})
+vim.api.nvim_create_user_command("Q", "q", {})
 local function whereami()
     local uptime = 7
     local downtime = 3
@@ -66,4 +68,5 @@ vim.api.nvim_create_user_command("Lex", function ()
     vim.wo.relativenumber = false
     vim.api.nvim_win_set_width(0, WIDTH)
 end, {})
+
 
