@@ -1,5 +1,6 @@
 vim.api.nvim_create_user_command("W", "w", {})
 vim.api.nvim_create_user_command("Q", "q", {})
+vim.api.nvim_create_user_command("TC", "tabclose", {})
 local function whereami()
     local uptime = 7
     local downtime = 3
