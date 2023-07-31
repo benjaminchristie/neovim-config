@@ -181,59 +181,53 @@ require("rust-tools").setup({
       capabilities = capabilities,
   }
 })
-local function find_cc_json(fn)
-    local _, e = string.find(fn, "_ws/src/[^/]*/")
-    local project_path = string.sub(fn, 0, e)
-    local project_build_path = string.gsub(project_path, "src", "build", 1)
-    return project_build_path, vim.fn.filereadable(project_build_path .. "compile_commands.json")
-end
 
-vim.api.nvim_create_autocmd({"BufAdd"}, {
-    pattern = {"*.cpp", "*.h", "*.hpp", "*.c"},
-    callback = function ()
-        local fn = vim.api.nvim_buf_get_name(0)
-        local active_clangd_clients = vim.lsp.get_active_clients({name="clangd"})
-        if string.find(fn, "_ws/src/") and (#active_clangd_clients == 0) then
-            -- possibly in catkin_ws
-            local pbp, pbp_exists = find_cc_json(fn)
-            local use_generated_json = "n"
-            if pbp_exists then
-                use_generated_json = vim.fn.input("Use " .. pbp .. " as project build path? [Y/n] : ")
-            end
-            if string.lower(use_generated_json) ~= "n" then
-                lspconfig['clangd'].setup{
-                    on_attach = on_attach,
-                    flags = lsp_flags,
-                    capabilities = capabilities,
-                    autostart = true,
-                    cmd = {
-                        "clangd",
-                        "--background-index",
-                        "--clang-tidy",
-                        "--clang-tidy-checks='clang-analyzer-core*,clang-analyzer-unix*,bugprone*,modernize*'",
-                        "--cross-file-rename",
-                        "--header-insertion=iwyu",
-                        "--suggest-missing-includes",
-                        "--compile-commands-dir='"..pbp.."'",
-                    }
-                }
-                return
-            end
-        end
-        lspconfig['clangd'].setup{
-            on_attach = on_attach,
-            flags = lsp_flags,
-            capabilities = capabilities,
-            autostart = true,
-            cmd = {
-                "clangd",
-                "--background-index",
-                "--clang-tidy",
-                "--clang-tidy-checks='clang-analyzer-core*,clang-analyzer-unix*,bugprone*,modernize*'",
-                "--cross-file-rename",
-                "--header-insertion=iwyu",
-                "--suggest-missing-includes",
+local function find_cc_json(fn)
+    local found = false
+    local project_path = nil
+    local project_build_path = nil
+    local _, e = string.find(fn, "_ws/src/[^/]*/")
+    if e ~= nil then
+        project_path = string.sub(fn, 0, e)
+        project_build_path = string.gsub(project_path, "src", "build", 1)
+        found = vim.fn.filereadable(project_build_path .. "compile_commands.json")
+    end
+    return project_build_path, found
+end
+local pbp, found = find_cc_json(vim.api.nvim_buf_get_name(0))
+if found then
+    lspconfig['clangd'].setup({
+        on_attach = on_attach,
+        flags = lsp_flags,
+        capabilities = capabilities,
+        autostart = true,
+        cmd = {
+            "clangd",
+            "--background-index",
+            "--clang-tidy",
+            "--clang-tidy-checks='clang-analyzer-core*,clang-analyzer-unix*,bugprone*,modernize*'",
+            "--cross-file-rename",
+            "--header-insertion=iwyu",
+            "--suggest-missing-includes",
+            "--compile-commands-dir='"..pbp.."'",
             }
         }
-    end
-})
+    )
+else
+    lspconfig['clangd'].setup({
+        on_attach = on_attach,
+        flags = lsp_flags,
+        capabilities = capabilities,
+        autostart = true,
+        cmd = {
+            "clangd",
+            "--background-index",
+            "--clang-tidy",
+            "--clang-tidy-checks='clang-analyzer-core*,clang-analyzer-unix*,bugprone*,modernize*'",
+            "--cross-file-rename",
+            "--header-insertion=iwyu",
+            "--suggest-missing-includes",
+            }
+        }
+    )
+end
