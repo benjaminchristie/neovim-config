@@ -185,7 +185,7 @@ local function find_cc_json(fn)
     local _, e = string.find(fn, "_ws/src/[^/]*/")
     local project_path = string.sub(fn, 0, e)
     local project_build_path = string.gsub(project_path, "src", "build", 1)
-    return project_build_path
+    return project_build_path, vim.fn.filereadable(project_build_path .. "compile_commands.json")
 end
 
 vim.api.nvim_create_autocmd({"BufAdd"}, {
@@ -195,9 +195,12 @@ vim.api.nvim_create_autocmd({"BufAdd"}, {
         local active_clangd_clients = vim.lsp.get_active_clients({name="clangd"})
         if string.find(fn, "_ws/src/") and (#active_clangd_clients == 0) then
             -- possibly in catkin_ws
-            local pbp = find_cc_json(fn)
-            local use_generated_json = vim.fn.input("Use " .. pbp .. " as project build path? [y/n] : ")
-            if use_generated_json == "y" then
+            local pbp, pbp_exists = find_cc_json(fn)
+            local use_generated_json = "n"
+            if pbp_exists then
+                use_generated_json = vim.fn.input("Use " .. pbp .. " as project build path? [Y/n] : ")
+            end
+            if string.lower(use_generated_json) ~= "n" then
                 lspconfig['clangd'].setup{
                     on_attach = on_attach,
                     flags = lsp_flags,
