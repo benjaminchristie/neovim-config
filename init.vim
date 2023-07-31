@@ -12,7 +12,7 @@ else
     Plug 'echasnovski/mini.starter'
     Plug 'ethanholz/nvim-lastplace'
     Plug 'folke/tokyonight.nvim'
-    Plug 'godlygeek/tabular'
+    " Plug 'godlygeek/tabular'
     Plug 'hrsh7th/cmp-buffer'
     Plug 'hrsh7th/cmp-cmdline'
     Plug 'hrsh7th/cmp-nvim-lsp'

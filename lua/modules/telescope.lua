@@ -1,4 +1,5 @@
-require('telescope').setup({
+local ts = require("telescope")
+ts.setup({
     defaults = {
 	layout_strategy = "bottom_pane",
 	layout_config = {
@@ -8,10 +9,10 @@ require('telescope').setup({
 })
 local builtins = require("telescope.builtin")
 local extensions = require("telescope").extensions
-require('telescope').load_extension("fzf")
-require('telescope').load_extension("refactoring")
-require('telescope').load_extension('media_files')
-require('telescope').load_extension('perfanno')
+ts.load_extension("fzf")
+ts.load_extension("refactoring")
+ts.load_extension('media_files')
+ts.load_extension('perfanno')
 vim.keymap.set('n', '<C-p><C-p>', function() return builtins.find_files() end )
 vim.keymap.set('n', '<C-p><C-f>', function() return builtins.live_grep() end)
 vim.keymap.set('n', '#',          function() return builtins.grep_string() end)
