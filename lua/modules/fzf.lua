@@ -29,7 +29,7 @@ fzf.setup({
     },
 })
 
-vim.keymap.set('n', '<C-p><C-p>', function() return fzf.files() end )
+vim.keymap.set('n', '<C-p><C-p>', function() return fzf.files({cmd = "find -type f | rg -v '.git' | rg -v '.cache' "}) end )
 vim.keymap.set('n', '<C-p><C-f>', function() return fzf.live_grep() end)
 vim.keymap.set('n', '#',          function() return fzf.grep_cword() end)
 vim.keymap.set('n', '<C-p><C-d>', function() return fzf.lsp_document_symbols() end)
@@ -39,5 +39,6 @@ vim.keymap.set('n', '<C-p><C-h>', function() return fzf.help_tags() end)
 vim.keymap.set('n', '<C-p><C-q>', function() return fzf.blines() end)
 vim.keymap.set('n', '<C-p><C-i>', function() return fzf.lsp_workspace_symbols() end)
 vim.keymap.set('n', '<C-p><C-l>', function() return fzf.commands() end)
+vim.keymap.set('n', '<C-p><C-g><C-f>', function() return fzf.git_files() end)
 vim.keymap.set('n', '<C-p><C-g><C-b>', function() return fzf.git_branches() end)
 vim.keymap.set('n', '<C-p><C-g><C-l>', function() return fzf.git_commits()  end)
