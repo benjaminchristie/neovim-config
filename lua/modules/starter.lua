@@ -31,11 +31,11 @@ end
 local extra_items = function()
   return function()
     return {
-      {action = 'Telescope live_grep',       name = 'Grep',                      section = 'Actions'},
-      {action = 'Telescope help_tags',       name = 'Help',                      section = 'Actions'},
-      {action = 'Telescope oldfiles',        name = 'History',                   section = 'Actions'},
+      {action = 'FzfLua live_grep',          name = 'Grep',                      section = 'Actions'},
+      {action = 'FzfLua help_tags',          name = 'Help',                      section = 'Actions'},
+      {action = 'FzfLua oldfiles',           name = 'History',                   section = 'Actions'},
       {action = cached_repos,                name = 'Projects',                  section = 'Actions'},
-      {action = 'Telescope find_files',      name = 'Workspace files',           section = 'Actions'},
+      {action = 'FzfLua files',              name = 'Workspace files',           section = 'Actions'},
       {action = difftool,                    name = 'Diff tool',                 section = 'Actions'},
       {action = mergetool,                   name = 'Merge tool',                section = 'Actions'},
       {action = statustool,                  name = 'Status',                    section = 'Actions'},

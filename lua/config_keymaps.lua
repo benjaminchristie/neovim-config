@@ -1,11 +1,7 @@
 local gitsigns = require("gitsigns")
 
-vim.keymap.set('n', '<Up>', '<C-b>')
-vim.keymap.set('n', '<Down>', '<C-f>')
 vim.keymap.set('n', '<Left>', 'gT')
 vim.keymap.set('n', '<Right>', 'gt')
-vim.keymap.set('i', '<Up>', '<Esc><C-b>')
-vim.keymap.set('i', '<Down>', '<Esc><C-f>')
 vim.keymap.set('i', '<Left>', '<Esc>gT')
 vim.keymap.set('i', '<Right>', '<Esc>gt')
 vim.keymap.set('n', '`1', ':5winc<<CR>')

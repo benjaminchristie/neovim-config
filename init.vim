@@ -32,6 +32,7 @@ else
     Plug 'neovim/nvim-lspconfig'
     Plug 'nvim-lua/plenary.nvim'
     Plug 'nvim-lua/popup.nvim'
+    Plug 'ibhagwan/fzf-lua', {'branch': 'main'}
     Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build' }
     Plug 'nvim-telescope/telescope-media-files.nvim'
     Plug 'nvim-telescope/telescope.nvim', { 'branch': '0.1.x' }
