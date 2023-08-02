@@ -39,6 +39,10 @@ vim.api.nvim_set_hl(0, "StatusLine", {
     fg = colors.orange,
     bg = colors.bg_float,
 })
+vim.api.nvim_set_hl(0, "StatusLineNC", {
+    fg = colors.fg_dark,
+    bg = colors.bg_float,
+})
 vim.api.nvim_set_hl(0, 'DiagnosticUnnecessary', {
     fg=colors.dark5,
 })
