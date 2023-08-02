@@ -182,7 +182,7 @@ local function ascii_main()
     local str = ascii_headers(rand)
     return str, rand
 end
-local ascii_art, _ = ascii_main()
+local ascii_art = ascii_headers(8.5)
 starter.setup({
     evaluate_single = false,
     header = ascii_art,
