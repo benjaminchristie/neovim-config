@@ -50,6 +50,16 @@ local search_github = function ()
 end
 vim.keymap.set('n', '<A-g>', function() return search_github() end)
 vim.keymap.set('v', '<A-g>', function() return search_github() end)
+-- commentary improvements
+vim.keymap.set('n', 'gcc', function ()
+    local cursor_pos = vim.api.nvim_win_get_cursor(0)
+    local col_count_pre = vim.fn.strlen(vim.api.nvim_get_current_line())
+    vim.cmd("Commentary")
+    local col_count_post = vim.fn.strlen(vim.api.nvim_get_current_line())
+    local offset = col_count_post - col_count_pre
+    cursor_pos[2] = cursor_pos[2] + offset
+    vim.api.nvim_win_set_cursor(0, cursor_pos)
+end)
 -- git stuff
 vim.keymap.set('n', 'gM', ':Git mergetool -y ')
 vim.keymap.set('n', 'gV', ':Git difftool -y ')

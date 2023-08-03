@@ -7,8 +7,6 @@ else
     Plug 'benjaminchristie/csgithub.nvim', {'branch': 'master'}
     Plug 'benjaminchristie/nvim-colorizer.lua'
     Plug 'cljoly/telescope-repo.nvim'
-    Plug 'da-moon/telescope-toggleterm.nvim'
-    Plug 'debugloop/telescope-undo'
     Plug 'echasnovski/mini.starter'
     Plug 'ethanholz/nvim-lastplace'
     Plug 'folke/tokyonight.nvim'
@@ -17,7 +15,6 @@ else
     Plug 'mfussenegger/nvim-dap-python'
     Plug 'rcarriga/nvim-dap-ui'
     Plug 'LiadOz/nvim-dap-repl-highlights'
-    " Plug 'godlygeek/tabular'
     Plug 'hrsh7th/cmp-buffer'
     Plug 'hrsh7th/cmp-cmdline'
     Plug 'hrsh7th/cmp-nvim-lsp'
@@ -26,7 +23,6 @@ else
     Plug 'IMOKURI/line-number-interval.nvim'
     Plug 'kevinhwang91/nvim-ufo'
     Plug 'kevinhwang91/promise-async'
-    Plug 'kyazdani42/nvim-tree.lua'
     Plug 'kyazdani42/nvim-web-devicons'
     Plug 'kylechui/nvim-surround'
     Plug 'lambdalisue/suda.vim'
@@ -39,7 +35,6 @@ else
     Plug 'nvim-lua/popup.nvim'
     Plug 'ibhagwan/fzf-lua', {'branch': 'main'}
     Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build' }
-    Plug 'nvim-telescope/telescope-media-files.nvim'
     Plug 'nvim-telescope/telescope.nvim', { 'branch': '0.1.x' }
     Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
     Plug 'nvim-treesitter/nvim-treesitter-textobjects'
