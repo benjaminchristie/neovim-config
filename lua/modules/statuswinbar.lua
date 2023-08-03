@@ -145,18 +145,14 @@ local function trimmed_ts_statusline(opts)
 end
 
 function MyFunc()
+    local x = string.format("[%s] - %s", vim.bo.filetype, vim.fn.bufnr())
 	if not (hasvalue(force_inactive_buftypes, vim.bo.buftype) or hasvalue(force_inactive_filetypes, vim.bo.filetype)) then
-        local x = string.format("[%s] - %s", vim.bo.filetype, vim.fn.bufnr())
         local status = trimmed_ts_statusline()
-        if status == "" then
-            return x
+        if status ~= "" then
+            return x .. "%#StatusLineNC# : ̗̀➛ " .. status
         end
-        -- x = x .. "%#StatusLineNC# ➤ " .. trimmed_ts_statusline()
-        -- x = x .. "%#StatusLineNC# : ̗̀➛⌲ " .. trimmed_ts_statusline()
-        x = x .. "%#StatusLineNC# : ̗̀➛ " .. trimmed_ts_statusline()
-        return x
     end
-    return string.format("[%s]", vim.bo.filetype)
+    return x
 end
 vim.o.showtabline = 1
 vim.o.laststatus = 2
