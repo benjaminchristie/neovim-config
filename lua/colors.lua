@@ -43,6 +43,10 @@ vim.api.nvim_set_hl(0, "StatusLineNC", {
     fg = colors.fg_dark,
     bg = colors.bg_float,
 })
+vim.api.nvim_set_hl(0, 'MatchParen', {
+    fg=colors.orange,
+    bold = true,
+})
 vim.api.nvim_set_hl(0, 'DiagnosticUnnecessary', {
     fg=colors.dark5,
 })

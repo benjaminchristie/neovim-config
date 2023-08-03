@@ -28,6 +28,14 @@ vim.api.nvim_create_autocmd({"BufEnter"}, {
         vim.opt_local.filetype = "html"
     end
 })
+vim.api.nvim_create_augroup("MatchPairs", {clear = false})
+vim.api.nvim_create_autocmd({"BufEnter"}, {
+    group = "MatchPairs",
+    pattern = {"*.cpp", "*.h", "*.hpp", "*.c"},
+    callback = function ()
+        vim.bo.matchpairs = "(:),{:},[:],<:>,=:;,"
+    end
+})
 vim.api.nvim_create_augroup("ClangFormatGroup", {clear = false})
 vim.api.nvim_create_autocmd({"BufWritePre"}, {
     group = "ClangFormatGroup",

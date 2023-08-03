@@ -16,6 +16,7 @@ vim.o.autoindent = true
 vim.o.backup = false
 vim.o.ch = 1
 vim.o.clipboard = "unnamedplus"
+vim.o.cmdheight = 0
 vim.o.conceallevel = 0
 vim.o.cursorline = true
 vim.o.expandtab = true
@@ -26,7 +27,7 @@ vim.o.foldlevelstart = 99
 vim.o.hlsearch = true
 vim.o.hlsearch = true
 vim.o.incsearch = true
-vim.o.matchpairs = "(:),{:},[:],<:>,=:;,"
+vim.o.matchpairs = "(:),{:},[:],<:>"
 vim.o.mouse = "inv"
 vim.o.number = true
 vim.o.path = vim.o.path .. "**"
