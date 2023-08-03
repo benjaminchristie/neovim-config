@@ -1,4 +1,6 @@
 local gitsigns = require("gitsigns")
+local parsers = require("nvim-treesitter.parsers")
+local ts_utils = require("nvim-treesitter.ts_utils")
 local force_inactive_filetypes = {
   'NvimTree',
   'dbui',
@@ -95,6 +97,78 @@ vim.api.nvim_create_autocmd({"BufEnter", "DirChanged"}, {
 	end
     end
 })
+
+
+-- Trim spaces and opening brackets from end
+local transform_line = function(line)
+  return line:gsub("%s*[%[%(%{]*%s*$", "")
+end
+
+local function trimmed_ts_statusline(opts)
+  if not parsers.has_parser() then
+    return
+  end
+  local options = opts or {}
+  if type(opts) == "number" then
+    options = { indicator_size = opts }
+  end
+  local bufnr = options.bufnr or 0
+  local indicator_size = options.indicator_size or 100
+  local type_patterns = options.type_patterns or { "class", "function", "method", "struct"}
+  local transform_fn = options.transform_fn or transform_line
+  local separator = options.separator or " -> "
+  local allow_duplicates = options.allow_duplicates or false
+
+  local current_node = ts_utils.get_node_at_cursor()
+  if not current_node then
+    return ""
+  end
+
+  local lines = {}
+  local expr = current_node
+
+  while expr do
+    local line = ts_utils._get_line_for_node(expr, type_patterns, transform_fn, bufnr)
+    if line ~= "" then
+      if allow_duplicates or not vim.tbl_contains(lines, line) then
+        table.insert(lines, 1, line)
+      end
+    end
+    expr = expr:parent()
+  end
+
+  if lines[1] == nil then
+      return ""
+  end
+
+  return lines[1]
+end
+
+function MyFunc()
+	if not (hasvalue(force_inactive_buftypes, vim.bo.buftype) or hasvalue(force_inactive_filetypes, vim.bo.filetype)) then
+        local x = string.format("[%s] - %s", vim.bo.filetype, vim.fn.bufnr())
+        local status = trimmed_ts_statusline()
+        if status == "" then
+            return x
+        end
+        -- x = x .. "%#StatusLineNC# ➤ " .. trimmed_ts_statusline()
+        -- x = x .. "%#StatusLineNC# : ̗̀➛⌲ " .. trimmed_ts_statusline()
+        x = x .. "%#StatusLineNC# : ̗̀➛ " .. trimmed_ts_statusline()
+        return x
+    end
+    return string.format("[%s]", vim.bo.filetype)
+end
 vim.o.showtabline = 1
-vim.o.laststatus = 3
-vim.o.statusline = "%y - %l/%L - b%n"
+vim.o.laststatus = 2
+vim.api.nvim_create_autocmd({"BufEnter", "CursorMoved"}, {
+    pattern = "*",
+    callback = function ()
+        vim.opt_local.statusline = "%!v:lua.MyFunc()"
+    end
+})
+vim.api.nvim_create_autocmd({"BufLeave"}, {
+    pattern = "*",
+    callback = function ()
+        vim.opt_local.statusline = string.format("[%s] - %s", vim.bo.filetype, vim.fn.bufnr())
+    end
+})
