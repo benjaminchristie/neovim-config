@@ -26,7 +26,6 @@ vim.o.foldlevelstart = 99
 vim.o.hlsearch = true
 vim.o.hlsearch = true
 vim.o.incsearch = true
-vim.o.ls = 0
 vim.o.mouse = "inv"
 vim.o.number = true
 vim.o.path = vim.o.path .. "**"
