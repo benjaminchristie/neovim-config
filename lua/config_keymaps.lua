@@ -51,7 +51,7 @@ end
 vim.keymap.set('n', '<A-g>', function() return search_github() end)
 vim.keymap.set('v', '<A-g>', function() return search_github() end)
 -- commentary improvements
-vim.keymap.set('n', 'gcc', function ()
+vim.keymap.set('n', '<C-_>', function ()
     local cursor_pos = vim.api.nvim_win_get_cursor(0)
     local col_count_pre = vim.fn.strlen(vim.api.nvim_get_current_line())
     vim.cmd("Commentary")

@@ -27,10 +27,6 @@ vim.keymap.set('n', '<C-p><C-g><C-g>', function() return builtins.commands() end
 vim.keymap.set('n', '<C-p><C-g><C-d>', function() return builtins.git_commits()  end)
 vim.keymap.set('n', '<C-p><C-1>', function() return extensions.perfanno.actions.hottest_callers() end)
 vim.keymap.set('n', '<C-p><C-0>', function() return extensions.perfanno.actions.hottest_callees() end)
-vim.cmd([[
-    autocmd User TelescopePreviewerLoaded setlocal wrap
-]])
-
 -- refactoring, tmp
 --
 -- prompt for a refactor to apply when the remap is triggered

@@ -1,16 +1,8 @@
--- vim.api.nvim_create_augroup("fzf", {clear = false})
--- vim.api.nvim_create_autocmd({"BufEnter"}, {
---     group = "fzf",
---     pattern = "*",
---     callback = function ()
---         if vim.bo.filetype == "fzf" then
---             vim.fn.input("In!")
---             vim.api.nvim_buf_set_keymap(0, 't', '<esc>', [[<C-\><C-n>]], {})
---             vim.api.nvim_buf_set_keymap(0, 'n', 'j', '<Down>', {})
---             vim.api.nvim_buf_set_keymap(0, 'n', 'k', '<Up>', {})
---         end
---     end
--- })
+vim.api.nvim_create_augroup("FormatTelescope", {clear = false})
+vim.api.nvim_create_autocmd('User', {
+    pattern = "TelescopePreviewerLoaded",
+    command = "setlocal wrap",
+})
 vim.api.nvim_create_augroup("FormatGroup", {clear = false})
 vim.api.nvim_create_autocmd({"BufEnter"}, {
     group = "FormatGroup",
