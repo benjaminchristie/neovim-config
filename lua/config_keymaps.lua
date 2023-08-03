@@ -40,6 +40,7 @@ vim.keymap.set('v', '<A-g>', function() return search_github() end)
 vim.keymap.set('n', 'gM', ':Git mergetool -y ')
 vim.keymap.set('n', 'gV', ':Git difftool -y ')
 vim.keymap.set('n', 'gR', ':Git rebase --interactive -i HEAD~')
+
 IsGitsignsToggled = false
 vim.keymap.set('n', 'gst', function()
     IsGitSignsToggled = not IsGitSignsToggled
@@ -48,6 +49,12 @@ vim.keymap.set('n', 'gst', function()
     gitsigns.toggle_deleted(IsGitSignsToggled)
     gitsigns.toggle_numhl(IsGitSignsToggled)
 end)
+
+vim.keymap.set('n', 'gss', gitsigns.stage_hunk)
+-- equivalent to Gwrite
+vim.keymap.set('n', 'gsa', gitsigns.stage_buffer)
+-- equivalent to Gread
+vim.keymap.set('n', 'gsr', gitsigns.reset_buffer)
 
 -- cd to current working file
 vim.keymap.set('n', '<A-c>', function ()
