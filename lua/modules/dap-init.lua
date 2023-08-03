@@ -52,25 +52,6 @@ dap.configurations = {
       },
     },
     c = dap.configurations.cpp,
-    python = {
-        {
-            type = 'python';
-            repl_lang = "python";
-            request = 'launch';
-            name = 'Launch file';
-            program = "${file}";
-            pythonPath = function()
-                local cwd = vim.fn.getcwd()
-                if vim.fn.executable(cwd .. '/venv/bin/python') == 1 then
-                    return cwd .. '/venv/bin/python'
-                elseif vim.fn.executable(cwd .. '/.venv/bin/python') == 1 then
-                    return cwd .. '/.venv/bin/python'
-                else
-                    return '/usr/bin/python'
-                end
-            end;
-        }
-    },
 }
 dap.adapters = {
     cppdbg = {
@@ -102,7 +83,7 @@ dap.adapters = {
       end
     end
 }
-local dap_python = require('dap-python').setup('/home/benjamin/.pyenv/versions/dbg/bin/python')
+require('dap-python').setup('/home/benjamin/.pyenv/versions/dbg/bin/python')
 dapui.setup()
 dap.listeners.after.event_initialized["dapui_config"] = function()
   dapui.open()
@@ -113,5 +94,4 @@ end
 dap.listeners.before.event_exited["dapui_config"] = function()
   dapui.close()
 end
-
 

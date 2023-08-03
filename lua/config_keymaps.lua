@@ -1,5 +1,6 @@
 local gitsigns = require("gitsigns")
 local dap = require("dap")
+local dapui = require("dapui")
 
 vim.keymap.set('n', '<Left>', 'gT')
 vim.keymap.set('n', '<Right>', 'gt')
@@ -26,6 +27,10 @@ vim.keymap.set('n', 'gh', vim.diagnostic.setloclist, opts)
 --- DAP
 vim.keymap.set('n', '<A-d><A-r>', dap.restart)
 vim.keymap.set('n', '<A-d><A-d>', dap.continue)
+vim.keymap.set('n', '<A-d><A-q>', function ()
+    dap.close()
+    dapui.close()
+end)
 vim.keymap.set('n', '<A-d><A-l>', dap.list_breakpoints)
 vim.keymap.set('n', '<A-d><A-b>', dap.toggle_breakpoint)
 vim.keymap.set('n', '<A-d><A-p>', dap.pause)
