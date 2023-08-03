@@ -40,17 +40,13 @@ vim.keymap.set('v', '<A-g>', function() return search_github() end)
 vim.keymap.set('n', 'gM', ':Git mergetool -y ')
 vim.keymap.set('n', 'gV', ':Git difftool -y ')
 vim.keymap.set('n', 'gR', ':Git rebase --interactive -i HEAD~')
+IsGitsignsToggled = false
 vim.keymap.set('n', 'gst', function()
-    gitsigns.toggle_current_line_blame(true)
-    gitsigns.toggle_linehl(true)
-    gitsigns.toggle_deleted(true)
-    gitsigns.toggle_numhl(true)
-end)
-vim.keymap.set('n', 'gsf', function()
-    gitsigns.toggle_current_line_blame(false)
-    gitsigns.toggle_linehl(false)
-    gitsigns.toggle_deleted(false)
-    gitsigns.toggle_numhl(false)
+    IsGitSignsToggled = not IsGitSignsToggled
+    gitsigns.toggle_current_line_blame(IsGitSignsToggled)
+    gitsigns.toggle_linehl(IsGitSignsToggled)
+    gitsigns.toggle_deleted(IsGitSignsToggled)
+    gitsigns.toggle_numhl(IsGitSignsToggled)
 end)
 
 -- cd to current working file

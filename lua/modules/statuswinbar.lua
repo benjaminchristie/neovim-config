@@ -113,10 +113,8 @@ local function trimmed_ts_statusline(opts)
     options = { indicator_size = opts }
   end
   local bufnr = options.bufnr or 0
-  local indicator_size = options.indicator_size or 100
   local type_patterns = options.type_patterns or { "class", "function", "method", "struct"}
   local transform_fn = options.transform_fn or transform_line
-  local separator = options.separator or " -> "
   local allow_duplicates = options.allow_duplicates or false
 
   local current_node = ts_utils.get_node_at_cursor()
@@ -143,12 +141,11 @@ local function trimmed_ts_statusline(opts)
 
   return lines[1]
 end
-
 function MyFunc()
     local x = string.format("[%s] - %s", vim.bo.filetype, vim.fn.bufnr())
 	if not (hasvalue(force_inactive_buftypes, vim.bo.buftype) or hasvalue(force_inactive_filetypes, vim.bo.filetype)) then
         local status = trimmed_ts_statusline()
-        if status ~= "" then
+        if status ~= "" and status ~= nil then
             return x .. "%#StatusLineNC# : ̗̀➛ " .. status
         end
     end
