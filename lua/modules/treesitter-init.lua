@@ -1,8 +1,10 @@
+require('nvim-dap-repl-highlights').setup()
 require("nvim-treesitter.configs").setup({
     auto_install = true,
     highlight = {
         enable = true
     },
+    ensure_installed = { 'dap_repl' },
     incremental_selection = {
         enable = true,
         keymaps = {

@@ -152,7 +152,7 @@ function MyFunc()
     return x
 end
 vim.o.showtabline = 1
-vim.o.laststatus = 2
+vim.o.laststatus = 3
 vim.api.nvim_create_autocmd({"BufEnter", "CursorMoved"}, {
     pattern = "*",
     callback = function ()

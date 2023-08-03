@@ -1,4 +1,5 @@
 local gitsigns = require("gitsigns")
+local dap = require("dap")
 
 vim.keymap.set('n', '<Left>', 'gT')
 vim.keymap.set('n', '<Right>', 'gt')
@@ -22,6 +23,14 @@ vim.keymap.set('n', '<C-h><C-q>', vim.diagnostic.open_float, opts)
 vim.keymap.set('n', '<C-k>', vim.diagnostic.goto_prev, opts)
 vim.keymap.set('n', '<C-j>', vim.diagnostic.goto_next, opts)
 vim.keymap.set('n', 'gh', vim.diagnostic.setloclist, opts)
+--- DAP
+vim.keymap.set('n', '<A-d><A-r>', dap.restart)
+vim.keymap.set('n', '<A-d><A-d>', dap.continue)
+vim.keymap.set('n', '<A-d><A-l>', dap.list_breakpoints)
+vim.keymap.set('n', '<A-d><A-b>', dap.toggle_breakpoint)
+vim.keymap.set('n', '<A-d><A-p>', dap.pause)
+vim.keymap.set('n', '<A-d><A-n>', dap.step_over)
+vim.keymap.set('n', '<A-d><A-s>', dap.step_into)
 
 local search_github = function ()
     local csgithub = require("csgithub")

@@ -1,4 +1,9 @@
   -- Setup lspconfig.
+  -- neodev must be called before lspconfig
+require("neodev").setup({
+  -- add any options here, or leave empty to use the default settings
+    library = { plugins = { "nvim-dap-ui" }, types = true },
+})
 local lspconfig = require("lspconfig")
 local capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities())
 capabilities.textDocument.completion.completionItem.snippetSupport = true
@@ -108,6 +113,9 @@ lspconfig.bashls.setup{
 lspconfig.lua_ls.setup {
   settings = {
     Lua = {
+      completion = {
+        callSnippet = "Replace"
+      },
       runtime = {
         -- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
         version = 'LuaJIT',
