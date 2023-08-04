@@ -1,7 +1,6 @@
 require("modules/cmp-init")
 require("modules/dap-init")
 require("modules/fzf")
-require("modules/gdb")
 require("modules/lsp-init")
 require("modules/starter")
 require("modules/statuswinbar")

@@ -29,7 +29,7 @@ fzf.setup({
     },
 })
 
-vim.keymap.set('n', '<C-p><C-p>', function() return fzf.files({cmd = "find -type f | rg -v '.git' | rg -v '.cache' "}) end )
+vim.keymap.set('n', '<C-p><C-p>', function() return fzf.files({cmd = "find -type f | rg -v '.git' | rg -v '.cache' | rg -v 'bin/' | rg -v 'logs/' "}) end )
 vim.keymap.set('n', '<C-p><C-f>', function() return fzf.live_grep() end)
 vim.keymap.set('n', '#',          function() return fzf.grep_cword() end)
 vim.keymap.set('n', '<C-p><C-d>', function() return fzf.lsp_document_symbols() end)

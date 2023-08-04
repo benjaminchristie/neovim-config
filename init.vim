@@ -40,7 +40,6 @@ else
     Plug 'nvim-treesitter/nvim-treesitter-textobjects'
     Plug 'rhysd/vim-clang-format'
     Plug 'saadparwaiz1/cmp_luasnip'
-    Plug 'sakhnik/nvim-gdb', {'do': ':!./install.sh'}
     Plug 'simrat39/rust-tools.nvim'
     Plug 'stevearc/oil.nvim'
     Plug 'Shatur/neovim-tasks'

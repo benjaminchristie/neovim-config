@@ -3,6 +3,7 @@ local parsers = require("nvim-treesitter.parsers")
 local ts_utils = require("nvim-treesitter.ts_utils")
 local force_inactive_filetypes = {
   'NvimTree',
+  'dap-repl',
   'dbui',
   'fugitive',
   'fugitiveblame',
@@ -23,6 +24,7 @@ local force_inactive_buftypes = {
   'harpoon-menu',
   'nofile',
   'nowrite',
+  'prompt',
   'quickfix',
   'terminal',
   'toggleterm',

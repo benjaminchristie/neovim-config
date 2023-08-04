@@ -52,6 +52,7 @@ dap.configurations = {
       },
     },
     c = dap.configurations.cpp,
+    rust = dap.configurations.cpp,
 }
 dap.adapters = {
     cppdbg = {
@@ -84,7 +85,37 @@ dap.adapters = {
     end
 }
 require('dap-python').setup('/home/benjamin/.pyenv/versions/dbg/bin/python')
-dapui.setup()
+dapui.setup({
+    expand_lines = false,
+        layouts = { {
+            elements = { {
+                id = "stacks",
+                size = 0.10
+              }, {
+                id = "breakpoints",
+                size = 0.10
+              }, {
+                id = "scopes",
+                size = 0.40
+              }, {
+                id = "watches",
+                size = 0.40
+              } },
+            position = "left",
+            size = 60
+            }, {
+            elements = { {
+                id = "repl",
+                size = 0.5
+              }, {
+                id = "console",
+                size = 0.5
+              } },
+            position = "bottom",
+            size = 15
+            },
+        },
+})
 dap.listeners.after.event_initialized["dapui_config"] = function()
   dapui.open()
 end
