@@ -1,3 +1,16 @@
+--- menus
+vim.cmd([[
+aunmenu PopUp
+vnoremenu PopUp.Cut                         "+x
+vnoremenu PopUp.Copy                        "+y
+vnoremenu PopUp.Paste                       "+P
+nnoremenu PopUp.Go\ To\ Definition          <Cmd>lua vim.fn.feedkeys("gd")<CR>
+nnoremenu PopUp.Go\ To\ References          <Cmd>lua vim.fn.feedkeys("gr")<CR>
+nnoremenu PopUp.Toggle\ Breakpoint          <Cmd>lua vim.fn.feedkeys("<A-d><A-b>")<CR>
+nnoremenu PopUp.Open\ Debugger              <Cmd>lua require("dap").continue()<CR>
+anoremenu PopUp.Exit                        <Nop>
+]])
+--- autocmds
 vim.api.nvim_create_augroup("FormatTelescope", {clear = false})
 vim.api.nvim_create_autocmd('User', {
     pattern = "TelescopePreviewerLoaded",

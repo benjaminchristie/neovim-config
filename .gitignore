@@ -5,3 +5,4 @@ lua/plugins/nvim-make
 logs/
 colors/
 spell/
+bin/
