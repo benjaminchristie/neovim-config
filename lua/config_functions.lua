@@ -70,4 +70,22 @@ vim.api.nvim_create_user_command("Lex", function ()
     vim.api.nvim_win_set_width(0, WIDTH)
 end, {})
 
-
+vim.api.nvim_create_user_command("Build", function ()
+    local build_tools = {
+        "make ",
+        "cmake --build build ",
+        "export TERM=dumb && catkin build --no-color --no-status ",
+    }
+    local prompt = ""
+    for i=1,#build_tools do 
+        prompt = prompt .. i .. " : " .. build_tools[i] .. "\n"
+    end
+    prompt = prompt .. "Enter your choice : "
+    local which_compiler = vim.fn.input(prompt)
+    local idx = tonumber(which_compiler)
+    if idx == nil then 
+        return
+    end
+    vim.fn.feedkeys(":Dispatch " .. build_tools[idx])
+    return
+end, {})
