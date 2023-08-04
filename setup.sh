@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # NVIM install
-mkdir -p ~/.config/nvim/bin/
+mkdir -p ~/.config/nvim/bin/vscode-cpptools/
 mkdir -p ~/.local/bin/
 git clone https://github.com/neovim/neovim.git /tmp/neovim
 cd /tmp/neovim/ && make CMAKE_BUILD_TYPE=RelWithDebInfo
