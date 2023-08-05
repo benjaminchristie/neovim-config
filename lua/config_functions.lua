@@ -77,15 +77,43 @@ vim.api.nvim_create_user_command("Build", function ()
         "export TERM=dumb && catkin build --no-color --no-status ",
     }
     local prompt = ""
-    for i=1,#build_tools do 
+    for i=1,#build_tools do
         prompt = prompt .. i .. " : " .. build_tools[i] .. "\n"
     end
     prompt = prompt .. "Enter your choice : "
     local which_compiler = vim.fn.input(prompt)
     local idx = tonumber(which_compiler)
-    if idx == nil then 
+    if idx == nil then
         return
     end
     vim.fn.feedkeys(":Dispatch " .. build_tools[idx])
-    return
 end, {})
+
+--- used for large files or when treesitter + lsp is slow
+local lazy_load = function ()
+    vim.o.syntax = "off"
+    vim.lsp.stop_client(vim.lsp.get_clients())
+    pcall(vim.treesitter.stop)
+    vim.fn.timer_start(1000, function ()
+        vim.o.syntax = "on"
+        vim.cmd("LspStart")
+        pcall(vim.treesitter.start)
+    end)
+end
+vim.api.nvim_create_user_command("LazyLoad", lazy_load, {})
+vim.api.nvim_create_augroup("LazyLoadLargeFiles", {clear = true})
+vim.api.nvim_create_autocmd({"BufReadPost"}, {
+    group = "LazyLoadLargeFiles",
+    pattern = "*",
+    callback = function ()
+        if vim.fn.getfsize(vim.api.nvim_buf_get_name(0)) > 65536 then
+            print("Lazy loading file...")
+            lazy_load()
+        else
+            vim.o.syntax = "on"
+            pcall(vim.treesitter.start)
+            vim.cmd("LspStart")
+        end
+    end
+})
+

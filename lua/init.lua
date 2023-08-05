@@ -1,4 +1,3 @@
-vim.loader.enable()
 require("config")
 require("colors")
 require("options")

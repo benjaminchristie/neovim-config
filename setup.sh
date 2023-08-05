@@ -51,11 +51,16 @@ install_lsps() {
         echo 'exec "$HOME/.config/nvim/bin/lua_ls/bin/lua-language-server" "$@"' > $HOME/.local/bin/lua-language-server && \
         chmod +x $HOME/.local/bin/lua-language-server
     # bash-language-server
-    sudo npm i -g bash-language-server
-    # pyright
-    pip install --ignore-installed --break-system-packages pyright
-    # cmake
-    pip install --ignore-installed --break-system-packages cmake-language-server
+    curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash && \
+        source $HOME/.bashrc && \
+        nvm install 18 && \
+        nvm use 18 && \
+        sudo npm i -g bash-language-server
+    # pyright, cmake-language-server
+    if ! pip install --ignore-installed pyright cmake-language-server
+    then
+        pip install --ignore-installed --break-system-packages pyright cmake-language-server
+    fi
 } 
 # unused, since FZF is included in my vimplug configuration
 install_fzf() {
@@ -73,11 +78,16 @@ install_vimplug() {
 }
 install_linters() {
     # black-macchiato
-    pip install --ignore-installed --break-system-packages black-macchiato
+    if ! pip install --ignore-installed black-macchiato
+    then
+        pip install --ignore-installed --break-system-packages black-macchiato
+    fi
 }
 
 read -p "USE AT YOUR OWN RISK: Ensure you have paru or apt configured and press any button to continue: " dummy_var
 mkdir -p ~/.local/bin/
+
+print_style "Installing neovim dependencies: \n"
 
 ## install dependencies
 if [ -x "$(command -v paru)" ]
@@ -108,4 +118,4 @@ PATH=$HOME/.local/bin:$PATH
 FZF_DEFAULT_COMMAND='rg --hidden -l ""'
 echo "export FZF_DEFAULT_COMMAND='rg --hidden -l \"\"'" >> $HOME/.bashrc
 
-printf "\n\nNeovim installation is complete! Note that some LSPs may not be installed.\n"
+print_style "\n\nNeovim installation is complete! Note that some LSPs may not be installed. You may need to restart your shell for changes to take effect.\n"

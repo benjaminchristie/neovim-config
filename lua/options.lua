@@ -43,7 +43,7 @@ vim.o.termguicolors = true
 vim.o.ts = 4
 vim.o.undofile = true
 vim.o.wildmenu = true
-vim.o.wrap = true
+vim.o.wrap = false
 vim.opt.list = false
 vim.opt.listchars = { eol="", trail = "▓", extends = ''}
 vim.opt.fillchars = ""

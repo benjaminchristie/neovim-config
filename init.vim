@@ -1,3 +1,4 @@
+lua vim.loader.enable()
 if exists('g:vscode')
     " VSCode extension
     lua require("vscode-init")

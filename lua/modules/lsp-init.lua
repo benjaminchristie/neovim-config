@@ -61,11 +61,13 @@ lspconfig.cmake.setup{
     on_attach = on_attach,
     flags = lsp_flags,
     capabilities = capabilities,
+    autostart = false,
 }
 lspconfig.pyright.setup{
     on_attach = on_attach,
     flags = lsp_flags,
     capabilities = capabilities,
+    autostart = false,
 }
 -- lspconfig.pylsp.setup{
 --     on_attach = function(client)
@@ -94,23 +96,31 @@ lspconfig['tsserver'].setup{
     on_attach = on_attach,
     flags = lsp_flags,
     capabilities = capabilities,
+    autostart = false,
 }
 lspconfig['gopls'].setup{
     on_attach = on_attach,
     flags = lsp_flags,
     capabilities = capabilities,
+    autostart = false,
 }
 lspconfig['texlab'].setup{
     on_attach = on_attach,
     flags = lsp_flags,
     capabilities = capabilities,
+    autostart = false,
 }
 lspconfig.bashls.setup{
     on_attach = on_attach,
     flags = lsp_flags,
     capabilities = capabilities,
+    autostart = false,
 }
 lspconfig.lua_ls.setup {
+  on_attach = on_attach,
+  flags = lsp_flags,
+  capabilities = capabilities,
+  autostart = false,
   settings = {
     Lua = {
       completion = {
@@ -137,27 +147,30 @@ lspconfig.lua_ls.setup {
       },
     },
   },
-  on_attach = on_attach,
 }
 lspconfig.html.setup{
     on_attach = on_attach,
     flags = lsp_flags,
     capabilities = capabilities,
+    autostart = false,
 }
 lspconfig.cssls.setup{
     on_attach = on_attach,
     flags = lsp_flags,
     capabilities = capabilities,
+    autostart = false,
 }
 lspconfig.dockerls.setup{
     on_attach = on_attach,
     flags = lsp_flags,
     capabilities = capabilities,
+    autostart = false,
 }
 lspconfig.marksman.setup{
     on_attach = on_attach,
     flags = lsp_flags,
     capabilities = capabilities,
+    autostart = false,
 }
 local function get_probe_dir(root_dir)
   local project_root = require('lspconfig/util').find_node_modules_ancestor(root_dir)
@@ -169,6 +182,7 @@ lspconfig.angularls.setup{
     on_attach = on_attach,
     flags = lsp_flags,
     capabilities = capabilities,
+    autostart = false,
     cmd = {
         'angularls',
         '--stdio',
@@ -182,12 +196,14 @@ lspconfig.asm_lsp.setup{
     on_attach = on_attach,
     flags = lsp_flags,
     capabilities = capabilities,
+    autostart = false,
 }
 require("rust-tools").setup({
   server = {
       on_attach = on_attach,
       flags = lsp_flags,
       capabilities = capabilities,
+    autostart = false,
   }
 })
 
@@ -209,7 +225,7 @@ if found then
         on_attach = on_attach,
         flags = lsp_flags,
         capabilities = capabilities,
-        autostart = true,
+        autostart = false,
         cmd = {
             "clangd",
             "--background-index",
@@ -227,7 +243,7 @@ else
         on_attach = on_attach,
         flags = lsp_flags,
         capabilities = capabilities,
-        autostart = true,
+        autostart = false,
         cmd = {
             "clangd",
             "--background-index",
