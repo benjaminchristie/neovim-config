@@ -111,8 +111,8 @@ vim.api.nvim_create_autocmd({"BufReadPost"}, {
             lazy_load()
         else
             vim.o.syntax = "on"
-            pcall(vim.treesitter.start)
             vim.cmd("LspStart")
+            pcall(vim.treesitter.start)
         end
     end
 })

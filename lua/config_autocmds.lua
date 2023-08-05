@@ -47,7 +47,7 @@ vim.api.nvim_create_autocmd({"BufWritePre"}, {
     group = "ClangFormatGroup",
     pattern = {"*.cpp", "*.h", "*.hpp", "*.c"},
     callback = function()
-        vim.cmd("ClangFormat")
+        vim.lsp.buf.format()
     end
 })
 if vim.fn.executable("black-macchiato") then
