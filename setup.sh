@@ -19,6 +19,7 @@ cp /tmp/fzf/bin/fzf ~/.local/bin/
 cd /tmp && wget https://github.com/microsoft/vscode-cpptools/releases/download/v1.16.3/cpptools-linux.vsix 
 unzip cpptools-linux.vsix
 cp /tmp/extension/debugAdapters/bin/* ~/.config/nvim/bin/vscode-cpptools/ 
+chmod +x ~/.config/nvim/bin/vscode-cpptools/OpenDebugAD7
 # debugpy: python
 mkdir ~/.config/nvim/bin/virtualenvs
 cd ~/.config/nvim/bin/virtualenvs/ && python -m venv debugpy && debugpy/bin/python -m pip install debugpy

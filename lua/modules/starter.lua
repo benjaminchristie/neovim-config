@@ -35,7 +35,7 @@ local extra_items = function()
       {action = 'FzfLua help_tags',          name = 'Help',                      section = 'Actions'},
       {action = 'FzfLua oldfiles',           name = 'History',                   section = 'Actions'},
       {action = cached_repos,                name = 'Projects',                  section = 'Actions'},
-      {action = 'FzfLua files',              name = 'Workspace files',           section = 'Actions'},
+      {action = 'FzfLua git_files',          name = 'Workspace files',           section = 'Actions'},
       {action = difftool,                    name = 'Diff tool',                 section = 'Actions'},
       {action = mergetool,                   name = 'Merge tool',                section = 'Actions'},
       {action = statustool,                  name = 'Status',                    section = 'Actions'},

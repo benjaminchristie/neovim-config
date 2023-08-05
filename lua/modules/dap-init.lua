@@ -75,7 +75,7 @@ dap.adapters = {
       else
         cb({
           type = 'executable',
-          command = '/home/benjamin/.pyenv/versions/dbg/bin/python',
+          command = '/home/benjamin/.config/nvim/bin/virtualenvs/debugpy/bin/python',
           args = { '-m', 'debugpy.adapter' },
           options = {
             source_filetype = 'python',
@@ -84,7 +84,7 @@ dap.adapters = {
       end
     end
 }
-require('dap-python').setup('/home/benjamin/.pyenv/versions/dbg/bin/python')
+require('dap-python').setup('/home/benjamin/.config/nvim/bin/virtualenvs/debugpy/bin/python')
 dapui.setup({
     expand_lines = false,
         layouts = { {
