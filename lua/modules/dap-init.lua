@@ -85,6 +85,22 @@ dap.adapters = {
     end
 }
 require('dap-python').setup('/home/benjamin/.config/nvim/bin/virtualenvs/debugpy/bin/python')
+require('dap-go').setup()
+require("nvim-dap-virtual-text").setup({
+    enabled = false,
+    enabled_commands = true,
+    highlight_changed_variables = true,
+    highlight_new_as_changed = true,
+    show_stop_reason = true,
+    commented = false,
+    only_first_definition = false,
+    all_references = false,
+    clear_on_continue = false,
+    virt_text_pos = "eol",
+})
+require('persistent-breakpoints').setup{
+	load_breakpoints_event = { "BufReadPost" }
+}
 dapui.setup({
     expand_lines = false,
         layouts = { {
@@ -112,7 +128,7 @@ dapui.setup({
                 size = 0.5
               } },
             position = "bottom",
-            size = 15
+            size = 8
             },
         },
 })
