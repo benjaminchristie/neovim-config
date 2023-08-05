@@ -53,6 +53,7 @@ install_lsps() {
     # bash-language-server
     curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash && \
         source $HOME/.bashrc && \
+        PATH=$HOME/.local/bin:$PATH && \
         nvm install 18 && \
         nvm use 18 && \
         sudo npm i -g bash-language-server
@@ -96,7 +97,7 @@ then
 elif [ -x "$(command -v apt)" ]
 then
     sudo apt update -yqq && \
-        sudo apt install -y --no-install-recommends python3-pip gcc gdb clang git sudo curl wget unzip tar ninja-build build-essential cmake gettext npm cargo python-is-python3 python3-venv xclip ripgrep
+        sudo apt install -y --no-install-recommends python3-pip gcc gdb clang git sudo curl wget unzip tar ninja-build build-essential cmake gettext npm cargo python-is-python3 python3-venv xclip ripgrep clang-format
 else
     echo "paru or apt is not configured"
     return 1

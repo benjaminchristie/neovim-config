@@ -20,11 +20,22 @@ vim.keymap.set('n', '<C-d>', '<C-d>zz')
 vim.keymap.set('n', '<C-u>', '<C-u>zz')
 vim.keymap.set('n', '}', '}zz')
 vim.keymap.set('n', '{', '{zz')
-local opts = { noremap=true, silent=true }
-vim.keymap.set('n', '<C-h><C-q>', vim.diagnostic.open_float, opts)
-vim.keymap.set('n', '<C-k>', vim.diagnostic.goto_prev, opts)
-vim.keymap.set('n', '<C-j>', vim.diagnostic.goto_next, opts)
-vim.keymap.set('n', 'gh', vim.diagnostic.setloclist, opts)
+
+vim.keymap.set('n', '<C-h><C-q>', vim.diagnostic.open_float)
+vim.keymap.set('n', '<C-k>', vim.diagnostic.goto_prev)
+vim.keymap.set('n', '<C-j>', vim.diagnostic.goto_next)
+vim.keymap.set('n', 'gh', vim.diagnostic.setloclist)
+
+vim.api.nvim_set_option_value('omnifunc', 'v:lua.vim.lsp.omnifunc', {})
+
+vim.keymap.set('n', 'gd', vim.lsp.buf.definition)
+vim.keymap.set('n', '<space>', vim.lsp.buf.hover)
+vim.keymap.set('n', 'gi', vim.lsp.buf.implementation)
+vim.keymap.set('n', '<C-h><C-g>', vim.lsp.buf.signature_help)
+vim.keymap.set('n', '<C-h><C-d>', vim.lsp.buf.type_definition)
+vim.keymap.set('n', '<C-h><C-r><C-m>', vim.lsp.buf.rename)
+vim.keymap.set('n', '<C-h><C-e>', vim.lsp.buf.code_action)
+vim.keymap.set('n', 'gr', vim.lsp.buf.references)
 --- DAP
 vim.keymap.set('n', '<A-d><A-v>', function ()
     vim.cmd("DapVirtualTextEnable")
