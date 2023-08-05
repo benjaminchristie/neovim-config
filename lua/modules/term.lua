@@ -11,6 +11,8 @@ vim.api.nvim_create_autocmd({"TermOpen"}, {
     pattern = "term://*",
     callback = function ()
         vim.api.nvim_buf_set_keymap(0, 't', '<esc>', [[<C-\><C-n>]], {noremap = true})
+        vim.opt_local.number = false
+        vim.opt_local.relativenumber = false
     end
 })
 
