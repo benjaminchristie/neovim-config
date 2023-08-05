@@ -236,6 +236,7 @@ else
             "--cross-file-rename",
             "--header-insertion=iwyu",
             "--suggest-missing-includes",
+            "--compile-commands-dir='.'"
             }
         }
     )
