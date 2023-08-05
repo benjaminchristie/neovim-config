@@ -45,10 +45,9 @@ vim.api.nvim_create_autocmd({ "BufEnter" }, {
 vim.api.nvim_create_augroup("LspFormatting", { clear = true })
 vim.api.nvim_create_autocmd({ "BufWritePre" }, {
     group = "LspFormatting",
-    pattern = "*",
-    callback = function()
-        pcall(vim.lsp.buf.format)
-    end
+    pattern = {"*.cpp", "*.h", "*.cxx", "*.hpp"},
+    command = "ClangFormat",
+
 })
 if vim.fn.executable("black-macchiato") then
     local params = {

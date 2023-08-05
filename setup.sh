@@ -93,7 +93,7 @@ print_style "Installing neovim dependencies: \n"
 ## install dependencies
 if [ -x "$(command -v paru)" ]
 then
-    paru -S --noconfirm bash-language-server glow bat clang clangd cmake-language-server dockerfile-language-server gcc gdb git gopls python-pip cargo fzf ninja ripgrep
+    paru -S --noconfirm bash-language-server glow bat clang cmake-language-server dockerfile-language-server gcc gdb git gopls python-pip cargo fzf ninja ripgrep
 elif [ -x "$(command -v apt)" ]
 then
     sudo apt update -yqq && \

@@ -63,6 +63,8 @@ else
     Plug 'tpope/vim-commentary'
     Plug 'tpope/vim-dispatch', { 'on': 'Dispatch' }
     Plug 'tpope/vim-eunuch'
+    Plug 'rhysd/vim-clang-format', { 'on': 'ClangFormat', 'for': 'cpp' }
+    Plug 'chrisgrieser/nvim-early-retirement'
 
     " Accessory
     Plug 'benjaminchristie/nvim-colorizer.lua'

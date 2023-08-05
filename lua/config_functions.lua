@@ -107,7 +107,7 @@ vim.api.nvim_create_autocmd({ "BufReadPost" }, {
     pattern = "*",
     callback = function()
         if vim.fn.getfsize(vim.api.nvim_buf_get_name(0)) > 65536 then
-            print("Lazy loading file...")
+            vim.notify("Lazy loading file...")
             lazy_load()
         else
             vim.o.syntax = "on"

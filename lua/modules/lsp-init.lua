@@ -120,7 +120,7 @@ lspconfig.lua_ls.setup {
     on_attach = on_attach,
     flags = lsp_flags,
     capabilities = capabilities,
-    autostart = false,
+    autostart = true,
     settings = {
         Lua = {
             completion = {
@@ -215,6 +215,7 @@ local function find_cc_json(fn)
     if e ~= nil then
         project_path = string.sub(fn, 0, e)
         project_build_path = string.gsub(project_path, "src", "build", 1)
+---@diagnostic disable-next-line: cast-local-type
         found = vim.fn.filereadable(project_build_path .. "compile_commands.json")
     end
     return project_build_path, found
