@@ -1,3 +1,4 @@
+vim.g.dispatch_no_maps = 1
 vim.g.editorconfig_trim_trailing_whitespace = true
 vim.g.line_number_interval_enable_at_startup = 1
 vim.g.loaded_2html_plugin = 0

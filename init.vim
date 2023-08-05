@@ -48,6 +48,7 @@ else
     Plug 'ThePrimeagen/refactoring.nvim'
     Plug 'tpope/vim-commentary'
     Plug 'tpope/vim-fugitive'
+    Plug 'tpope/vim-dispatch'
     Plug 'windwp/nvim-autopairs'
     Plug 'windwp/nvim-ts-autotag'
     call plug#end()
