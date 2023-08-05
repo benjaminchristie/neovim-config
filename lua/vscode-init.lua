@@ -15,11 +15,12 @@ vim.keymap.set('n', '<Up>', '<C-b>')
 vim.keymap.set('n', '<Down>', '<C-f>')
 vim.keymap.set('n', '<Left>', 'gT')
 vim.keymap.set('n', '<Right>', 'gt')
-vim.keymap.set('n', '\\s', function ()
+vim.keymap.set('n', '\\s', function()
     local word = vim.fn.expand("<cword>")
     local line_num = vim.api.nvim_win_get_cursor(0)[1]
     local change_to = vim.fn.input("Change " .. word .. " to : ")
     vim.cmd(':%s/' .. word .. "/" .. change_to .. "/g")
     vim.cmd(":" .. line_num)
-    end
+end
 )
+

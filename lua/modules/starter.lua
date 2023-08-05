@@ -1,64 +1,64 @@
 local starter = require('mini.starter')
 
 local function cached_repos()
-    return require("telescope").extensions.repo.cached_list{file_ignore_patterns={
+    return require("telescope").extensions.repo.cached_list { file_ignore_patterns = {
         "/%.cache/", "/%.cargo/", "/%.local/share/", "/%.zsh/"
-    }}
+    } }
 end
 
 local function statustool()
-    if not pcall(function () vim.cmd('tab G') end) then
-		vim.cmd('echohl WarningMsg | echo "Directory is not a git repository" | echohl None')
+    if not pcall(function() vim.cmd('tab G') end) then
+        vim.cmd('echohl WarningMsg | echo "Directory is not a git repository" | echohl None')
     end
 end
 
 local function difftool()
     local branch = vim.fn.input("Perform difftool on : ")
-    vim.cmd ("echon ' '")
-    if not pcall(function () vim.cmd("Git difftool -y " .. branch) end) then
-		vim.cmd('echohl WarningMsg | echo "Directory is not a git repository" | echohl None')
+    vim.cmd("echon ' '")
+    if not pcall(function() vim.cmd("Git difftool -y " .. branch) end) then
+        vim.cmd('echohl WarningMsg | echo "Directory is not a git repository" | echohl None')
     end
 end
 
 local function mergetool()
     local branch = vim.fn.input("Perform mergetool on : ")
-    vim.cmd ("echon ' '")
-    if not pcall(function () vim.cmd("Git mergetool -y " .. branch) end) then
-		vim.cmd('echohl WarningMsg | echo "Directory is not a git repository" | echohl None')
+    vim.cmd("echon ' '")
+    if not pcall(function() vim.cmd("Git mergetool -y " .. branch) end) then
+        vim.cmd('echohl WarningMsg | echo "Directory is not a git repository" | echohl None')
     end
 end
 
 local extra_items = function()
-  return function()
-    return {
-      {action = 'FzfLua live_grep',          name = 'Grep',                      section = 'Actions'},
-      {action = 'FzfLua help_tags',          name = 'Help',                      section = 'Actions'},
-      {action = 'FzfLua oldfiles',           name = 'History',                   section = 'Actions'},
-      {action = cached_repos,                name = 'Projects',                  section = 'Actions'},
-      {action = 'FzfLua git_files',          name = 'Workspace files',           section = 'Actions'},
-      {action = difftool,                    name = 'Diff tool',                 section = 'Actions'},
-      {action = mergetool,                   name = 'Merge tool',                section = 'Actions'},
-      {action = statustool,                  name = 'Status',                    section = 'Actions'},
-    }
-  end
+    return function()
+        return {
+            { action = 'FzfLua live_grep', name = 'Grep',            section = 'Actions' },
+            { action = 'FzfLua help_tags', name = 'Help',            section = 'Actions' },
+            { action = 'FzfLua oldfiles',  name = 'History',         section = 'Actions' },
+            { action = cached_repos,       name = 'Projects',        section = 'Actions' },
+            { action = 'FzfLua git_files', name = 'Workspace files', section = 'Actions' },
+            { action = difftool,           name = 'Diff tool',       section = 'Actions' },
+            { action = mergetool,          name = 'Merge tool',      section = 'Actions' },
+            { action = statustool,         name = 'Status',          section = 'Actions' },
+        }
+    end
 end
 
 local function ascii_headers(rand)
     if rand < 1 then
         return [[
-           __________                                 
-         .'----------`.                              
-         | .--------. |                             
-         | |########| |       __________               
-         | |########| |      /__________\              
-.--------| `--------' |------|    --=-- |------. 
-|        `----,-.-----'      |o ======  |      | 
-|       ______|_|_______     |__________|      | 
-|      /  %%%%%%%%%%%%  \                      | 
-|     /  %%%%%%%%%%%%%%  \                     | 
-|     ^^^^^^^^^^^^^^^^^^^^                     | 
-+----------------------------------------------+ 
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ 
+           __________
+         .'----------`.
+         | .--------. |
+         | |########| |       __________
+         | |########| |      /__________\
+.--------| `--------' |------|    --=-- |------.
+|        `----,-.-----'      |o ======  |      |
+|       ______|_|_______     |__________|      |
+|      /  %%%%%%%%%%%%  \                      |
+|     /  %%%%%%%%%%%%%%  \                     |
+|     ^^^^^^^^^^^^^^^^^^^^                     |
++----------------------------------------------+
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
         ]]
     elseif rand < 2 then
         return [[
@@ -166,7 +166,7 @@ local function ascii_headers(rand)
   .'.            .       .
   |o|      .  *      .        .  *   .
  .'o'.       * .        .   *    ..
- |.-.|       .        .            *       
+ |.-.|       .        .            *
  '   '     *      *        *    .
   ( )     .  *      .        .  *   .
    )    ..    *    .      *  .  ..  *
@@ -187,13 +187,12 @@ starter.setup({
     evaluate_single = false,
     header = ascii_art,
     items = {
-      starter.sections.recent_files(7, false, true),
-      extra_items(),
+        starter.sections.recent_files(7, false, true),
+        extra_items(),
     },
     content_hooks = {
-      starter.gen_hook.aligning("center", "center"),
-      starter.gen_hook.padding(0, 0),
+        starter.gen_hook.aligning("center", "center"),
+        starter.gen_hook.padding(0, 0),
     },
     footer = "",
 })
-

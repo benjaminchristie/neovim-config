@@ -1,27 +1,27 @@
-  -- Setup lspconfig.
-  -- neodev must be called before lspconfig
+-- Setup lspconfig.
+-- neodev must be called before lspconfig
 require("neodev").setup({
-  -- add any options here, or leave empty to use the default settings
+    -- add any options here, or leave empty to use the default settings
     library = { plugins = { "nvim-dap-ui" }, types = true },
 })
 local lspconfig = require("lspconfig")
 local capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities())
 capabilities.textDocument.completion.completionItem.snippetSupport = true
 vim.lsp.handlers["textDocument/hover"] =
-  vim.lsp.with(
-  vim.lsp.handlers.hover,
-  {
-    border = "single"
-  }
-)
+    vim.lsp.with(
+        vim.lsp.handlers.hover,
+        {
+            border = "single"
+        }
+    )
 
 vim.lsp.handlers["textDocument/signatureHelp"] =
-  vim.lsp.with(
-  vim.lsp.handlers.signature_help,
-  {
-    border = "single"
-  }
-)
+    vim.lsp.with(
+        vim.lsp.handlers.signature_help,
+        {
+            border = "single"
+        }
+    )
 -- Mappings.
 -- See `:help vim.diagnostic.*` for documentation on any of the below functions
 
@@ -34,7 +34,7 @@ local on_attach = function(_, bufnr)
 
     -- Mappings.
     -- See `:help vim.lsp.*` for documentation on any of the below functions
-    local bufopts = { noremap=true, silent=true, buffer=bufnr }
+    local bufopts = { noremap = true, silent = true, buffer = bufnr }
     -- vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, bufopts)
     vim.keymap.set('n', 'gd', vim.lsp.buf.definition, bufopts)
     -- vim.keymap.set('n', '<space>', require("nabla").popup, bufopts)
@@ -57,13 +57,13 @@ local lsp_flags = {
     -- This is the default in Nvim 0.7+
     debounce_text_changes = 150,
 }
-lspconfig.cmake.setup{
+lspconfig.cmake.setup {
     on_attach = on_attach,
     flags = lsp_flags,
     capabilities = capabilities,
     autostart = false,
 }
-lspconfig.pyright.setup{
+lspconfig.pyright.setup {
     on_attach = on_attach,
     flags = lsp_flags,
     capabilities = capabilities,
@@ -92,93 +92,93 @@ lspconfig.pyright.setup{
 --         }
 --     }
 -- }
-lspconfig['tsserver'].setup{
+lspconfig['tsserver'].setup {
     on_attach = on_attach,
     flags = lsp_flags,
     capabilities = capabilities,
     autostart = false,
 }
-lspconfig['gopls'].setup{
+lspconfig['gopls'].setup {
     on_attach = on_attach,
     flags = lsp_flags,
     capabilities = capabilities,
     autostart = false,
 }
-lspconfig['texlab'].setup{
+lspconfig['texlab'].setup {
     on_attach = on_attach,
     flags = lsp_flags,
     capabilities = capabilities,
     autostart = false,
 }
-lspconfig.bashls.setup{
+lspconfig.bashls.setup {
     on_attach = on_attach,
     flags = lsp_flags,
     capabilities = capabilities,
     autostart = false,
 }
 lspconfig.lua_ls.setup {
-  on_attach = on_attach,
-  flags = lsp_flags,
-  capabilities = capabilities,
-  autostart = false,
-  settings = {
-    Lua = {
-      completion = {
-        callSnippet = "Replace"
-      },
-      runtime = {
-        -- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
-        version = 'LuaJIT',
-      },
-      diagnostics = {
-        -- Get the language server to recognize the `vim` global
-        globals = {'vim'},
-        undefined_global = false,
-        missing_parameters = false,
-      },
-      workspace = {
-        -- Make the server aware of Neovim runtime files
-        library = vim.api.nvim_get_runtime_file("", true),
-        checkThirdParty = false,
-      },
-      -- Do not send telemetry data containing a randomized but unique identifier
-      telemetry = {
-        enable = false,
-      },
+    on_attach = on_attach,
+    flags = lsp_flags,
+    capabilities = capabilities,
+    autostart = false,
+    settings = {
+        Lua = {
+            completion = {
+                callSnippet = "Replace"
+            },
+            runtime = {
+                -- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
+                version = 'LuaJIT',
+            },
+            diagnostics = {
+                -- Get the language server to recognize the `vim` global
+                globals = { 'vim' },
+                undefined_global = false,
+                missing_parameters = false,
+            },
+            workspace = {
+                -- Make the server aware of Neovim runtime files
+                library = vim.api.nvim_get_runtime_file("", true),
+                checkThirdParty = false,
+            },
+            -- Do not send telemetry data containing a randomized but unique identifier
+            telemetry = {
+                enable = false,
+            },
+        },
     },
-  },
 }
-lspconfig.html.setup{
+lspconfig.html.setup {
     on_attach = on_attach,
     flags = lsp_flags,
     capabilities = capabilities,
     autostart = false,
 }
-lspconfig.cssls.setup{
+lspconfig.cssls.setup {
     on_attach = on_attach,
     flags = lsp_flags,
     capabilities = capabilities,
     autostart = false,
 }
-lspconfig.dockerls.setup{
+lspconfig.dockerls.setup {
     on_attach = on_attach,
     flags = lsp_flags,
     capabilities = capabilities,
     autostart = false,
 }
-lspconfig.marksman.setup{
+lspconfig.marksman.setup {
     on_attach = on_attach,
     flags = lsp_flags,
     capabilities = capabilities,
     autostart = false,
 }
 local function get_probe_dir(root_dir)
-  local project_root = require('lspconfig/util').find_node_modules_ancestor(root_dir)
+    local project_root = require('lspconfig/util').find_node_modules_ancestor(root_dir)
 
-  return project_root and (project_root .. '/node_modules') or ''
+    return project_root and (project_root .. '/node_modules') or ''
 end
 local default_probe_dir = get_probe_dir(vim.fn.getcwd())
-lspconfig.angularls.setup{
+lspconfig.angularls.setup {
     on_attach = on_attach,
     flags = lsp_flags,
     capabilities = capabilities,
@@ -189,22 +189,22 @@ lspconfig.angularls.setup{
         '--tsProbeLocations', default_probe_dir,
         '--ngProbeLocations', default_probe_dir
     },
-    filetypes = {'typescript', 'html', 'typescriptreact', 'typescript.tsx'},
+    filetypes = { 'typescript', 'html', 'typescriptreact', 'typescript.tsx' },
     root_dir = require('lspconfig/util').root_pattern('angular.json', '.git'),
 }
-lspconfig.asm_lsp.setup{
+lspconfig.asm_lsp.setup {
     on_attach = on_attach,
     flags = lsp_flags,
     capabilities = capabilities,
     autostart = false,
 }
 require("rust-tools").setup({
-  server = {
-      on_attach = on_attach,
-      flags = lsp_flags,
-      capabilities = capabilities,
-    autostart = false,
-  }
+    server = {
+        on_attach = on_attach,
+        flags = lsp_flags,
+        capabilities = capabilities,
+        autostart = false,
+    }
 })
 
 local function find_cc_json(fn)
@@ -234,9 +234,9 @@ if found then
             "--cross-file-rename",
             "--header-insertion=iwyu",
             "--suggest-missing-includes",
-            "--compile-commands-dir='"..pbp.."'",
-            }
+            "--compile-commands-dir='" .. pbp .. "'",
         }
+    }
     )
 else
     lspconfig['clangd'].setup({
@@ -253,7 +253,7 @@ else
             "--header-insertion=iwyu",
             "--suggest-missing-includes",
             "--compile-commands-dir='.'"
-            }
         }
+    }
     )
 end

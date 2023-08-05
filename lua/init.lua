@@ -27,7 +27,7 @@ require("oil").setup({
         end
     }
 })
-require('colorizer').setup({}, { css = true; })
+require('colorizer').setup({}, { css = true, })
 require("plugins.nvim-gpg")
 require("plugins.make-flow")
 require('nvim-autopairs').setup({
@@ -35,7 +35,7 @@ require('nvim-autopairs').setup({
     enable_check_bracket_line = false,
 })
 require('nvim-ts-autotag').setup({
-    filetypes = {"html", "xml"}
+    filetypes = { "html", "xml" }
 })
 require("indent_blankline").setup {
     show_current_context = true,

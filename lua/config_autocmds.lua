@@ -12,13 +12,13 @@ nnoremenu PopUp.Peek\ Value                 <Cmd>lua require("dapui").eval(nil, 
 anoremenu PopUp.Exit                        <Nop>
 ]])
 --- autocmds
-vim.api.nvim_create_augroup("FormatTelescope", {clear = true})
+vim.api.nvim_create_augroup("FormatTelescope", { clear = true })
 vim.api.nvim_create_autocmd('User', {
     pattern = "TelescopePreviewerLoaded",
     command = "setlocal wrap",
 })
-vim.api.nvim_create_augroup("FormatGroup", {clear = true})
-vim.api.nvim_create_autocmd({"BufEnter"}, {
+vim.api.nvim_create_augroup("FormatGroup", { clear = true })
+vim.api.nvim_create_autocmd({ "BufEnter" }, {
     group = "FormatGroup",
     pattern = "*",
     callback = function()
@@ -26,28 +26,28 @@ vim.api.nvim_create_autocmd({"BufEnter"}, {
         vim.cmd('setlocal formatoptions-=cro')
     end
 })
-vim.api.nvim_create_augroup("LaunchEnterGroup", {clear = true})
-vim.api.nvim_create_autocmd({"BufEnter"}, {
+vim.api.nvim_create_augroup("LaunchEnterGroup", { clear = true })
+vim.api.nvim_create_autocmd({ "BufEnter" }, {
     group = "LaunchEnterGroup",
-    pattern = {"*.launch", ".urdf", "*.xacro", "*.xml"},
+    pattern = { "*.launch", ".urdf", "*.xacro", "*.xml" },
     callback = function()
         vim.opt_local.filetype = "html"
     end
 })
-vim.api.nvim_create_augroup("MatchPairs", {clear = true})
-vim.api.nvim_create_autocmd({"BufEnter"}, {
+vim.api.nvim_create_augroup("MatchPairs", { clear = true })
+vim.api.nvim_create_autocmd({ "BufEnter" }, {
     group = "MatchPairs",
-    pattern = {"*.cpp", "*.h", "*.hpp", "*.c"},
-    callback = function ()
+    pattern = { "*.cpp", "*.h", "*.hpp", "*.c" },
+    callback = function()
         vim.bo.matchpairs = "(:),{:},[:],<:>,=:;,"
     end
 })
-vim.api.nvim_create_augroup("ClangFormatGroup", {clear = true})
-vim.api.nvim_create_autocmd({"BufWritePre"}, {
-    group = "ClangFormatGroup",
-    pattern = {"*.cpp", "*.h", "*.hpp", "*.c"},
+vim.api.nvim_create_augroup("LspFormatting", { clear = true })
+vim.api.nvim_create_autocmd({ "BufWritePre" }, {
+    group = "LspFormatting",
+    pattern = "*",
     callback = function()
-        vim.lsp.buf.format()
+        pcall(vim.lsp.buf.format)
     end
 })
 if vim.fn.executable("black-macchiato") then
@@ -55,21 +55,21 @@ if vim.fn.executable("black-macchiato") then
         command = 'pyright.organizeimports',
         arguments = { vim.uri_from_bufnr(0) },
     }
-    vim.api.nvim_create_augroup("PythonFormatting", {clear = true})
-    vim.api.nvim_create_autocmd({"BufWritePre"}, {
+    vim.api.nvim_create_augroup("PythonFormatting", { clear = true })
+    vim.api.nvim_create_autocmd({ "BufWritePre" }, {
         group = "PythonFormatting",
         pattern = "*.py",
-        callback = function ()
+        callback = function()
             vim.bo.swapfile = false
             local line_num = vim.api.nvim_win_get_cursor(0)[1]
             local _pre = vim.api.nvim_buf_get_lines(0, 0, -1, false)
             local fn = vim.api.nvim_buf_get_name(0)
-            vim.fn.jobstart("cat ".. fn .." | black-macchiato",
+            vim.fn.jobstart("cat " .. fn .. " | black-macchiato",
                 {
                     stdout_buffered = true,
                     stderr_buffered = true,
                     on_exit = function(_, code, _)
-                        if code ~= 0 and vim.api.nvim_buf_get_name(0) == fn then  -- ERROR, reset lines
+                        if code ~= 0 and vim.api.nvim_buf_get_name(0) == fn then -- ERROR, reset lines
                             vim.api.nvim_buf_set_lines(0, 0, -1, false, _pre)
                         end
                         vim.lsp.buf.execute_command(params)
@@ -77,7 +77,7 @@ if vim.fn.executable("black-macchiato") then
                     end,
                     on_stdout = function(_, data)
                         if data and vim.api.nvim_buf_get_name(0) == fn then
-                            table.remove(data, #data)  -- black-macchiato adds an extra newline for some reason
+                            table.remove(data, #data) -- black-macchiato adds an extra newline for some reason
                             vim.api.nvim_buf_set_lines(0, 0, -1, false, data)
                         end
                     end,

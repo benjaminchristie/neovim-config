@@ -37,23 +37,23 @@ vim.keymap.set('n', '<C-h><C-r><C-m>', vim.lsp.buf.rename)
 vim.keymap.set('n', '<C-h><C-e>', vim.lsp.buf.code_action)
 vim.keymap.set('n', 'gr', vim.lsp.buf.references)
 --- DAP
-vim.keymap.set('n', '<A-d><A-v>', function ()
+vim.keymap.set('n', '<A-d><A-v>', function()
     vim.cmd("DapVirtualTextEnable")
 end)
 vim.keymap.set('n', '<A-d><A-r>', dap.restart)
 vim.keymap.set('n', '<A-d><A-t>', dap.run_to_cursor)
 vim.keymap.set('n', '<A-d><A-d>', dap.continue)
-vim.keymap.set('n', '<A-d><A-q>', function ()
+vim.keymap.set('n', '<A-d><A-q>', function()
     dap.close()
     dapui.close()
 end)
-vim.keymap.set('n', '<A-d><A-l>', function ()
+vim.keymap.set('n', '<A-d><A-l>', function()
     pbreakpoints.toggle_breakpoint(nil, nil, vim.fn.input("Log : "))
 end)
-vim.keymap.set('n', '<A-d><A-b>', function ()
+vim.keymap.set('n', '<A-d><A-b>', function()
     pbreakpoints.toggle_breakpoint(vim.fn.input("Condition : "))
 end)
-vim.keymap.set('n', '<A-d><A-p>', function ()
+vim.keymap.set('n', '<A-d><A-p>', function()
     dapui.eval(nil, {
         enter = true
     })
@@ -61,21 +61,21 @@ end)
 vim.keymap.set('n', '<A-d><A-n>', dap.step_over)
 vim.keymap.set('n', '<A-d><A-s>', dap.step_into)
 
-local search_github = function ()
+local search_github = function()
     local csgithub = require("csgithub")
     local url = csgithub.search({
-	includeFilename=false,
-	includeExtension=true,
+        includeFilename = false,
+        includeExtension = true,
     })
     if url == nil then
-    	return
+        return
     end
     csgithub.open(url)
 end
 vim.keymap.set('n', '<A-g>', function() return search_github() end)
 vim.keymap.set('v', '<A-g>', function() return search_github() end)
 -- commentary improvements
-vim.keymap.set('n', '<C-_>', function ()
+vim.keymap.set('n', '<C-_>', function()
     local cursor_pos = vim.api.nvim_win_get_cursor(0)
     local col_count_pre = vim.fn.strlen(vim.api.nvim_get_current_line())
     vim.cmd("Commentary")
@@ -105,20 +105,20 @@ vim.keymap.set('n', 'gsa', gitsigns.stage_buffer)
 vim.keymap.set('n', 'gsr', gitsigns.reset_buffer)
 
 -- cd to current working file
-vim.keymap.set('n', '<A-c>', function ()
+vim.keymap.set('n', '<A-c>', function()
     local cwd = vim.fn.expand("%:p:h")
     vim.api.nvim_set_current_dir(cwd)
     print("Changed cwd to " .. cwd)
 end)
 
 -- find and replace assistance
-vim.keymap.set('n', '\\s', function ()
+vim.keymap.set('n', '\\s', function()
     local word = vim.fn.expand("<cword>")
     local line_num = vim.api.nvim_win_get_cursor(0)[1]
     local change_to = vim.fn.input("Change " .. word .. " to : ")
     vim.cmd(':%s/' .. word .. "/" .. change_to .. "/g")
     vim.cmd(":" .. line_num)
-    end
+end
 )
 
 local handler = function(virtText, lnum, endLnum, width, truncate)
@@ -135,7 +135,7 @@ local handler = function(virtText, lnum, endLnum, width, truncate)
         else
             chunkText = truncate(chunkText, targetWidth - curWidth)
             local hlGroup = chunk[2]
-            table.insert(newVirtText, {chunkText, hlGroup})
+            table.insert(newVirtText, { chunkText, hlGroup })
             chunkWidth = vim.fn.strdisplaywidth(chunkText)
             -- str width returned from truncate() may less than 2nd argument, need padding
             if curWidth + chunkWidth < targetWidth then
@@ -145,7 +145,7 @@ local handler = function(virtText, lnum, endLnum, width, truncate)
         end
         curWidth = curWidth + chunkWidth
     end
-    table.insert(newVirtText, {suffix, 'MoreMsg'})
+    table.insert(newVirtText, { suffix, 'MoreMsg' })
     return newVirtText
 end
 local ufo = require("ufo")
@@ -153,7 +153,7 @@ ufo.setup({
     enable_get_fold_virt_text = true,
     fold_virt_text_handler = handler,
     provider_selector = function(_, _, _)
-        return {'treesitter', 'indent'}
+        return { 'treesitter', 'indent' }
     end
 })
 vim.keymap.set('n', 'zR', ufo.openAllFolds)
@@ -170,10 +170,9 @@ end)
 
 -- handle harpoon
 for i = 0, 9, 1 do
-   vim.keymap.set('n', '<A-'..i..">", function() return require("harpoon.ui").nav_file(i) end)
+    vim.keymap.set('n', '<A-' .. i .. ">", function() return require("harpoon.ui").nav_file(i) end)
 end
 vim.keymap.set('n', "<A-h>", function() return require("harpoon.ui").toggle_quick_menu() end)
 vim.keymap.set('n', "<A-m>", function() return require("harpoon.mark").add_file() end)
 vim.keymap.set('n', "<A-k>", function() return require("harpoon.ui").nav_prev() end)
 vim.keymap.set('n', "<A-j>", function() return require("harpoon.ui").nav_next() end)
-

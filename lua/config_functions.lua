@@ -13,23 +13,23 @@ local function whereami()
     }
     local length = #cursor_colors
     for i = 0, length, 1 do
-        vim.fn.timer_start((i + 1) * uptime, function ()
+        vim.fn.timer_start((i + 1) * uptime, function()
             vim.wo.cursorline = true
             vim.wo.cursorcolumn = true
-            vim.api.nvim_set_hl(1, "Cursor",       {bg=cursor_colors[i]})
-            vim.api.nvim_set_hl(1, "CursorLine",   {bg=cursor_colors[i]})
-            vim.api.nvim_set_hl(1, "CursorColumn", {bg=cursor_colors[i]})
+            vim.api.nvim_set_hl(1, "Cursor", { bg = cursor_colors[i] })
+            vim.api.nvim_set_hl(1, "CursorLine", { bg = cursor_colors[i] })
+            vim.api.nvim_set_hl(1, "CursorColumn", { bg = cursor_colors[i] })
             vim.api.nvim_win_set_hl_ns(vim.api.nvim_get_current_win(), 1)
         end)
-        vim.fn.timer_start((length) * uptime + (i + 1) * downtime, function ()
+        vim.fn.timer_start((length) * uptime + (i + 1) * downtime, function()
             vim.wo.cursorline = true
             vim.wo.cursorcolumn = true
-            vim.api.nvim_set_hl(1, "Cursor",       {bg=cursor_colors[length - i - 1]})
-            vim.api.nvim_set_hl(1, "CursorLine",   {bg=cursor_colors[length - i - 1]})
-            vim.api.nvim_set_hl(1, "CursorColumn", {bg=cursor_colors[length - i - 1]})
+            vim.api.nvim_set_hl(1, "Cursor", { bg = cursor_colors[length - i - 1] })
+            vim.api.nvim_set_hl(1, "CursorLine", { bg = cursor_colors[length - i - 1] })
+            vim.api.nvim_set_hl(1, "CursorColumn", { bg = cursor_colors[length - i - 1] })
             vim.api.nvim_win_set_hl_ns(vim.api.nvim_get_current_win(), 1)
         end)
-        vim.fn.timer_start((length + 1) * (uptime + downtime), function ()
+        vim.fn.timer_start((length + 1) * (uptime + downtime), function()
             vim.wo.cursorcolumn = false
             vim.o.cursorcolumn = false
             vim.api.nvim_win_set_hl_ns(vim.api.nvim_get_current_win(), 0)
@@ -50,19 +50,19 @@ end
 
 vim.api.nvim_create_user_command("Copygpg", copygpg, {})
 
-vim.api.nvim_create_user_command("TmpLua", function ()
+vim.api.nvim_create_user_command("TmpLua", function()
     vim.cmd("e /tmp/tmp" .. vim.fn.reltimestr(vim.fn.reltime()))
     vim.bo.filetype = "lua"
 end, {})
 
-vim.api.nvim_create_user_command("Ex", function ()
+vim.api.nvim_create_user_command("Ex", function()
     local HEIGHT = 12
     vim.cmd("topleft Oil")
     vim.wo.number = false
     vim.wo.relativenumber = false
     vim.api.nvim_win_set_height(0, HEIGHT)
 end, {})
-vim.api.nvim_create_user_command("Lex", function ()
+vim.api.nvim_create_user_command("Lex", function()
     local WIDTH = 45
     vim.cmd("vertical Oil")
     vim.wo.number = false
@@ -70,14 +70,14 @@ vim.api.nvim_create_user_command("Lex", function ()
     vim.api.nvim_win_set_width(0, WIDTH)
 end, {})
 
-vim.api.nvim_create_user_command("Build", function ()
+vim.api.nvim_create_user_command("Build", function()
     local build_tools = {
         "make ",
         "cmake --build build ",
         "export TERM=dumb && catkin build --no-color --no-status ",
     }
     local prompt = ""
-    for i=1,#build_tools do
+    for i = 1, #build_tools do
         prompt = prompt .. i .. " : " .. build_tools[i] .. "\n"
     end
     prompt = prompt .. "Enter your choice : "
@@ -90,22 +90,22 @@ vim.api.nvim_create_user_command("Build", function ()
 end, {})
 
 --- used for large files or when treesitter + lsp is slow
-local lazy_load = function ()
+local lazy_load = function()
     vim.o.syntax = "off"
     vim.lsp.stop_client(vim.lsp.get_clients())
     pcall(vim.treesitter.stop)
-    vim.fn.timer_start(1000, function ()
+    vim.fn.timer_start(1000, function()
         vim.o.syntax = "on"
         vim.cmd("LspStart")
         pcall(vim.treesitter.start)
     end)
 end
 vim.api.nvim_create_user_command("LazyLoad", lazy_load, {})
-vim.api.nvim_create_augroup("LazyLoadLargeFiles", {clear = true})
-vim.api.nvim_create_autocmd({"BufReadPost"}, {
+vim.api.nvim_create_augroup("LazyLoadLargeFiles", { clear = true })
+vim.api.nvim_create_autocmd({ "BufReadPost" }, {
     group = "LazyLoadLargeFiles",
     pattern = "*",
-    callback = function ()
+    callback = function()
         if vim.fn.getfsize(vim.api.nvim_buf_get_name(0)) > 65536 then
             print("Lazy loading file...")
             lazy_load()
@@ -116,4 +116,3 @@ vim.api.nvim_create_autocmd({"BufReadPost"}, {
         end
     end
 })
-

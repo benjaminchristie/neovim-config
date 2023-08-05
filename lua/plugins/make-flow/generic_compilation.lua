@@ -9,6 +9,7 @@ function CreateWin()
     -- vim.api.nvim_buf_set_option(buf, 'number', false)
     return buf
 end
+
 function Compile(path, command, bufnr, timeout)
     if not vim.fn.bufexists(bufnr) then
         bufnr = CreateWin()
@@ -24,20 +25,20 @@ function Compile(path, command, bufnr, timeout)
                 if exitCode == 0 then
                     if vim.fn.bufexists(bufnr) then
                         vim.api.nvim_buf_set_lines(bufnr, 0, 1, false,
-                            {"===Compilation Successful!==="})
+                            { "===Compilation Successful!===" })
                     end
-                    -- begin deferral 
-                    vim.defer_fn(function ()
-                        if vim.api.nvim_buf_is_loaded(bufnr) then
-			-- if vim.fn.bufexists(bufnr) then
-                            vim.api.nvim_buf_delete(bufnr, {force=true, unload=false})
-                        end
-                    end,
-                    timeout
+                    -- begin deferral
+                    vim.defer_fn(function()
+                            if vim.api.nvim_buf_is_loaded(bufnr) then
+                                -- if vim.fn.bufexists(bufnr) then
+                                vim.api.nvim_buf_delete(bufnr, { force = true, unload = false })
+                            end
+                        end,
+                        timeout
                     )
                 else
                     vim.api.nvim_buf_set_lines(bufnr, 0, 1, false,
-                        {"===Compilation Unsuccesful==="})
+                        { "===Compilation Unsuccesful===" })
                 end
             end,
             on_stdout = function(_, data)
@@ -46,23 +47,25 @@ function Compile(path, command, bufnr, timeout)
                         data)
                 else
                     vim.api.nvim_buf_set_lines(bufnr, -1, -1, false,
-                        {"no output"})
+                        { "no output" })
                 end
             end,
-            on_stderr = function (_, data)
+            on_stderr = function(_, data)
                 if data then
                     vim.api.nvim_buf_set_lines(bufnr, -1, -1, false,
                         data)
                 else
                     vim.api.nvim_buf_set_lines(bufnr, -1, -1, false,
-                        {"no output"})
+                        { "no output" })
                 end
             end
-    })
+        })
 end
+
 function KillBuffer(bufnr)
     if vim.api.nvim_buf_is_loaded(bufnr) then
-        vim.api.nvim_buf_delete(bufnr, {force=true, unload=false})
+        vim.api.nvim_buf_delete(bufnr, { force = true, unload = false })
     end
 end
-return {killBuffer = KillBuffer, compile = Compile, createWin = CreateWin}
+
+return { killBuffer = KillBuffer, compile = Compile, createWin = CreateWin }
