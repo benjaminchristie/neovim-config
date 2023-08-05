@@ -1,6 +1,11 @@
 require("config")
 require("colors")
 require("options")
+require("early-retirement").setup({
+    retirementAgeMins = 10,
+    ignoreVisibileBufs = false,
+    notificationOnAutoClose = false,
+})
 require("harpoon").setup({})
 require("oil").setup({
     skip_confirm_for_simple_edits = true,
