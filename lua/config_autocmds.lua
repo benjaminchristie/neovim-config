@@ -8,15 +8,16 @@ nnoremenu PopUp.Go\ To\ Definition          <Cmd>lua vim.fn.feedkeys("gd")<CR>
 nnoremenu PopUp.Go\ To\ References          <Cmd>lua vim.fn.feedkeys("gr")<CR>
 nnoremenu PopUp.Toggle\ Breakpoint          <Cmd>lua vim.fn.feedkeys("<A-d><A-b>")<CR>
 nnoremenu PopUp.Open\ Debugger              <Cmd>lua require("dap").continue()<CR>
+nnoremenu PopUp.Peek\ Value                 <Cmd>lua require("dapui").eval(nil, {enter = true})<CR>
 anoremenu PopUp.Exit                        <Nop>
 ]])
 --- autocmds
-vim.api.nvim_create_augroup("FormatTelescope", {clear = false})
+vim.api.nvim_create_augroup("FormatTelescope", {clear = true})
 vim.api.nvim_create_autocmd('User', {
     pattern = "TelescopePreviewerLoaded",
     command = "setlocal wrap",
 })
-vim.api.nvim_create_augroup("FormatGroup", {clear = false})
+vim.api.nvim_create_augroup("FormatGroup", {clear = true})
 vim.api.nvim_create_autocmd({"BufEnter"}, {
     group = "FormatGroup",
     pattern = "*",
@@ -25,7 +26,7 @@ vim.api.nvim_create_autocmd({"BufEnter"}, {
         vim.cmd('setlocal formatoptions-=cro')
     end
 })
-vim.api.nvim_create_augroup("LaunchEnterGroup", {clear = false})
+vim.api.nvim_create_augroup("LaunchEnterGroup", {clear = true})
 vim.api.nvim_create_autocmd({"BufEnter"}, {
     group = "LaunchEnterGroup",
     pattern = {"*.launch", ".urdf", "*.xacro", "*.xml"},
@@ -33,7 +34,7 @@ vim.api.nvim_create_autocmd({"BufEnter"}, {
         vim.opt_local.filetype = "html"
     end
 })
-vim.api.nvim_create_augroup("MatchPairs", {clear = false})
+vim.api.nvim_create_augroup("MatchPairs", {clear = true})
 vim.api.nvim_create_autocmd({"BufEnter"}, {
     group = "MatchPairs",
     pattern = {"*.cpp", "*.h", "*.hpp", "*.c"},
@@ -41,7 +42,7 @@ vim.api.nvim_create_autocmd({"BufEnter"}, {
         vim.bo.matchpairs = "(:),{:},[:],<:>,=:;,"
     end
 })
-vim.api.nvim_create_augroup("ClangFormatGroup", {clear = false})
+vim.api.nvim_create_augroup("ClangFormatGroup", {clear = true})
 vim.api.nvim_create_autocmd({"BufWritePre"}, {
     group = "ClangFormatGroup",
     pattern = {"*.cpp", "*.h", "*.hpp", "*.c"},
@@ -54,7 +55,7 @@ if vim.fn.executable("black-macchiato") then
         command = 'pyright.organizeimports',
         arguments = { vim.uri_from_bufnr(0) },
     }
-    vim.api.nvim_create_augroup("PythonFormatting", {clear = false})
+    vim.api.nvim_create_augroup("PythonFormatting", {clear = true})
     vim.api.nvim_create_autocmd({"BufWritePre"}, {
         group = "PythonFormatting",
         pattern = "*.py",

@@ -6,7 +6,7 @@ require("toggleterm").setup{
     persist_size = false,
 }
 
-vim.api.nvim_create_augroup("TerminalKeymaps", {clear = false})
+vim.api.nvim_create_augroup("TerminalKeymaps", {clear = true})
 vim.api.nvim_create_autocmd({"TermOpen"}, {
     pattern = "term://*",
     callback = function ()

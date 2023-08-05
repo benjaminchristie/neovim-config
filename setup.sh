@@ -53,10 +53,11 @@ install_lsps() {
     # bash-language-server
     sudo npm i -g bash-language-server
     # pyright
-    pip install --ignore-installed pyright
+    pip install --ignore-installed --break-system-packages pyright
     # cmake
-    pip install --ignore-installed cmake-language-server
+    pip install --ignore-installed --break-system-packages cmake-language-server
 } 
+# unused, since FZF is included in my vimplug configuration
 install_fzf() {
     # fzf
     git clone https://github.com/junegunn/fzf /tmp/fzf && \
@@ -72,10 +73,10 @@ install_vimplug() {
 }
 install_linters() {
     # black-macchiato
-    pip install --ignore-installed black-macchiato
+    pip install --ignore-installed --break-system-packages black-macchiato
 }
 
-read -p "Ensure you have paru or apt configured and press any button to continue: " dummy_var
+read -p "USE AT YOUR OWN RISK: Ensure you have paru or apt configured and press any button to continue: " dummy_var
 mkdir -p ~/.local/bin/
 
 ## install dependencies
@@ -97,8 +98,6 @@ print_style "Installing neovim LSPs : \n"
 install_lsps 
 print_style "Installing neovim DAPs : \n"
 install_daps 
-print_style "Installing FZF : \n"
-install_fzf 
 print_style "Installing linters : \n"
 install_linters
 print_style "Installing vim-plug : \n"
