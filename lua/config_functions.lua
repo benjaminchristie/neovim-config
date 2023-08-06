@@ -123,3 +123,18 @@ vim.api.nvim_create_autocmd({ "BufReadPost" }, {
         end
     end
 })
+local change_plug_options = function()
+    local w = [[width = math.ceil(vim.api.nvim_get_option("columns") * 0.8), ]]
+    local h = [[height = math.ceil(vim.api.nvim_get_option("lines") * 0.8), ]]
+    local r = [[col = math.ceil(vim.api.nvim_get_option("columns") * 0.1 - 1), ]]
+    local c = [[row = math.ceil(vim.api.nvim_get_option("lines") * 0.1 - 1), ]]
+    local floating_opts = [[relative = 'editor', style='minimal', border = "single"]]
+    vim.g.plug_window = [[lua vim.api.nvim_open_win(vim.api.nvim_create_buf(true, false), true, {]] .. w .. h .. r .. c .. floating_opts .. "})"
+    vim.cmd("PlugUpdate")
+    vim.fn.timer_start(5000, function ()
+        vim.g.plug_window = [[vertical topleft new]]
+    end)
+end
+vim.api.nvim_create_user_command("Plug", change_plug_options, {
+    desc =  "queue a floating window for vim-plug"
+})
