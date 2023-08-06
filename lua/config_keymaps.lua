@@ -3,17 +3,17 @@ local dap = require("dap")
 local dapui = require("dapui")
 local pbreakpoints = require('persistent-breakpoints.api')
 
-vim.keymap.set('n', '<Left>', 'gT')
-vim.keymap.set('n', '<Right>', 'gt')
-vim.keymap.set('i', '<Left>', '<Esc>gT')
-vim.keymap.set('i', '<Right>', '<Esc>gt')
-vim.keymap.set('n', '`1', ':5winc<<CR>')
-vim.keymap.set('n', '`4', ':5winc><CR>')
-vim.keymap.set('n', '`2', ':3winc+<CR>')
-vim.keymap.set('n', '`3', ':3winc-<CR>')
-vim.keymap.set('n', 'zs', 'zMzO')
-vim.keymap.set('v', "J", ":m '>+1<CR>gv=gv")
-vim.keymap.set('v', "K", ":m '<-2<CR>gv=gv")
+vim.keymap.set('n', '<Left>', 'gT', {desc = "Go to left tab"})
+vim.keymap.set('n', '<Right>', 'gt', {desc = "Go to right tab"})
+vim.keymap.set('i', '<Left>', '<Esc>gT', {desc = "Go to left tab"})
+vim.keymap.set('i', '<Right>', '<Esc>gt', {desc = "Go to right tab"})
+vim.keymap.set('n', '`1', ':5winc<<CR>', {desc = "Change window size"})
+vim.keymap.set('n', '`4', ':5winc><CR>', {desc = "Change window size"})
+vim.keymap.set('n', '`2', ':3winc+<CR>', {desc = "Change window size"})
+vim.keymap.set('n', '`3', ':3winc-<CR>', {desc = "Change window size"})
+vim.keymap.set('n', 'zs', 'zMzO', {desc = "Open all folds"})
+vim.keymap.set('v', "J", ":m '>+1<CR>gv=gv", {desc = "Move text as block"})
+vim.keymap.set('v', "K", ":m '<-2<CR>gv=gv", {desc = "Move text as block"})
 vim.keymap.set('n', 'n', 'nzz')
 vim.keymap.set('n', 'N', 'Nzz')
 vim.keymap.set('n', '<C-d>', '<C-d>zz')
@@ -21,13 +21,10 @@ vim.keymap.set('n', '<C-u>', '<C-u>zz')
 vim.keymap.set('n', '}', '}zz')
 vim.keymap.set('n', '{', '{zz')
 
-vim.keymap.set('n', '<C-h><C-q>', vim.diagnostic.open_float)
-vim.keymap.set('n', '<C-k>', vim.diagnostic.goto_prev)
-vim.keymap.set('n', '<C-j>', vim.diagnostic.goto_next)
-vim.keymap.set('n', 'gh', vim.diagnostic.setloclist)
-
-vim.api.nvim_set_option_value('omnifunc', 'v:lua.vim.lsp.omnifunc', {})
-
+vim.keymap.set('n', '<C-h><C-q>', vim.diagnostic.open_float, {desc = "diagnostics assistance"})
+vim.keymap.set('n', '<C-k>', vim.diagnostic.goto_prev, {desc = "diagnostics assistance"})
+vim.keymap.set('n', '<C-j>', vim.diagnostic.goto_next, {desc = "diagnostics assistance"})
+vim.keymap.set('n', 'gh', vim.diagnostic.setloclist, {desc = "diagnostics assistance"})
 vim.keymap.set('n', 'gd', vim.lsp.buf.definition)
 vim.keymap.set('n', '<space>', vim.lsp.buf.hover)
 vim.keymap.set('n', 'gi', vim.lsp.buf.implementation)
@@ -39,10 +36,10 @@ vim.keymap.set('n', 'gr', vim.lsp.buf.references)
 --- DAP
 vim.keymap.set('n', '<A-d><A-v>', function()
     vim.cmd("DapVirtualTextEnable")
-end)
-vim.keymap.set('n', '<A-d><A-r>', dap.restart)
-vim.keymap.set('n', '<A-d><A-t>', dap.run_to_cursor)
-vim.keymap.set('n', '<A-d><A-d>', dap.continue)
+end, {desc = "enable virtual text when debugging"})
+vim.keymap.set('n', '<A-d><A-r>', dap.restart, {desc = "restart debugger"})
+vim.keymap.set('n', '<A-d><A-t>', dap.run_to_cursor, {desc = "run to cursor"})
+vim.keymap.set('n', '<A-d><A-d>', dap.continue, {desc = "continue debugger"})
 vim.keymap.set('n', '<A-d><A-q>', function()
     dap.close()
     dapui.close()
@@ -58,8 +55,8 @@ vim.keymap.set('n', '<A-d><A-p>', function()
         enter = true
     })
 end)
-vim.keymap.set('n', '<A-d><A-n>', dap.step_over)
-vim.keymap.set('n', '<A-d><A-s>', dap.step_into)
+vim.keymap.set('n', '<A-d><A-n>', dap.step_over, {desc = "step over function"})
+vim.keymap.set('n', '<A-d><A-s>', dap.step_into, {desc = "step into function"})
 
 local search_github = function()
     local csgithub = require("csgithub")
@@ -83,7 +80,7 @@ vim.keymap.set('n', '<C-_>', function()
     local offset = col_count_post - col_count_pre
     cursor_pos[2] = cursor_pos[2] + offset
     vim.api.nvim_win_set_cursor(0, cursor_pos)
-end)
+end, {desc = "toggle comment while preserving place on line"})
 -- git stuff
 vim.keymap.set('n', 'gM', ':Git mergetool -y ')
 vim.keymap.set('n', 'gV', ':Git difftool -y ')
@@ -96,13 +93,13 @@ vim.keymap.set('n', 'gst', function()
     gitsigns.toggle_linehl(IsGitSignsToggled)
     gitsigns.toggle_deleted(IsGitSignsToggled)
     gitsigns.toggle_numhl(IsGitSignsToggled)
-end)
+end, {desc = "toggle gitsigns blame and buffer changes"})
 
-vim.keymap.set('n', 'gss', gitsigns.stage_hunk)
+vim.keymap.set('n', 'gss', gitsigns.stage_hunk, {desc = "gitsigns stage hunk"})
 -- equivalent to Gwrite
-vim.keymap.set('n', 'gsa', gitsigns.stage_buffer)
+vim.keymap.set('n', 'gsa', gitsigns.stage_buffer, {desc = "gitsigns stage buffer"})
 -- equivalent to Gread
-vim.keymap.set('n', 'gsr', gitsigns.reset_buffer)
+vim.keymap.set('n', 'gsr', gitsigns.reset_buffer, {desc = "gitsigns reset buffer, same as :Gread"})
 
 -- cd to current working file
 vim.keymap.set('n', '<A-c>', function()
@@ -118,8 +115,7 @@ vim.keymap.set('n', '\\s', function()
     local change_to = vim.fn.input("Change " .. word .. " to : ")
     vim.cmd(':%s/' .. word .. "/" .. change_to .. "/g")
     vim.cmd(":" .. line_num)
-end
-)
+end, {desc = "find and replace across scope and file"})
 
 local handler = function(virtText, lnum, endLnum, width, truncate)
     local newVirtText = {}
@@ -156,16 +152,16 @@ ufo.setup({
         return { 'treesitter', 'indent' }
     end
 })
-vim.keymap.set('n', 'zR', ufo.openAllFolds)
-vim.keymap.set('n', 'zM', ufo.closeAllFolds)
-vim.keymap.set('n', 'zr', ufo.openFoldsExceptKinds)
+vim.keymap.set('n', 'zR', ufo.openAllFolds, {desc = "open all folds"})
+vim.keymap.set('n', 'zM', ufo.closeAllFolds, {desc = "close all folds"})
+vim.keymap.set('n', 'zr', ufo.openFoldsExceptKinds, {desc = "open most folds"})
 vim.keymap.set('n', 'zm', ufo.closeFoldsWith) -- closeAllFolds == closeFoldsWith(0)
 vim.keymap.set('n', 'K', function()
     local winid = ufo.peekFoldedLinesUnderCursor()
     if not winid then
         vim.lsp.buf.hover()
     end
-end)
+end, {desc = "peek fold, or call lsp.buf.hover()"})
 
 
 -- handle harpoon

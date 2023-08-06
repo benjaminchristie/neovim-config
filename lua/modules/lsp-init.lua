@@ -28,29 +28,10 @@ vim.lsp.handlers["textDocument/signatureHelp"] =
 
 -- Use an on_attach function to only map the following keys
 -- after the language server attaches to the current buffer
-local on_attach = function(_, bufnr)
+local on_attach = function(client, bufnr)
     -- Enable completion triggered by <c-x><c-o>
     vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
-
-    -- Mappings.
-    -- See `:help vim.lsp.*` for documentation on any of the below functions
-    local bufopts = { noremap = true, silent = true, buffer = bufnr }
-    -- vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, bufopts)
-    vim.keymap.set('n', 'gd', vim.lsp.buf.definition, bufopts)
-    -- vim.keymap.set('n', '<space>', require("nabla").popup, bufopts)
-    vim.keymap.set('n', '<space>', vim.lsp.buf.hover, bufopts)
-    vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, bufopts)
-    vim.keymap.set('n', '<C-h><C-g>', vim.lsp.buf.signature_help, bufopts)
-    -- vim.keymap.set('n', '<C-h>wa', vim.lsp.buf.add_workspace_folder, bufopts)
-    -- vim.keymap.set('n', '<C-h>wr', vim.lsp.buf.remove_workspace_folder, bufopts)
-    -- vim.keymap.set('n', '<C-h>wl', function()
-    --     print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
-    -- end, bufopts)
-    vim.keymap.set('n', '<C-h><C-d>', vim.lsp.buf.type_definition, bufopts)
-    vim.keymap.set('n', '<C-h><C-r><C-m>', vim.lsp.buf.rename, bufopts)
-    vim.keymap.set('n', '<C-h><C-e>', vim.lsp.buf.code_action, bufopts)
-    vim.keymap.set('n', 'gr', vim.lsp.buf.references, bufopts)
-    -- vim.keymap.set('n', '<C-h><C-/>', vim.diagnostic.open_float, bufopts)
+    client.server_capabilities.semanticTokensProvider = nil
 end
 
 local lsp_flags = {

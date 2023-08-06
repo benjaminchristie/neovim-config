@@ -1,6 +1,7 @@
-vim.api.nvim_create_user_command("W", "w", {})
-vim.api.nvim_create_user_command("Q", "q", {})
-vim.api.nvim_create_user_command("TC", "tabclose", {})
+vim.api.nvim_create_user_command("W", "w", {desc = "alias to :w"})
+vim.api.nvim_create_user_command("Q", "q", {desc = "alias to :q"})
+vim.api.nvim_create_user_command("TC", "tabclose", {desc = "alias to tabclose"})
+vim.api.nvim_create_user_command("TO", "tabclose", {desc = "alias to tabonly"})
 local function whereami()
     local uptime = 7
     local downtime = 3
@@ -36,7 +37,7 @@ local function whereami()
         end)
     end
 end
-vim.api.nvim_create_user_command("Where", whereami, {})
+vim.api.nvim_create_user_command("Where", whereami, {desc = "highlight cursor position"})
 
 Copygpg_filename = "" -- not proud of this
 local function copygpg()
@@ -48,12 +49,12 @@ local function copygpg()
     vim.cmd("silent !copygpg " .. Copygpg_filename)
 end
 
-vim.api.nvim_create_user_command("Copygpg", copygpg, {})
+vim.api.nvim_create_user_command("Copygpg", copygpg, {desc = "decrypt and copy contents of gpg file to clipboard"})
 
 vim.api.nvim_create_user_command("TmpLua", function()
     vim.cmd("e /tmp/tmp" .. vim.fn.reltimestr(vim.fn.reltime()))
     vim.bo.filetype = "lua"
-end, {})
+end, {desc = "make a temporarily lua file"})
 
 vim.api.nvim_create_user_command("Ex", function()
     local HEIGHT = 12
@@ -61,14 +62,14 @@ vim.api.nvim_create_user_command("Ex", function()
     vim.wo.number = false
     vim.wo.relativenumber = false
     vim.api.nvim_win_set_height(0, HEIGHT)
-end, {})
+end, {desc = "open oil above"})
 vim.api.nvim_create_user_command("Lex", function()
     local WIDTH = 45
     vim.cmd("vertical Oil")
     vim.wo.number = false
     vim.wo.relativenumber = false
     vim.api.nvim_win_set_width(0, WIDTH)
-end, {})
+end, {desc = "open oil to the right"})
 
 vim.api.nvim_create_user_command("Build", function()
     local build_tools = {
@@ -87,20 +88,21 @@ vim.api.nvim_create_user_command("Build", function()
         return
     end
     vim.fn.feedkeys(":Dispatch " .. build_tools[idx])
-end, {})
+end, {desc = "select build tool for dispatch, then call :Dispatch"})
 
 --- used for large files or when treesitter + lsp is slow
 local lazy_load = function()
     vim.o.syntax = "off"
     vim.lsp.stop_client(vim.lsp.get_clients())
-    pcall(vim.treesitter.stop)
+    vim.treesitter.stop()
     vim.fn.timer_start(1000, function()
-        vim.o.syntax = "on"
-        vim.cmd("LspStart")
-        pcall(vim.treesitter.start)
+        -- vim.cmd("LspStart")
+        if vim.treesitter.language.get_lang(vim.o.filetype) ~= nil then
+            vim.treesitter.start()
+        end
     end)
 end
-vim.api.nvim_create_user_command("LazyLoad", lazy_load, {})
+vim.api.nvim_create_user_command("LazyLoad", lazy_load, {desc = "attempt to lazy load ts and lsp"})
 vim.api.nvim_create_augroup("LazyLoadLargeFiles", { clear = true })
 vim.api.nvim_create_autocmd({ "BufReadPost" }, {
     group = "LazyLoadLargeFiles",
@@ -112,7 +114,9 @@ vim.api.nvim_create_autocmd({ "BufReadPost" }, {
         else
             vim.o.syntax = "on"
             vim.cmd("LspStart")
-            pcall(vim.treesitter.start)
+            if vim.treesitter.language.get_lang(vim.o.filetype) ~= nil then
+                vim.treesitter.start()
+            end
         end
     end
 })
