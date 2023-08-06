@@ -1,6 +1,7 @@
 require("config")
 require("colors")
 require("options")
+require("highlight-undo").setup({})
 require("early-retirement").setup({
     retirementAgeMins = 10,
     ignoreVisibileBufs = false,

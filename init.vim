@@ -59,6 +59,7 @@ else
     Plug 'kylechui/nvim-surround'
     Plug 'lukas-reineke/indent-blankline.nvim'
     Plug 'mbbill/undotree', { 'on': 'UndotreeToggle' }
+    Plug 'tzachar/highlight-undo.nvim'
     Plug 't-troebst/perfanno.nvim'
     Plug 'tpope/vim-commentary'
     Plug 'tpope/vim-dispatch', { 'on': 'Dispatch' }
