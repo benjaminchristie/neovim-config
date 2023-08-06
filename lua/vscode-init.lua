@@ -1,5 +1,3 @@
-vim.loader.enable()
-
 vim.o.hlsearch = true
 vim.o.incsearch = true
 
