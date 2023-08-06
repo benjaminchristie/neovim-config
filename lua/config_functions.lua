@@ -95,13 +95,16 @@ local lazy_load = function()
     vim.o.syntax = "off"
     vim.lsp.stop_client(vim.lsp.get_clients())
     vim.treesitter.stop()
-    vim.fn.timer_start(1000, function()
-        -- vim.cmd("LspStart")
+    vim.diagnostic.hide(nil, 0)
+    vim.fn.timer_start(5000, function()
         if vim.treesitter.language.get_lang(vim.o.filetype) ~= nil then
             vim.treesitter.start()
         end
+        vim.cmd("LspStart")
+        vim.diagnostic.show(nil, 0)
     end)
 end
+vim.keymap.set("n", "<A-l>", lazy_load)
 vim.api.nvim_create_user_command("LazyLoad", lazy_load, {desc = "attempt to lazy load ts and lsp"})
 vim.api.nvim_create_augroup("LazyLoadLargeFiles", { clear = true })
 vim.api.nvim_create_autocmd({ "BufReadPost" }, {
@@ -113,10 +116,10 @@ vim.api.nvim_create_autocmd({ "BufReadPost" }, {
             lazy_load()
         else
             vim.o.syntax = "on"
-            vim.cmd("LspStart")
             if vim.treesitter.language.get_lang(vim.o.filetype) ~= nil then
                 vim.treesitter.start()
             end
+            vim.cmd("LspStart")
         end
     end
 })

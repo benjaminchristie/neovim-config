@@ -31,7 +31,7 @@ vim.lsp.handlers["textDocument/signatureHelp"] =
 local on_attach = function(client, bufnr)
     -- Enable completion triggered by <c-x><c-o>
     vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
-    client.server_capabilities.semanticTokensProvider = nil
+    -- client.server_capabilities.semanticTokensProvider = nil
 end
 
 local lsp_flags = {
@@ -42,13 +42,13 @@ lspconfig.cmake.setup {
     on_attach = on_attach,
     flags = lsp_flags,
     capabilities = capabilities,
-    autostart = false,
+    autostart = true,
 }
 lspconfig.pyright.setup {
     on_attach = on_attach,
     flags = lsp_flags,
     capabilities = capabilities,
-    autostart = false,
+    autostart = true,
 }
 -- lspconfig.pylsp.setup{
 --     on_attach = function(client)
@@ -77,25 +77,25 @@ lspconfig['tsserver'].setup {
     on_attach = on_attach,
     flags = lsp_flags,
     capabilities = capabilities,
-    autostart = false,
+    autostart = true,
 }
 lspconfig['gopls'].setup {
     on_attach = on_attach,
     flags = lsp_flags,
     capabilities = capabilities,
-    autostart = false,
+    autostart = true,
 }
 lspconfig['texlab'].setup {
     on_attach = on_attach,
     flags = lsp_flags,
     capabilities = capabilities,
-    autostart = false,
+    autostart = true,
 }
 lspconfig.bashls.setup {
     on_attach = on_attach,
     flags = lsp_flags,
     capabilities = capabilities,
-    autostart = false,
+    autostart = true,
 }
 lspconfig.lua_ls.setup {
     on_attach = on_attach,
@@ -133,25 +133,25 @@ lspconfig.html.setup {
     on_attach = on_attach,
     flags = lsp_flags,
     capabilities = capabilities,
-    autostart = false,
+    autostart = true,
 }
 lspconfig.cssls.setup {
     on_attach = on_attach,
     flags = lsp_flags,
     capabilities = capabilities,
-    autostart = false,
+    autostart = true,
 }
 lspconfig.dockerls.setup {
     on_attach = on_attach,
     flags = lsp_flags,
     capabilities = capabilities,
-    autostart = false,
+    autostart = true,
 }
 lspconfig.marksman.setup {
     on_attach = on_attach,
     flags = lsp_flags,
     capabilities = capabilities,
-    autostart = false,
+    autostart = true,
 }
 local function get_probe_dir(root_dir)
     local project_root = require('lspconfig/util').find_node_modules_ancestor(root_dir)
@@ -177,65 +177,30 @@ lspconfig.asm_lsp.setup {
     on_attach = on_attach,
     flags = lsp_flags,
     capabilities = capabilities,
-    autostart = false,
+    autostart = true,
 }
 require("rust-tools").setup({
     server = {
         on_attach = on_attach,
         flags = lsp_flags,
         capabilities = capabilities,
-        autostart = false,
+        autostart = true,
     }
 })
 
-local function find_cc_json(fn)
-    local found = false
-    local project_path = nil
-    local project_build_path = nil
-    local _, e = string.find(fn, "_ws/src/[^/]*/")
-    if e ~= nil then
-        project_path = string.sub(fn, 0, e)
-        project_build_path = string.gsub(project_path, "src", "build", 1)
----@diagnostic disable-next-line: cast-local-type
-        found = vim.fn.filereadable(project_build_path .. "compile_commands.json")
-    end
-    return project_build_path, found
-end
-local pbp, found = find_cc_json(vim.api.nvim_buf_get_name(0))
-if found then
-    lspconfig['clangd'].setup({
-        on_attach = on_attach,
-        flags = lsp_flags,
-        capabilities = capabilities,
-        autostart = false,
-        cmd = {
-            "clangd",
-            "--background-index",
-            "--clang-tidy",
-            "--clang-tidy-checks='clang-analyzer-core*,clang-analyzer-unix*,bugprone*,modernize*'",
-            "--cross-file-rename",
-            "--header-insertion=iwyu",
-            "--suggest-missing-includes",
-            "--compile-commands-dir='" .. pbp .. "'",
-        }
+lspconfig['clangd'].setup({
+    on_attach = on_attach,
+    flags = lsp_flags,
+    capabilities = capabilities,
+    autostart = true,
+    cmd = {
+        "clangd",
+        "--background-index",
+        "--clang-tidy",
+        "--clang-tidy-checks='clang-analyzer-core*,clang-analyzer-unix*,bugprone*,modernize*'",
+        "--cross-file-rename",
+        "--header-insertion=iwyu",
+        "--suggest-missing-includes",
+        "--compile-commands-dir='.'"
     }
-    )
-else
-    lspconfig['clangd'].setup({
-        on_attach = on_attach,
-        flags = lsp_flags,
-        capabilities = capabilities,
-        autostart = false,
-        cmd = {
-            "clangd",
-            "--background-index",
-            "--clang-tidy",
-            "--clang-tidy-checks='clang-analyzer-core*,clang-analyzer-unix*,bugprone*,modernize*'",
-            "--cross-file-rename",
-            "--header-insertion=iwyu",
-            "--suggest-missing-includes",
-            "--compile-commands-dir='.'"
-        }
-    }
-    )
-end
+})
