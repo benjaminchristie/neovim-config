@@ -47,14 +47,12 @@ vim.api.nvim_create_autocmd({"BufNew"}, {
     end
 })
 vim.api.nvim_create_augroup("Oil", { clear = true })
-vim.api.nvim_create_autocmd({ "BufLeave" }, {
+vim.api.nvim_create_autocmd({ "BufEnter" }, {
     group = "Oil",
     pattern = "*",
     callback = function ()
-        if vim.bo.filetype == "oil" then
-            vim.o.number = true
-            vim.o.relativenumber = true
-        end
+        vim.o.number = true
+        vim.o.relativenumber = true
     end
 })
 vim.api.nvim_create_augroup("FormatTelescope", { clear = true })
