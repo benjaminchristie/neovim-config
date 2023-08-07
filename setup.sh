@@ -56,6 +56,7 @@ install_lsps() {
         PATH=$HOME/.local/bin:$PATH && \
         nvm install 18 && \
         nvm use 18 && \
+        nvm alias default 18 && \
         sudo npm i -g bash-language-server
     # pyright, cmake-language-server
     if ! pip install --ignore-installed pyright cmake-language-server

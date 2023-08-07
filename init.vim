@@ -37,7 +37,7 @@ else
 
     " Git
     Plug 'lewis6991/gitsigns.nvim'
-    Plug 'tpope/vim-fugitive', { 'on': [ 'G', 'Git' ]}
+    Plug 'tpope/vim-fugitive'
 
     " File finders
     Plug 'ThePrimeagen/harpoon'
