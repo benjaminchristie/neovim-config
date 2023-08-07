@@ -1,9 +1,5 @@
 -- Setup nvim-cmp.
-local cmp = require 'cmp'
-
-
--- require("luasnip.loaders.from_lua").load({paths = "./snippets"})
-
+local cmp = require('cmp')
 cmp.setup({
     snippet = {
         -- REQUIRED - you must specify a snippet engine
