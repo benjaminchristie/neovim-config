@@ -24,7 +24,7 @@ else
     Plug 'saadparwaiz1/cmp_luasnip'
     Plug 'simrat39/rust-tools.nvim', { 'for': 'rust' }
     Plug 'windwp/nvim-autopairs'
-    Plug 'windwp/nvim-ts-autotag'
+    Plug 'windwp/nvim-ts-autotag', { 'for': [ 'html', 'xml', 'launch' ]}
 
     " DAP
     Plug 'LiadOz/nvim-dap-repl-highlights'
@@ -43,14 +43,13 @@ else
     Plug 'ThePrimeagen/harpoon'
     Plug 'cljoly/telescope-repo.nvim'
     Plug 'ibhagwan/fzf-lua', { 'branch': 'main' }
-    Plug 'kyazdani42/nvim-web-devicons', { 'on': 'Oil' }
+    Plug 'kyazdani42/nvim-web-devicons'
     Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build' }
     Plug 'nvim-telescope/telescope.nvim', { 'branch': '0.1.x' }
     Plug 'stevearc/oil.nvim', { 'on': 'Oil' }
 
     " QoL
     Plug 'IMOKURI/line-number-interval.nvim'
-    Plug 'Shatur/neovim-tasks'
     Plug 'ThePrimeagen/refactoring.nvim'
     Plug 'akinsho/toggleterm.nvim'
     Plug 'benjaminchristie/csgithub.nvim', { 'branch': 'master'}
@@ -69,7 +68,7 @@ else
     Plug 'chrisgrieser/nvim-early-retirement'
 
     " Accessory
-    Plug 'benjaminchristie/nvim-colorizer.lua'
+    Plug 'benjaminchristie/nvim-colorizer.lua', { 'for': [ 'css', 'html' ]}
     Plug 'dstein64/vim-startuptime', { 'on': 'StartupTime' }
     Plug 'echasnovski/mini.starter'
     Plug 'folke/tokyonight.nvim'
