@@ -52,7 +52,8 @@ install_lsps() {
         chmod +x $HOME/.local/bin/lua-language-server
     # bash-language-server
     curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash && \
-        source $HOME/.bashrc && \
+        export NVM_DIR="$HOME/.nvm" && \
+        [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" && \
         PATH=$HOME/.local/bin:$PATH && \
         nvm install 18 && \
         nvm use 18 && \
@@ -63,6 +64,9 @@ install_lsps() {
     then
         pip install --ignore-installed --break-system-packages pyright cmake-language-server testresources marksman
     fi
+    mkdir -p $HOME/.config/nvim/bin/dictionary && \
+        cd $HOME/.config/nvim/bin/dictionary && \
+        aspell -d en dump master | aspell -l en expand > my.dict
 } 
 # unused, since FZF is included in my vimplug configuration
 install_fzf() {
@@ -94,11 +98,11 @@ print_style "Installing neovim dependencies: \n"
 ## install dependencies
 if [ -x "$(command -v paru)" ]
 then
-    paru -S --noconfirm bash-language-server glow bat clang cmake-language-server dockerfile-language-server gcc gdb git gopls python-pip cargo fzf ninja ripgrep
+    paru -S --noconfirm bash-language-server glow bat clang cmake-language-server dockerfile-language-server gcc gdb git gopls python-pip cargo fzf ninja ripgrep aspell aspell-en
 elif [ -x "$(command -v apt)" ]
 then
     sudo apt update -yqq && \
-        sudo apt install -y --no-install-recommends python3-pip gcc gdb clang git sudo curl wget unzip tar ninja-build build-essential cmake gettext nodejs cargo python-is-python3 python3-venv xclip ripgrep clang-format
+        sudo apt install -y --no-install-recommends python3-pip gcc gdb clang git sudo curl wget unzip tar ninja-build build-essential cmake gettext nodejs cargo python-is-python3 python3-venv xclip ripgrep clang-format aspell aspell-en
 else
     echo "paru or apt is not configured"
     return 1
