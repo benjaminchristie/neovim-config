@@ -12,40 +12,6 @@ nnoremenu PopUp.Peek\ Value                 <Cmd>lua require("dapui").eval(nil, 
 anoremenu PopUp.Exit                        <Nop>
 ]])
 --- autocmds
-Perfanno_required = false
-Colorizer_autotag_required = false
-vim.api.nvim_create_autocmd({ "BufNew" }, {
-    pattern = { "*.cpp", "*.c", "*.py", "*.h" },
-    callback = function()
-        if not Perfanno_required then
-            require("perfanno").setup {
-                line_highlights = require("perfanno.util").make_bg_highlights("#1A1B26", "#CC3300", 10),
-                vt_highlight = require("perfanno.util").make_fg_highlight("#CC3300"),
-                annotate_after_load = true,
-                annotate_on_open = true,
-                ts_function_patterns = {
-                    default = {
-                        "function",
-                        "method",
-                    },
-                },
-            }
-            Perfanno_required = true
-        end
-    end
-})
-vim.api.nvim_create_autocmd({ "BufNew" }, {
-    pattern = { "*.css", "*.html", "*.js", "*.ts", "*.xml" },
-    callback = function()
-        if not Colorizer_autotag_required then
-            require('colorizer').setup({}, { css = true, })
-            require('nvim-ts-autotag').setup({
-                filetypes = { "html", "xml" }
-            })
-            Colorizer_autotag_required = true
-        end
-    end
-})
 vim.api.nvim_create_autocmd("BufWritePre", {
     pattern = "*.lua",
     callback = function()

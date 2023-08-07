@@ -24,7 +24,7 @@ else
     Plug 'saadparwaiz1/cmp_luasnip'
     Plug 'simrat39/rust-tools.nvim', { 'for': 'rust' }
     Plug 'windwp/nvim-autopairs'
-    Plug 'windwp/nvim-ts-autotag', { 'for': [ 'html', 'xml', 'launch' ]}
+    Plug 'windwp/nvim-ts-autotag'
 
     " DAP
     Plug 'LiadOz/nvim-dap-repl-highlights'
@@ -68,7 +68,7 @@ else
     Plug 'chrisgrieser/nvim-early-retirement'
 
     " Accessory
-    Plug 'benjaminchristie/nvim-colorizer.lua', { 'for': [ 'css', 'html' ]}
+    Plug 'benjaminchristie/nvim-colorizer.lua'
     Plug 'dstein64/vim-startuptime', { 'on': 'StartupTime' }
     Plug 'echasnovski/mini.starter'
     Plug 'folke/tokyonight.nvim'
