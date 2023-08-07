@@ -188,6 +188,16 @@ require("rust-tools").setup({
     }
 })
 
+local clang_tidy_checks = {
+    "clang-analyzer-core*",
+    "clang-analyzer-unix*",
+    "clang-analyzer-nullability*",
+    "clang-analyzer-optin.cplusplus.UninitializedObject",
+    "clang-analyzer-optin.cplusplus.VirtualCall",
+    "bugprone*",
+    "modernize*",
+}
+
 lspconfig['clangd'].setup({
     on_attach = on_attach,
     flags = lsp_flags,
@@ -195,9 +205,13 @@ lspconfig['clangd'].setup({
     autostart = true,
     cmd = {
         "clangd",
+        "--all-scopes-completion",
+        "--completion-style=bundled",
+        "--pch-storage=memory",
+        "--pretty",
         "--background-index",
         "--clang-tidy",
-        "--clang-tidy-checks='clang-analyzer-core*,clang-analyzer-unix*,bugprone*,modernize*'",
+        "--clang-tidy-checks='"..table.concat(clang_tidy_checks, ",") .. "'",
         "--cross-file-rename",
         "--header-insertion=iwyu",
         "--suggest-missing-includes",
