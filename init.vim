@@ -6,12 +6,6 @@ else
     call plug#begin()
     """ Internal plugins """
     " Essential
-    Plug 'hrsh7th/cmp-buffer'
-    Plug 'hrsh7th/cmp-cmdline'
-    Plug 'hrsh7th/cmp-nvim-lsp'
-    Plug 'hrsh7th/cmp-path'
-    Plug 'hrsh7th/nvim-cmp'
-    Plug 'petertriho/cmp-git'
     Plug 'nvim-lua/plenary.nvim'
     Plug 'nvim-lua/popup.nvim'
     Plug 'nvim-treesitter/nvim-treesitter', { 'do': ':TSUpdate' }
@@ -25,6 +19,13 @@ else
     Plug 'simrat39/rust-tools.nvim', { 'for': 'rust' }
     Plug 'windwp/nvim-autopairs'
     Plug 'windwp/nvim-ts-autotag'
+    Plug 'hrsh7th/cmp-buffer'
+    Plug 'hrsh7th/cmp-cmdline'
+    Plug 'hrsh7th/cmp-nvim-lsp'
+    Plug 'hrsh7th/cmp-path'
+    Plug 'hrsh7th/nvim-cmp'
+    Plug 'uga-rosa/cmp-dictionary'
+    Plug 'petertriho/cmp-git'
 
     " DAP
     Plug 'LiadOz/nvim-dap-repl-highlights'

@@ -1,4 +1,4 @@
-vim.api.nvim_set_var("line_number_interval#custom_interval", {1,2,3,4,5})
+vim.api.nvim_set_var("line_number_interval#custom_interval", { 1, 2, 3, 4, 5 })
 vim.api.nvim_set_var("line_number_interval#use_custom", 1)
 vim.api.nvim_set_option_value('omnifunc', 'v:lua.vim.lsp.omnifunc', {})
 vim.g.plug_window = [[vertical topleft new]]
@@ -18,6 +18,7 @@ vim.o.clipboard = "unnamedplus"
 vim.o.cmdheight = 1
 vim.o.conceallevel = 0
 vim.o.cursorline = true
+vim.o.dictionary = "/home/benjamin/.config/nvim/bin/dictionary/my.dict"
 vim.o.expandtab = true
 vim.o.foldcolumn = '0' -- '0' is not bad
 vim.o.foldenable = true
