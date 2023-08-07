@@ -57,11 +57,11 @@ install_lsps() {
         nvm install 18 && \
         nvm use 18 && \
         nvm alias default 18 && \
-        sudo npm i -g bash-language-server
+        sudo npm i -g bash-language-server vscode-langservers-extracted
     # pyright, cmake-language-server
-    if ! pip install --ignore-installed pyright cmake-language-server
+    if ! pip install --ignore-installed pyright cmake-language-server testresources marksman
     then
-        pip install --ignore-installed --break-system-packages pyright cmake-language-server
+        pip install --ignore-installed --break-system-packages pyright cmake-language-server testresources marksman
     fi
 } 
 # unused, since FZF is included in my vimplug configuration
@@ -98,7 +98,7 @@ then
 elif [ -x "$(command -v apt)" ]
 then
     sudo apt update -yqq && \
-        sudo apt install -y --no-install-recommends python3-pip gcc gdb clang git sudo curl wget unzip tar ninja-build build-essential cmake gettext npm cargo python-is-python3 python3-venv xclip ripgrep clang-format
+        sudo apt install -y --no-install-recommends python3-pip gcc gdb clang git sudo curl wget unzip tar ninja-build build-essential cmake gettext nodejs cargo python-is-python3 python3-venv xclip ripgrep clang-format
 else
     echo "paru or apt is not configured"
     return 1
