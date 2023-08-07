@@ -23,8 +23,12 @@ vim.lsp.handlers["textDocument/signatureHelp"] =
     )
 -- Use an on_attach function to only map the following keys
 -- after the language server attaches to the current buffer
+
 local on_attach = function(client, bufnr)
     vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
+end
+
+local on_attach_with_inlay_hints = function(client, bufnr)
     vim.api.nvim_create_augroup("lsp_augroup", { clear = true })
     vim.api.nvim_create_autocmd("InsertEnter", {
         buffer = bufnr,
@@ -36,7 +40,10 @@ local on_attach = function(client, bufnr)
         callback = function() vim.lsp.inlay_hint(bufnr, false) end,
         group = "lsp_augroup",
     })
+    return on_attach(client, bufnr)
 end
+
+
 local lsp_flags = {
     -- This is the default in Nvim 0.7+
     debounce_text_changes = 150,
@@ -78,7 +85,7 @@ lspconfig.bashls.setup {
     autostart = true,
 }
 lspconfig.lua_ls.setup {
-    on_attach = on_attach,
+    on_attach = on_attach_with_inlay_hints,
     flags = lsp_flags,
     capabilities = capabilities,
     autostart = true,
@@ -157,7 +164,7 @@ lspconfig.asm_lsp.setup {
 }
 require("rust-tools").setup({
     server = {
-        on_attach = on_attach,
+        on_attach = on_attach_with_inlay_hints,
         flags = lsp_flags,
         capabilities = capabilities,
         autostart = true,
@@ -175,13 +182,14 @@ local clang_tidy_checks = {
 }
 
 lspconfig['clangd'].setup({
-    on_attach = on_attach,
+    on_attach = on_attach_with_inlay_hints,
     flags = lsp_flags,
     capabilities = capabilities,
     autostart = true,
     cmd = {
         "clangd",
         "--all-scopes-completion",
+        "-j=4",
         "--completion-style=bundled",
         "--pch-storage=memory",
         "--pretty",
@@ -191,6 +199,7 @@ lspconfig['clangd'].setup({
         "--cross-file-rename",
         "--header-insertion=iwyu",
         "--suggest-missing-includes",
-        "--compile-commands-dir='.'"
+        "--compile-commands-dir='.'",
+        "--inlay-hints=true"
     }
 })
