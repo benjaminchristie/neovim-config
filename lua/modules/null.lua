@@ -28,4 +28,3 @@ null_ls.setup({
         "CMakeLists.txt"
     )
 })
-

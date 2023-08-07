@@ -1,4 +1,4 @@
-require("toggleterm").setup{
+require("toggleterm").setup {
     size = 40,
     open_mapping = [[<A-t>]],
     direction = 'float',
@@ -6,15 +6,17 @@ require("toggleterm").setup{
     persist_size = false,
 }
 
-vim.api.nvim_create_augroup("TerminalKeymaps", {clear = false})
-vim.api.nvim_create_autocmd({"TermOpen"}, {
+vim.api.nvim_create_augroup("TerminalKeymaps", { clear = true })
+vim.api.nvim_create_autocmd({ "TermOpen" }, {
     pattern = "term://*",
-    callback = function ()
-        vim.api.nvim_buf_set_keymap(0, 't', '<esc>', [[<C-\><C-n>]], {noremap = true})
+    callback = function()
+        vim.api.nvim_buf_set_keymap(0, 't', '<esc>', [[<C-\><C-n>]], { noremap = true })
+        vim.opt_local.number = false
+        vim.opt_local.relativenumber = false
     end
 })
 
 local Terminal = require('toggleterm.terminal').Terminal
-local pyterm = Terminal:new({cmd = "/usr/bin/python", hidden = true})
-vim.keymap.set('n', [[<A-p>]], function () pyterm:toggle() end)
-vim.keymap.set('t', [[<A-p>]], function () pyterm:toggle() end)
+local pyterm = Terminal:new({ cmd = "/usr/bin/python", hidden = true })
+vim.keymap.set('n', [[<A-p>]], function() pyterm:toggle() end)
+vim.keymap.set('t', [[<A-p>]], function() pyterm:toggle() end)

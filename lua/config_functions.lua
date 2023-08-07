@@ -1,6 +1,7 @@
-vim.api.nvim_create_user_command("W", "w", {})
-vim.api.nvim_create_user_command("Q", "q", {})
-vim.api.nvim_create_user_command("TC", "tabclose", {})
+vim.api.nvim_create_user_command("W", "w", {desc = "alias to :w"})
+vim.api.nvim_create_user_command("Q", "q", {desc = "alias to :q"})
+vim.api.nvim_create_user_command("TC", "tabclose", {desc = "alias to tabclose"})
+vim.api.nvim_create_user_command("TO", "tabclose", {desc = "alias to tabonly"})
 local function whereami()
     local uptime = 7
     local downtime = 3
@@ -13,30 +14,30 @@ local function whereami()
     }
     local length = #cursor_colors
     for i = 0, length, 1 do
-        vim.fn.timer_start((i + 1) * uptime, function ()
+        vim.fn.timer_start((i + 1) * uptime, function()
             vim.wo.cursorline = true
             vim.wo.cursorcolumn = true
-            vim.api.nvim_set_hl(1, "Cursor",       {bg=cursor_colors[i]})
-            vim.api.nvim_set_hl(1, "CursorLine",   {bg=cursor_colors[i]})
-            vim.api.nvim_set_hl(1, "CursorColumn", {bg=cursor_colors[i]})
+            vim.api.nvim_set_hl(1, "Cursor", { bg = cursor_colors[i] })
+            vim.api.nvim_set_hl(1, "CursorLine", { bg = cursor_colors[i] })
+            vim.api.nvim_set_hl(1, "CursorColumn", { bg = cursor_colors[i] })
             vim.api.nvim_win_set_hl_ns(vim.api.nvim_get_current_win(), 1)
         end)
-        vim.fn.timer_start((length) * uptime + (i + 1) * downtime, function ()
+        vim.fn.timer_start((length) * uptime + (i + 1) * downtime, function()
             vim.wo.cursorline = true
             vim.wo.cursorcolumn = true
-            vim.api.nvim_set_hl(1, "Cursor",       {bg=cursor_colors[length - i - 1]})
-            vim.api.nvim_set_hl(1, "CursorLine",   {bg=cursor_colors[length - i - 1]})
-            vim.api.nvim_set_hl(1, "CursorColumn", {bg=cursor_colors[length - i - 1]})
+            vim.api.nvim_set_hl(1, "Cursor", { bg = cursor_colors[length - i - 1] })
+            vim.api.nvim_set_hl(1, "CursorLine", { bg = cursor_colors[length - i - 1] })
+            vim.api.nvim_set_hl(1, "CursorColumn", { bg = cursor_colors[length - i - 1] })
             vim.api.nvim_win_set_hl_ns(vim.api.nvim_get_current_win(), 1)
         end)
-        vim.fn.timer_start((length + 1) * (uptime + downtime), function ()
+        vim.fn.timer_start((length + 1) * (uptime + downtime), function()
             vim.wo.cursorcolumn = false
             vim.o.cursorcolumn = false
             vim.api.nvim_win_set_hl_ns(vim.api.nvim_get_current_win(), 0)
         end)
     end
 end
-vim.api.nvim_create_user_command("Where", whereami, {})
+vim.api.nvim_create_user_command("Where", whereami, {desc = "highlight cursor position"})
 
 Copygpg_filename = "" -- not proud of this
 local function copygpg()
@@ -48,26 +49,92 @@ local function copygpg()
     vim.cmd("silent !copygpg " .. Copygpg_filename)
 end
 
-vim.api.nvim_create_user_command("Copygpg", copygpg, {})
+vim.api.nvim_create_user_command("Copygpg", copygpg, {desc = "decrypt and copy contents of gpg file to clipboard"})
 
-vim.api.nvim_create_user_command("TmpLua", function ()
+vim.api.nvim_create_user_command("TmpLua", function()
     vim.cmd("e /tmp/tmp" .. vim.fn.reltimestr(vim.fn.reltime()))
     vim.bo.filetype = "lua"
-end, {})
+end, {desc = "make a temporarily lua file"})
 
-vim.api.nvim_create_user_command("Ex", function ()
+vim.api.nvim_create_user_command("Ex", function()
     local HEIGHT = 12
     vim.cmd("topleft Oil")
     vim.wo.number = false
     vim.wo.relativenumber = false
     vim.api.nvim_win_set_height(0, HEIGHT)
-end, {})
-vim.api.nvim_create_user_command("Lex", function ()
+end, {desc = "open oil above"})
+vim.api.nvim_create_user_command("Lex", function()
     local WIDTH = 45
     vim.cmd("vertical Oil")
     vim.wo.number = false
     vim.wo.relativenumber = false
     vim.api.nvim_win_set_width(0, WIDTH)
-end, {})
+end, {desc = "open oil to the right"})
 
+vim.api.nvim_create_user_command("Build", function()
+    local build_tools = {
+        "make ",
+        "cmake --build build ",
+        "export TERM=dumb && catkin build --no-color --no-status ",
+    }
+    local prompt = ""
+    for i = 1, #build_tools do
+        prompt = prompt .. i .. " : " .. build_tools[i] .. "\n"
+    end
+    prompt = prompt .. "Enter your choice : "
+    local which_compiler = vim.fn.input(prompt)
+    local idx = tonumber(which_compiler)
+    if idx == nil then
+        return
+    end
+    vim.fn.feedkeys(":Dispatch " .. build_tools[idx])
+end, {desc = "select build tool for dispatch, then call :Dispatch"})
 
+--- used for large files or when treesitter + lsp is slow
+local lazy_load = function()
+    vim.o.syntax = "off"
+    vim.lsp.stop_client(vim.lsp.get_clients())
+    vim.treesitter.stop()
+    vim.diagnostic.hide(nil, 0)
+    vim.fn.timer_start(5000, function()
+        if vim.treesitter.language.get_lang(vim.o.filetype) ~= nil then
+            vim.treesitter.start()
+        end
+        vim.cmd("LspStart")
+        vim.diagnostic.show(nil, 0)
+    end)
+end
+vim.keymap.set("n", "<A-l>", lazy_load)
+vim.api.nvim_create_user_command("LazyLoad", lazy_load, {desc = "attempt to lazy load ts and lsp"})
+vim.api.nvim_create_augroup("LazyLoadLargeFiles", { clear = true })
+vim.api.nvim_create_autocmd({ "BufReadPost" }, {
+    group = "LazyLoadLargeFiles",
+    pattern = "*",
+    callback = function()
+        if vim.fn.getfsize(vim.api.nvim_buf_get_name(0)) > 65536 then
+            vim.notify("Lazy loading file...")
+            lazy_load()
+        else
+            vim.o.syntax = "on"
+            if vim.treesitter.language.get_lang(vim.o.filetype) ~= nil then
+                vim.treesitter.start()
+            end
+            vim.cmd("LspStart")
+        end
+    end
+})
+local change_plug_options = function()
+    local w = [[width = math.ceil(vim.api.nvim_get_option("columns") * 0.8), ]]
+    local h = [[height = math.ceil(vim.api.nvim_get_option("lines") * 0.8), ]]
+    local r = [[col = math.ceil(vim.api.nvim_get_option("columns") * 0.1 - 1), ]]
+    local c = [[row = math.ceil(vim.api.nvim_get_option("lines") * 0.1 - 1), ]]
+    local floating_opts = [[relative = 'editor', style='minimal', border = "single"]]
+    vim.g.plug_window = [[lua vim.api.nvim_open_win(vim.api.nvim_create_buf(true, false), true, {]] .. w .. h .. r .. c .. floating_opts .. "})"
+    vim.cmd("PlugUpdate")
+    vim.fn.timer_start(5000, function ()
+        vim.g.plug_window = [[vertical topleft new]]
+    end)
+end
+vim.api.nvim_create_user_command("Plug", change_plug_options, {
+    desc =  "queue a floating window for vim-plug"
+})

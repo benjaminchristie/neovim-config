@@ -1,71 +1,54 @@
-  -- Setup lspconfig.
-  -- neodev must be called before lspconfig
+-- Setup lspconfig.
+-- neodev must be called before lspconfig
 require("neodev").setup({
-  -- add any options here, or leave empty to use the default settings
+    -- add any options here, or leave empty to use the default settings
     library = { plugins = { "nvim-dap-ui" }, types = true },
 })
 local lspconfig = require("lspconfig")
 local capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities())
 capabilities.textDocument.completion.completionItem.snippetSupport = true
 vim.lsp.handlers["textDocument/hover"] =
-  vim.lsp.with(
-  vim.lsp.handlers.hover,
-  {
-    border = "single"
-  }
-)
+    vim.lsp.with(
+        vim.lsp.handlers.hover,
+        {
+            border = "single"
+        }
+    )
 
 vim.lsp.handlers["textDocument/signatureHelp"] =
-  vim.lsp.with(
-  vim.lsp.handlers.signature_help,
-  {
-    border = "single"
-  }
-)
+    vim.lsp.with(
+        vim.lsp.handlers.signature_help,
+        {
+            border = "single"
+        }
+    )
 -- Mappings.
 -- See `:help vim.diagnostic.*` for documentation on any of the below functions
 
 
 -- Use an on_attach function to only map the following keys
 -- after the language server attaches to the current buffer
-local on_attach = function(_, bufnr)
+local on_attach = function(client, bufnr)
     -- Enable completion triggered by <c-x><c-o>
     vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
-
-    -- Mappings.
-    -- See `:help vim.lsp.*` for documentation on any of the below functions
-    local bufopts = { noremap=true, silent=true, buffer=bufnr }
-    -- vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, bufopts)
-    vim.keymap.set('n', 'gd', vim.lsp.buf.definition, bufopts)
-    -- vim.keymap.set('n', '<space>', require("nabla").popup, bufopts)
-    vim.keymap.set('n', '<space>', vim.lsp.buf.hover, bufopts)
-    vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, bufopts)
-    vim.keymap.set('n', '<C-h><C-g>', vim.lsp.buf.signature_help, bufopts)
-    -- vim.keymap.set('n', '<C-h>wa', vim.lsp.buf.add_workspace_folder, bufopts)
-    -- vim.keymap.set('n', '<C-h>wr', vim.lsp.buf.remove_workspace_folder, bufopts)
-    -- vim.keymap.set('n', '<C-h>wl', function()
-    --     print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
-    -- end, bufopts)
-    vim.keymap.set('n', '<C-h><C-d>', vim.lsp.buf.type_definition, bufopts)
-    vim.keymap.set('n', '<C-h><C-r><C-m>', vim.lsp.buf.rename, bufopts)
-    vim.keymap.set('n', '<C-h><C-e>', vim.lsp.buf.code_action, bufopts)
-    vim.keymap.set('n', 'gr', vim.lsp.buf.references, bufopts)
-    -- vim.keymap.set('n', '<C-h><C-/>', vim.diagnostic.open_float, bufopts)
+    -- client.server_capabilities.semanticTokensProvider = nil
 end
 
 local lsp_flags = {
     -- This is the default in Nvim 0.7+
     debounce_text_changes = 150,
 }
-lspconfig.cmake.setup{
+lspconfig.cmake.setup {
     on_attach = on_attach,
     flags = lsp_flags,
     capabilities = capabilities,
+    autostart = true,
 }
-lspconfig.pyright.setup{
+lspconfig.pyright.setup {
     on_attach = on_attach,
     flags = lsp_flags,
     capabilities = capabilities,
+    autostart = true,
 }
 -- lspconfig.pylsp.setup{
 --     on_attach = function(client)
@@ -90,153 +73,134 @@ lspconfig.pyright.setup{
 --         }
 --     }
 -- }
-lspconfig['tsserver'].setup{
+lspconfig['tsserver'].setup {
     on_attach = on_attach,
     flags = lsp_flags,
     capabilities = capabilities,
+    autostart = true,
 }
-lspconfig['gopls'].setup{
+lspconfig['gopls'].setup {
     on_attach = on_attach,
     flags = lsp_flags,
     capabilities = capabilities,
+    autostart = true,
 }
-lspconfig['texlab'].setup{
+lspconfig['texlab'].setup {
     on_attach = on_attach,
     flags = lsp_flags,
     capabilities = capabilities,
+    autostart = true,
 }
-lspconfig.bashls.setup{
+lspconfig.bashls.setup {
     on_attach = on_attach,
     flags = lsp_flags,
     capabilities = capabilities,
+    autostart = true,
 }
 lspconfig.lua_ls.setup {
-  settings = {
-    Lua = {
-      completion = {
-        callSnippet = "Replace"
-      },
-      runtime = {
-        -- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
-        version = 'LuaJIT',
-      },
-      diagnostics = {
-        -- Get the language server to recognize the `vim` global
-        globals = {'vim'},
-        undefined_global = false,
-        missing_parameters = false,
-      },
-      workspace = {
-        -- Make the server aware of Neovim runtime files
-        library = vim.api.nvim_get_runtime_file("", true),
-        checkThirdParty = false,
-      },
-      -- Do not send telemetry data containing a randomized but unique identifier
-      telemetry = {
-        enable = false,
-      },
+    on_attach = on_attach,
+    flags = lsp_flags,
+    capabilities = capabilities,
+    autostart = true,
+    settings = {
+        Lua = {
+            completion = {
+                callSnippet = "Replace"
+            },
+            runtime = {
+                -- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
+                version = 'LuaJIT',
+            },
+            diagnostics = {
+                -- Get the language server to recognize the `vim` global
+                globals = { 'vim' },
+                undefined_global = false,
+                missing_parameters = false,
+            },
+            workspace = {
+                -- Make the server aware of Neovim runtime files
+                library = vim.api.nvim_get_runtime_file("", true),
+                checkThirdParty = false,
+            },
+            -- Do not send telemetry data containing a randomized but unique identifier
+            telemetry = {
+                enable = false,
+            },
+        },
     },
-  },
-  on_attach = on_attach,
 }
-lspconfig.html.setup{
+lspconfig.html.setup {
     on_attach = on_attach,
     flags = lsp_flags,
     capabilities = capabilities,
+    autostart = true,
 }
-lspconfig.cssls.setup{
+lspconfig.cssls.setup {
     on_attach = on_attach,
     flags = lsp_flags,
     capabilities = capabilities,
+    autostart = true,
 }
-lspconfig.dockerls.setup{
+lspconfig.dockerls.setup {
     on_attach = on_attach,
     flags = lsp_flags,
     capabilities = capabilities,
+    autostart = true,
 }
-lspconfig.marksman.setup{
+lspconfig.marksman.setup {
     on_attach = on_attach,
     flags = lsp_flags,
     capabilities = capabilities,
+    autostart = true,
 }
 local function get_probe_dir(root_dir)
-  local project_root = require('lspconfig/util').find_node_modules_ancestor(root_dir)
+    local project_root = require('lspconfig/util').find_node_modules_ancestor(root_dir)
 
-  return project_root and (project_root .. '/node_modules') or ''
+    return project_root and (project_root .. '/node_modules') or ''
 end
 local default_probe_dir = get_probe_dir(vim.fn.getcwd())
-lspconfig.angularls.setup{
+lspconfig.angularls.setup {
     on_attach = on_attach,
     flags = lsp_flags,
     capabilities = capabilities,
+    autostart = false,
     cmd = {
         'angularls',
         '--stdio',
         '--tsProbeLocations', default_probe_dir,
         '--ngProbeLocations', default_probe_dir
     },
-    filetypes = {'typescript', 'html', 'typescriptreact', 'typescript.tsx'},
+    filetypes = { 'typescript', 'html', 'typescriptreact', 'typescript.tsx' },
     root_dir = require('lspconfig/util').root_pattern('angular.json', '.git'),
 }
-lspconfig.asm_lsp.setup{
+lspconfig.asm_lsp.setup {
     on_attach = on_attach,
     flags = lsp_flags,
     capabilities = capabilities,
+    autostart = true,
 }
 require("rust-tools").setup({
-  server = {
-      on_attach = on_attach,
-      flags = lsp_flags,
-      capabilities = capabilities,
-  }
+    server = {
+        on_attach = on_attach,
+        flags = lsp_flags,
+        capabilities = capabilities,
+        autostart = true,
+    }
 })
 
-local function find_cc_json(fn)
-    local found = false
-    local project_path = nil
-    local project_build_path = nil
-    local _, e = string.find(fn, "_ws/src/[^/]*/")
-    if e ~= nil then
-        project_path = string.sub(fn, 0, e)
-        project_build_path = string.gsub(project_path, "src", "build", 1)
-        found = vim.fn.filereadable(project_build_path .. "compile_commands.json")
-    end
-    return project_build_path, found
-end
-local pbp, found = find_cc_json(vim.api.nvim_buf_get_name(0))
-if found then
-    lspconfig['clangd'].setup({
-        on_attach = on_attach,
-        flags = lsp_flags,
-        capabilities = capabilities,
-        autostart = true,
-        cmd = {
-            "clangd",
-            "--background-index",
-            "--clang-tidy",
-            "--clang-tidy-checks='clang-analyzer-core*,clang-analyzer-unix*,bugprone*,modernize*'",
-            "--cross-file-rename",
-            "--header-insertion=iwyu",
-            "--suggest-missing-includes",
-            "--compile-commands-dir='"..pbp.."'",
-            }
-        }
-    )
-else
-    lspconfig['clangd'].setup({
-        on_attach = on_attach,
-        flags = lsp_flags,
-        capabilities = capabilities,
-        autostart = true,
-        cmd = {
-            "clangd",
-            "--background-index",
-            "--clang-tidy",
-            "--clang-tidy-checks='clang-analyzer-core*,clang-analyzer-unix*,bugprone*,modernize*'",
-            "--cross-file-rename",
-            "--header-insertion=iwyu",
-            "--suggest-missing-includes",
-            }
-        }
-    )
-end
+lspconfig['clangd'].setup({
+    on_attach = on_attach,
+    flags = lsp_flags,
+    capabilities = capabilities,
+    autostart = true,
+    cmd = {
+        "clangd",
+        "--background-index",
+        "--clang-tidy",
+        "--clang-tidy-checks='clang-analyzer-core*,clang-analyzer-unix*,bugprone*,modernize*'",
+        "--cross-file-rename",
+        "--header-insertion=iwyu",
+        "--suggest-missing-includes",
+        "--compile-commands-dir='.'"
+    }
+})

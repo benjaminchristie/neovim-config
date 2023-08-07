@@ -1,8 +1,12 @@
-vim.loader.enable()
 require("config")
 require("colors")
 require("options")
-require("harpoon").setup({})
+require("highlight-undo").setup({})
+require("early-retirement").setup({
+    retirementAgeMins = 10,
+    ignoreVisibileBufs = false,
+    notificationOnAutoClose = false,
+})
 require("oil").setup({
     skip_confirm_for_simple_edits = true,
     prompt_save_on_select_new_entry = false,
@@ -28,15 +32,11 @@ require("oil").setup({
         end
     }
 })
-require('colorizer').setup({}, { css = true; })
 require("plugins.nvim-gpg")
 require("plugins.make-flow")
 require('nvim-autopairs').setup({
     ignored_next_char = "[%w%.]",
     enable_check_bracket_line = false,
-})
-require('nvim-ts-autotag').setup({
-    filetypes = {"html", "xml"}
 })
 require("indent_blankline").setup {
     show_current_context = true,
@@ -52,15 +52,3 @@ require("gitsigns").setup({
     },
     current_line_blame_formatter = " <author>, <author_time> - <abbrev_sha> - <summary>  "
 })
-require("perfanno").setup {
-    line_highlights = require("perfanno.util").make_bg_highlights("#1A1B26", "#CC3300", 10),
-    vt_highlight = require("perfanno.util").make_fg_highlight("#CC3300"),
-    annotate_after_load = true,
-    annotate_on_open = true,
-    ts_function_patterns = {
-        default = {
-            "function",
-            "method",
-        },
-    },
-}

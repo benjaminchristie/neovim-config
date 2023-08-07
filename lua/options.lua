@@ -1,13 +1,12 @@
+vim.api.nvim_set_var("line_number_interval#custom_interval", {1,2,3,4,5})
+vim.api.nvim_set_var("line_number_interval#use_custom", 1)
+vim.api.nvim_set_option_value('omnifunc', 'v:lua.vim.lsp.omnifunc', {})
+vim.g.plug_window = [[vertical topleft new]]
+vim.g.dispatch_no_maps = 1
 vim.g.editorconfig_trim_trailing_whitespace = true
+vim.g.indent_blankline_char_list_blankline = { '|', '|', '|', '|', '|', "", "", "", "", "" }
 vim.g.line_number_interval_enable_at_startup = 1
 vim.g.loaded_2html_plugin = 0
--- vim.g.loaded_gzip = 1
--- vim.g.loaded_zip = 1
--- vim.g.loaded_matchit = 1
--- vim.g.loaded_matchparen = 1
--- vim.g.loaded_tar = 1
--- vim.g.loaded_tarPlugin = 1
--- vim.g.loaded_zipPlugin = 1
 vim.g.syntastic_auto_jump = 1
 vim.g.term_buf = 0
 vim.g.term_win = 0
@@ -22,7 +21,7 @@ vim.o.cursorline = true
 vim.o.expandtab = true
 vim.o.foldcolumn = '0' -- '0' is not bad
 vim.o.foldenable = true
-vim.o.foldlevel = 99 -- Using ufo provider need a large value, feel free to decrease the value
+vim.o.foldlevel = 99   -- Using ufo provider need a large value, feel free to decrease the value
 vim.o.foldlevelstart = 99
 vim.o.hlsearch = true
 vim.o.hlsearch = true
@@ -42,14 +41,13 @@ vim.o.spell = false
 vim.o.splitkeep = "screen"
 vim.o.splitright = true
 vim.o.sw = 4
+vim.o.syntax = "on"
 vim.o.tabstop = 8
 vim.o.termguicolors = true
 vim.o.ts = 4
 vim.o.undofile = true
 vim.o.wildmenu = true
-vim.o.wrap = true
-vim.opt.list = false
-vim.opt.listchars = { eol="", trail = "▓", extends = ''}
+vim.o.wrap = false
 vim.opt.fillchars = ""
-vim.cmd('let g:line_number_interval#use_custom = 1')
-vim.cmd('let g:line_number_interval#custom_interval = [1,2,3,4,5]')
+vim.opt.list = false
+vim.opt.listchars = { eol = "", trail = "▓", extends = '' }
