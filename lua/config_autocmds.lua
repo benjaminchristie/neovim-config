@@ -14,8 +14,8 @@ anoremenu PopUp.Exit                        <Nop>
 --- autocmds
 Perfanno_required = false
 Colorizer_autotag_required = false
-vim.api.nvim_create_autocmd({"BufNew"}, {
-    pattern = {"*.cpp", "*.c", "*.py", "*.h"},
+vim.api.nvim_create_autocmd({ "BufNew" }, {
+    pattern = { "*.cpp", "*.c", "*.py", "*.h" },
     callback = function()
         if not Perfanno_required then
             require("perfanno").setup {
@@ -34,23 +34,29 @@ vim.api.nvim_create_autocmd({"BufNew"}, {
         end
     end
 })
-vim.api.nvim_create_autocmd({"BufNew"}, {
-    pattern = {"*.css", "*.html", "*.js", "*.ts", "*.xml"},
-    callback = function ()
+vim.api.nvim_create_autocmd({ "BufNew" }, {
+    pattern = { "*.css", "*.html", "*.js", "*.ts", "*.xml" },
+    callback = function()
         if not Colorizer_autotag_required then
             require('colorizer').setup({}, { css = true, })
             require('nvim-ts-autotag').setup({
                 filetypes = { "html", "xml" }
             })
-        Colorizer_autotag_required = true
+            Colorizer_autotag_required = true
         end
+    end
+})
+vim.api.nvim_create_autocmd("BufWritePre", {
+    pattern = "*.lua",
+    callback = function()
+        vim.lsp.buf.format()
     end
 })
 vim.api.nvim_create_augroup("Oil", { clear = true })
 vim.api.nvim_create_autocmd({ "BufEnter" }, {
     group = "Oil",
     pattern = "*",
-    callback = function ()
+    callback = function()
         vim.o.number = true
         vim.o.relativenumber = true
     end
@@ -88,7 +94,7 @@ vim.api.nvim_create_autocmd({ "BufEnter" }, {
 vim.api.nvim_create_augroup("LspFormatting", { clear = true })
 vim.api.nvim_create_autocmd({ "BufWritePre" }, {
     group = "LspFormatting",
-    pattern = {"*.cpp", "*.h", "*.cxx", "*.hpp"},
+    pattern = { "*.cpp", "*.h", "*.cxx", "*.hpp" },
     command = "ClangFormat",
 
 })
