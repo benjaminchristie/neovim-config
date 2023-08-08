@@ -29,17 +29,18 @@ local on_attach = function(client, bufnr)
 end
 
 local on_attach_with_inlay_hints = function(client, bufnr)
+    vim.lsp.inlay_hint(bufnr, true)
     vim.api.nvim_create_augroup("lsp_augroup", { clear = true })
-    vim.api.nvim_create_autocmd("InsertEnter", {
-        buffer = bufnr,
-        callback = function() vim.lsp.inlay_hint(bufnr, true) end,
-        group = "lsp_augroup",
-    })
-    vim.api.nvim_create_autocmd("InsertLeave", {
-        buffer = bufnr,
-        callback = function() vim.lsp.inlay_hint(bufnr, false) end,
-        group = "lsp_augroup",
-    })
+    -- vim.api.nvim_create_autocmd("InsertEnter", {
+    --     buffer = bufnr,
+    --     callback = function() vim.lsp.inlay_hint(bufnr, false) end,
+    --     group = "lsp_augroup",
+    -- })
+    -- vim.api.nvim_create_autocmd("InsertLeave", {
+    --     buffer = bufnr,
+    --     callback = function() vim.lsp.inlay_hint(bufnr, true) end,
+    --     group = "lsp_augroup",
+    -- })
     return on_attach(client, bufnr)
 end
 
@@ -189,7 +190,6 @@ lspconfig['clangd'].setup({
     cmd = {
         "clangd",
         "--all-scopes-completion",
-        "-j=4",
         "--completion-style=bundled",
         "--pch-storage=memory",
         "--pretty",
