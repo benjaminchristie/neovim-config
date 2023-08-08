@@ -81,6 +81,7 @@ else
     Plug 'hrsh7th/vscode-langservers-extracted', { 'dir': '$HOME/.config/nvim/bin/vscode-langservers-extracted', 'do': 'cp bin/* $HOME/.local/bin/' }
     if executable('pnpm')
         Plug 'bash-lsp/bash-language-server', { 'dir': '$HOME/.config/nvim/bin/bash-language-server', 'do': 'pnpm install --silent && pnpm compile 1>/dev/null && npm i -g --prefix ./bin ./server 1>/dev/null && echo \"$HOME/.config/nvim/bin/bash-language-server/bin/bin/bash-language-server \"\$@\"\" > $HOME/.local/bin/bash-language-server && chmod +x $HOME/.local/bin/bash-language-server' }
+    endif
 
     """ Registering vim-plug provides help menus for vim-plug """
     Plug 'junegunn/vim-plug' 
