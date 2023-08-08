@@ -3,6 +3,7 @@ if exists('g:vscode')
     " VSCode extension
     lua require("vscode-init")
 else
+
     call plug#begin()
     """ Internal plugins """
     " Essential
@@ -76,16 +77,23 @@ else
 
 
     """ External plugins """
-    """ REQUIRES: node, pnpm """
+    """ REQUIRES: node, pnpm, pip, dotnet-sdk """
     Plug 'junegunn/fzf', {  'do': './install --all --no-fish' }
-    Plug 'hrsh7th/vscode-langservers-extracted', {  'do': 'cp bin/* $HOME/.local/bin/' }
+    Plug 'LuaLS/lua-language-server',          { 'do': './make.sh && echo \"$HOME/.local/share/nvim/plugged/lua-language-server/bin/lua-language-server \"\$@\"\" > $HOME/.local/bin/lua-language-server && chmod +x $HOME/.local/bin/lua-language-server' }
     if executable('pnpm')
-        Plug 'bash-lsp/bash-language-server', { 'do': 'pnpm install && pnpm compile && npm i -g --prefix ./bin ./server && echo \"$HOME/.local/share/nvim/plugged/bash-language-server/bin/bin/bash-language-server \"\$@\"\" > $HOME/.local/bin/bash-language-server && chmod +x $HOME/.local/bin/bash-language-server' }
+        Plug 'bash-lsp/bash-language-server',  { 'do': 'pnpm install && pnpm compile && npm i -g --prefix ./bin ./server && echo \"$HOME/.local/share/nvim/plugged/bash-language-server/bin/bin/bash-language-server \"\$@\"\" > $HOME/.local/bin/bash-language-server && chmod +x $HOME/.local/bin/bash-language-server' }
     endif
-    Plug 'artempyanykh/marksman',          { 'do': 'make install'}
-    Plug 'regen100/cmake-language-server', { 'do': '$HOME/.config/nvim/bin/pip-script.sh testresources cmake-language-server'}
-    Plug 'microsoft/pyright',              { 'do': '$HOME/.config/nvim/bin/pip-script.sh testresources pyright'}
-    Plug 'wbolster/black-macchiato',       { 'do': '$HOME/.config/nvim/bin/pip-script.sh black-macchiato'}
+    if executable('dotnet')
+        Plug 'artempyanykh/marksman',          { 'do': 'make install'}
+    endif
+    if executable('pip')
+        Plug 'regen100/cmake-language-server', { 'do': '$HOME/.config/nvim/bin/pip-script.sh testresources cmake-language-server'}
+        Plug 'microsoft/pyright',              { 'do': '$HOME/.config/nvim/bin/pip-script.sh testresources pyright'}
+        Plug 'wbolster/black-macchiato',       { 'do': '$HOME/.config/nvim/bin/pip-script.sh black-macchiato'}
+    endif
+    if executable('cargo')
+        Plug 'latex-lsp/texlab',               { 'do': 'cargo build --release --color=never && cp ./target/release/texlab $HOME/.local/bin/'}
+    endif
 
     """ Registering vim-plug provides help menus for vim-plug """
     Plug 'junegunn/vim-plug' 
