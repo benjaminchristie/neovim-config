@@ -8,6 +8,12 @@ require("early-retirement").setup({
     notificationOnAutoClose = false,
 })
 require("oil").setup({
+    columns = {
+        "icon"
+    },
+    win_options = {
+        conceallevel = 3,
+    },
     skip_confirm_for_simple_edits = true,
     prompt_save_on_select_new_entry = false,
     keymaps = {
@@ -66,7 +72,6 @@ require("perfanno").setup {
     },
 }
 
-require('colorizer').setup({}, { css = true, })
 require('nvim-ts-autotag').setup({
     filetypes = { "html", "xml" }
 })

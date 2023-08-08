@@ -47,7 +47,7 @@ else
     Plug 'kyazdani42/nvim-web-devicons'
     Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build' }
     Plug 'nvim-telescope/telescope.nvim', { 'branch': '0.1.x' }
-    Plug 'stevearc/oil.nvim', { 'on': 'Oil' }
+    Plug 'stevearc/oil.nvim'
 
     " QoL
     Plug 'IMOKURI/line-number-interval.nvim'
@@ -69,7 +69,7 @@ else
     Plug 'chrisgrieser/nvim-early-retirement'
 
     " Accessory
-    Plug 'benjaminchristie/nvim-colorizer.lua'
+    Plug 'benjaminchristie/nvim-colorizer.lua', { 'on': 'ColorizerToggle' }
     Plug 'dstein64/vim-startuptime', { 'on': 'StartupTime' }
     Plug 'echasnovski/mini.starter'
     Plug 'folke/tokyonight.nvim'
