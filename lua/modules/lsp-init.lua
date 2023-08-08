@@ -30,17 +30,6 @@ end
 
 local on_attach_with_inlay_hints = function(client, bufnr)
     vim.lsp.inlay_hint(bufnr, true)
-    vim.api.nvim_create_augroup("lsp_augroup", { clear = true })
-    -- vim.api.nvim_create_autocmd("InsertEnter", {
-    --     buffer = bufnr,
-    --     callback = function() vim.lsp.inlay_hint(bufnr, false) end,
-    --     group = "lsp_augroup",
-    -- })
-    -- vim.api.nvim_create_autocmd("InsertLeave", {
-    --     buffer = bufnr,
-    --     callback = function() vim.lsp.inlay_hint(bufnr, true) end,
-    --     group = "lsp_augroup",
-    -- })
     return on_attach(client, bufnr)
 end
 
@@ -110,6 +99,11 @@ lspconfig.lua_ls.setup {
             telemetry = {
                 enable = false,
             },
+            hint = {
+                enable = true,
+                arrayIndex = "Disable",
+                setType = false,
+            },
         },
     },
 }
@@ -151,8 +145,10 @@ lspconfig.angularls.setup {
     cmd = {
         'angularls',
         '--stdio',
-        '--tsProbeLocations', default_probe_dir,
-        '--ngProbeLocations', default_probe_dir
+        '--tsProbeLocations',
+        default_probe_dir,
+        '--ngProbeLocations',
+        default_probe_dir
     },
     filetypes = { 'typescript', 'html', 'typescriptreact', 'typescript.tsx' },
     root_dir = require('lspconfig/util').root_pattern('angular.json', '.git'),
@@ -189,6 +185,7 @@ lspconfig['clangd'].setup({
     autostart = true,
     cmd = {
         "clangd",
+        "-j=2",
         "--all-scopes-completion",
         "--completion-style=bundled",
         "--pch-storage=memory",

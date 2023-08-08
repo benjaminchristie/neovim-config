@@ -77,10 +77,11 @@ cmp.setup({
         disallow_prefix_unmatching = false,
     },
     experimental = {
-        ghost_text = true,
+        ghost_text = {
+            hl_group = "GhostText"
+        }
     }
 })
-
 -- Set configuration for specific filetype.
 cmp.setup.filetype('gitcommit', {
     sources = cmp.config.sources({
