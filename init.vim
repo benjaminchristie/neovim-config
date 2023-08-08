@@ -82,6 +82,10 @@ else
     if executable('pnpm')
         Plug 'bash-lsp/bash-language-server', { 'dir': '$HOME/.config/nvim/bin/bash-language-server', 'do': 'pnpm install --silent && pnpm compile 1>/dev/null && npm i -g --prefix ./bin ./server 1>/dev/null && echo \"$HOME/.config/nvim/bin/bash-language-server/bin/bin/bash-language-server \"\$@\"\" > $HOME/.local/bin/bash-language-server && chmod +x $HOME/.local/bin/bash-language-server' }
     endif
+    Plug 'regen100/cmake-language-server', { 'dir': '$HOME/.config/nvim/bin/cmake-language-server/', 'do': '$HOME/.config/nvim/bin/pip-script.sh testresources cmake-language-server'}
+    Plug 'microsoft/pyright',              { 'dir': '$HOME/.config/nvim/bin/pyright/',               'do': '$HOME/.config/nvim/bin/pip-script.sh testresources pyright'}
+    Plug 'artempyanykh/marksman',          { 'dir': '$HOME/.config/nvim/bin/marksman/',              'do': '$HOME/.config/nvim/bin/pip-script.sh testresources marksman'}
+    Plug 'wbolster/black-macchiato',       { 'dir': '$HOME/.config/nvim/bin/black-macchiato/',       'do': '$HOME/.config/nvim/bin/pip-script.sh black-macchiato'}
 
     """ Registering vim-plug provides help menus for vim-plug """
     Plug 'junegunn/vim-plug' 
