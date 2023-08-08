@@ -27,12 +27,18 @@ vim.lsp.handlers["textDocument/signatureHelp"] =
 local on_attach = function(client, bufnr)
     vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
 end
-
+local lsp_inlay_hints_enabled = true
 local on_attach_with_inlay_hints = function(client, bufnr)
-    vim.lsp.inlay_hint(bufnr, true)
+    vim.lsp.inlay_hint(bufnr, lsp_inlay_hints_enabled)
     return on_attach(client, bufnr)
 end
 
+vim.keymap.set('n', '<A-i>', function()
+    lsp_inlay_hints_enabled = not lsp_inlay_hints_enabled
+    for bufnr in ipairs(vim.api.nvim_list_bufs()) do
+        pcall(vim.lsp.inlay_hint, bufnr, lsp_inlay_hints_enabled)
+    end
+end)
 
 local lsp_flags = {
     -- This is the default in Nvim 0.7+
