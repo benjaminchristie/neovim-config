@@ -78,8 +78,9 @@ else
     """ External plugins """
     """ REQUIRES: node, pnpm"""
     Plug 'junegunn/fzf', { 'dir': '$HOME/.config/nvim/bin/fzf', 'do': './install --all --no-fish' }
-    Plug 'hrsh7th/vscode-langservers-extracted', { 'dir': 'HOME/.config/nvim/bin/vscode-langservers-extracted', 'do': 'cp bin/* $HOME/.local/bin/' }
-    Plug 'bash-lsp/bash-language-server', { 'dir': '$HOME/.config/nvim/bin/bash-language-server', 'do': 'pnpm install ---silent && pnpm compile --silent && pnpm reinstall-server --force --silent --prefix /tmp/ && cp /tmp/bin/bash-language-server $HOME/.local/bin/'}
+    Plug 'hrsh7th/vscode-langservers-extracted', { 'dir': '$HOME/.config/nvim/bin/vscode-langservers-extracted', 'do': 'cp bin/* $HOME/.local/bin/' }
+    if executable('pnpm')
+        Plug 'bash-lsp/bash-language-server', { 'dir': '$HOME/.config/nvim/bin/bash-language-server', 'do': 'pnpm install --silent && pnpm compile 1>/dev/null && npm i -g --prefix ./bin ./server 1>/dev/null && echo \"$HOME/.config/nvim/bin/bash-language-server/bin/bin/bash-language-server \"\$@\"\" > $HOME/.local/bin/bash-language-server && chmod +x $HOME/.local/bin/bash-language-server' }
 
     """ Registering vim-plug provides help menus for vim-plug """
     Plug 'junegunn/vim-plug' 
