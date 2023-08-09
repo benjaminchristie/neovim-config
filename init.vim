@@ -72,7 +72,7 @@ else
     " Accessory
     Plug 'benjaminchristie/nvim-colorizer.lua', { 'on': 'ColorizerToggle' }
     Plug 'dstein64/vim-startuptime', { 'on': 'StartupTime' }
-    Plug 'echasnovski/mini.starter'
+    Plug 'benjaminchristie/mini.starter'
     Plug 'folke/tokyonight.nvim'
 
 

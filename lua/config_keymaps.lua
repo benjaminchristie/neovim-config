@@ -21,6 +21,9 @@ vim.keymap.set('n', '<C-u>', '<C-u>zz')
 vim.keymap.set('n', '}', '}zz')
 vim.keymap.set('n', '{', '{zz')
 
+vim.keymap.set('n', '<A-s>', require("mini.starter").open, { desc = "open mini.starter screen" })
+
+
 vim.keymap.set('n', '<C-h><C-q>', vim.diagnostic.open_float, { desc = "diagnostics assistance" })
 vim.keymap.set('n', '<C-k>', vim.diagnostic.goto_prev, { desc = "diagnostics assistance" })
 vim.keymap.set('n', '<C-j>', vim.diagnostic.goto_next, { desc = "diagnostics assistance" })
