@@ -80,6 +80,7 @@ else
     """ REQUIRES: node, pnpm, pip, dotnet-sdk """
     Plug 'junegunn/fzf', {  'do': './install --all --no-fish' }
     Plug 'LuaLS/lua-language-server',          { 'do': './make.sh && echo \"$HOME/.local/share/nvim/plugged/lua-language-server/bin/lua-language-server \"\$@\"\" > $HOME/.local/bin/lua-language-server && chmod +x $HOME/.local/bin/lua-language-server' }
+    Plug 'tomblind/local-lua-debugger-vscode', { 'do': 'npm install && npm run build' }
     if executable('pnpm')
         Plug 'bash-lsp/bash-language-server',  { 'do': 'pnpm install && pnpm compile && npm i -g --prefix ./bin ./server && echo \"$HOME/.local/share/nvim/plugged/bash-language-server/bin/bin/bash-language-server \"\$@\"\" > $HOME/.local/bin/bash-language-server && chmod +x $HOME/.local/bin/bash-language-server' }
     endif
