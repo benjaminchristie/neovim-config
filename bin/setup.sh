@@ -32,6 +32,9 @@ install_daps() {
         cd $HOME/.config/nvim/bin/virtualenvs/ && \
         python -m venv debugpy && \
         debugpy/bin/python -m pip install debugpy
+    # lua script
+    cp $HOME/.config/nvim/bin/nlua.lua $HOME/.local/bin && \
+        chmod +x $HOME/.local/bin/nlua.lua
 }
 install_lsps() {
     ### LSPs ###
