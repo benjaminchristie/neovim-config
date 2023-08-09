@@ -89,7 +89,7 @@ else
     endif
     if executable('pip')
         Plug 'regen100/cmake-language-server', { 'do': '$HOME/.config/nvim/bin/pip-script.sh testresources cmake-language-server'}
-        Plug 'microsoft/pyright',              { 'do': '$HOME/.config/nvim/bin/pip-script.sh testresources pyright'}
+        Plug 'RobertCraigie/pyright-python',   { 'do': '$HOME/.config/nvim/bin/pip-script.sh testresources pyright'}
         Plug 'wbolster/black-macchiato',       { 'do': '$HOME/.config/nvim/bin/pip-script.sh black-macchiato'}
     endif
     if executable('cargo')
