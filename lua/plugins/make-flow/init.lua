@@ -1,11 +1,75 @@
-package.path = package.path .. ";/home/benjamin/.config/nvim/lua/plugins/make-flow/?.lua"
-local actions = require("generic_compilation")
+------- Define parameters -----------
+local function createWin()
+    local buf = vim.fn.bufadd("make-flow buffer")
+    vim.fn.bufload(buf)
+    vim.api.nvim_buf_set_option(buf, 'buftype', 'nofile')
+    return buf
+end
+
+local function compile(path, command, bufnr, timeout)
+    if not vim.fn.bufexists(bufnr) then
+        bufnr = CreateWin()
+    end
+    vim.api.nvim_buf_set_lines(bufnr, 0, -1, false, {
+        "Beginning compilation of " .. vim.fn.pathshorten(path)
+    })
+    vim.fn.jobstart(command,
+        {
+            stdout_buffered = true,
+            stderr_buffered = true,
+            on_exit = function(_, exitCode, _)
+                if exitCode == 0 then
+                    if vim.fn.bufexists(bufnr) then
+                        vim.api.nvim_buf_set_lines(bufnr, 0, 1, false,
+                            { "===Compilation Successful!===" })
+                    end
+                    -- begin deferral
+                    vim.defer_fn(function()
+                            if vim.api.nvim_buf_is_loaded(bufnr) then
+                                -- if vim.fn.bufexists(bufnr) then
+                                vim.api.nvim_buf_delete(bufnr, { force = true, unload = false })
+                            end
+                        end,
+                        timeout
+                    )
+                else
+                    vim.api.nvim_buf_set_lines(bufnr, 0, 1, false,
+                        { "===Compilation Unsuccesful===" })
+                end
+            end,
+            on_stdout = function(_, data)
+                if data then
+                    vim.api.nvim_buf_set_lines(bufnr, -1, -1, false,
+                        data)
+                else
+                    vim.api.nvim_buf_set_lines(bufnr, -1, -1, false,
+                        { "no output" })
+                end
+            end,
+            on_stderr = function(_, data)
+                if data then
+                    vim.api.nvim_buf_set_lines(bufnr, -1, -1, false,
+                        data)
+                else
+                    vim.api.nvim_buf_set_lines(bufnr, -1, -1, false,
+                        { "no output" })
+                end
+            end
+        })
+end
+
+local function killBuffer(bufnr)
+    if vim.api.nvim_buf_is_loaded(bufnr) then
+        vim.api.nvim_buf_delete(bufnr, { force = true, unload = false })
+    end
+end
+
 --- default parameters ---
 local mk_timeout = 1000
 local function compileCallback(filename, command, timeout)
     timeout = timeout or mk_timeout
-    local bufnr = actions.createWin()
-    actions.compile(filename,
+    local bufnr = createWin()
+    compile(filename,
         command,
         bufnr,
         timeout
@@ -40,8 +104,9 @@ local function makeUpfile()
     -- compileCallback(filename, {"make", "auto", "--silent", "-C", lfn })
     compileCallback(filename, { "make", "auto", "--silent", "-C", lfn })
 end
-local function killBuffer()
-    actions.killBuffer(actions.createWin())
+
+local function kill()
+    killBuffer(createWin())
 end
 local function pythonReindent()
     local filename = vim.api.nvim_buf_get_name(0)
@@ -57,5 +122,5 @@ vim.keymap.set({ "n" }, "<C-l><C-p>", pandocCompile)
 vim.keymap.set({ "n" }, "<C-l><C-c>", cppCompile)
 vim.keymap.set({ "n" }, "<C-l><C-l>", makeUpfile)
 vim.keymap.set({ "n" }, "<C-l><C-r>", pythonReindent)
-vim.keymap.set({ "n" }, "<C-l><C-q>", killBuffer)
+vim.keymap.set({ "n" }, "<C-l><C-q>", kill)
 -- vim.keymap.set({"n"}, "<C-k><C-q>", killBuffer)

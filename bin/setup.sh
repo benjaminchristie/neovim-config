@@ -102,7 +102,7 @@ then
 elif [ -x "$(command -v apt)" ]
 then
     sudo apt update -yqq && \
-        sudo apt install -y --no-install-recommends python3-pip gcc gdb clang git sudo curl wget unzip tar ninja-build build-essential cmake gettext nodejs cargo python-is-python3 python3-venv xclip ripgrep clang-format aspell aspell-en
+        sudo apt install -y --no-install-recommends grep python3-pip gcc gdb clang git sudo curl wget unzip tar ninja-build build-essential cmake gettext nodejs cargo python-is-python3 python3-venv xclip ripgrep clang-format aspell aspell-en
     curl -fsSL https://get.pnpm.io/install.sh | sh -
 else
     echo "paru or apt is not configured"
