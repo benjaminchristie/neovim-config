@@ -71,7 +71,6 @@ require("perfanno").setup {
         },
     },
 }
-
 require('nvim-ts-autotag').setup({
     filetypes = { "html", "xml" }
 })

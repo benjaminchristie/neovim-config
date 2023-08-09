@@ -50,15 +50,6 @@ install_lsps() {
         cp -r /tmp/lua-language-server/* . && \
         echo 'exec "$HOME/.config/nvim/bin/lua_ls/bin/lua-language-server" "$@"' > $HOME/.local/bin/lua-language-server && \
         chmod +x $HOME/.local/bin/lua-language-server
-    # # bash-language-server
-    # curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash && \
-    #     export NVM_DIR="$HOME/.nvm" && \
-    #     [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" && \
-    #     PATH=$HOME/.local/bin:$PATH && \
-    #     nvm install 18 && \
-    #     nvm use 18 && \
-    #     nvm alias default 18 && \
-    #     sudo npm i -g bash-language-server vscode-langservers-extracted
     # pyright, cmake-language-server
     if ! pip install --ignore-installed pyright cmake-language-server testresources marksman
     then
@@ -98,7 +89,7 @@ print_style "Installing neovim dependencies: \n"
 ## install dependencies
 if [ -x "$(command -v paru)" ]
 then
-    paru -S --noconfirm bash-language-server glow bat clang cmake-language-server dockerfile-language-server gcc gdb git gopls python-pip cargo fzf ninja ripgrep aspell aspell-en pnpm
+    paru -S --noconfirm glow bat clang dockerfile-language-server gcc gdb git gopls python-pip cargo fzf ninja ripgrep aspell aspell-en pnpm
 elif [ -x "$(command -v apt)" ]
 then
     sudo apt update -yqq && \

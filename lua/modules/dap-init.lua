@@ -1,6 +1,8 @@
 local dap = require("dap")
 local dapui = require("dapui")
 
+dap.set_log_level("TRACE")
+
 dap.configurations = {
     cpp = {
         {
@@ -55,12 +57,42 @@ dap.configurations = {
     },
     c = dap.configurations.cpp,
     rust = dap.configurations.cpp,
+    lua = {
+        {
+            name = 'Current file (local-lua-dbg, lua)',
+            type = 'local_lua',
+            request = 'launch',
+            cwd = '${workspaceFolder}',
+            program = {
+                lua = 'nlua.lua',
+                file = '${file}',
+            },
+            args = {},
+        }
+    },
 }
 dap.adapters = {
     cppdbg = {
         id = 'cppdbg',
         type = 'executable',
-        command = '/home/benjamin/.config/nvim/bin/vscode-cpptools/OpenDebugAD7'
+        command = os.getenv("HOME") .. '/.config/nvim/bin/vscode-cpptools/OpenDebugAD7'
+    },
+    local_lua = {
+        id = 'lldbg',
+        type = "executable",
+        command = "node",
+        args = {
+            os.getenv("HOME") .. "/.local/share/nvim/plugged/local-lua-debugger-vscode/extension/debugAdapter.js"
+        },
+        enrich_config = function(config, on_config)
+            if not config["extensionPath"] then
+                local c = vim.deepcopy(config)
+                c.extensionPath = os.getenv("HOME") .. "/.local/share/nvim/plugged/local-lua-debugger-vscode/"
+                on_config(c)
+            else
+                on_config(config)
+            end
+        end,
     },
     python = function(cb, config)
         if config.request == 'attach' then
@@ -143,3 +175,22 @@ end
 dap.listeners.before.event_exited["dapui_config"] = function()
     dapui.close()
 end
+-- local dap = require("dap")
+-- dap.adapters["local-lua"] = {
+--   type = "executable",
+--   command = "node",
+--   args = {
+--     "/absolute/path/to/local-lua-debugger-vscode/extension/debugAdapter.js"
+--   },
+--   enrich_config = function(config, on_config)
+--     if not config["extensionPath"] then
+--       local c = vim.deepcopy(config)
+--       -- 💀 If this is missing or wrong you'll see
+--       -- "module 'lldebugger' not found" errors in the dap-repl when trying to launch a debug session
+--       c.extensionPath = "/absolute/path/to/local-lua-debugger-vscode/"
+--       on_config(c)
+--     else
+--       on_config(config)
+--     end
+--   end,
+-- }
