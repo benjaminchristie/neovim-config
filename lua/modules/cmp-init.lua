@@ -1,24 +1,24 @@
 -- Setup nvim-cmp.
 local cmp = require('cmp')
 local luasnip = require("luasnip")
-require("cmp_git").setup()
-local dict = require("cmp_dictionary")
-dict.setup({
-    exact = 2,
-    first_case_insensitive = true,
-    document = true,
-    document_command = "wn %s -over",
-    async = true,
-    sqlite = false,
-    max_items = 10,
-    capacity = 50,
-    debug = true,
-})
-dict.switcher({
-    spelllang = {
-        en = "/home/benjamin/.config/nvim/bin/dictionary/my.dict"
-    },
-})
+-- require("cmp_git").setup()
+-- local dict = require("cmp_dictionary")
+-- dict.setup({
+--     exact = 2,
+--     first_case_insensitive = true,
+--     document = true,
+--     document_command = "wn %s -over",
+--     async = true,
+--     sqlite = false,
+--     max_items = 10,
+--     capacity = 50,
+--     debug = true,
+-- })
+-- dict.switcher({
+--     spelllang = {
+--         en = "/home/benjamin/.config/nvim/bin/dictionary/my.dict"
+--     },
+-- })
 cmp.setup({
     snippet = {
         -- REQUIRED - you must specify a snippet engine
@@ -64,10 +64,10 @@ cmp.setup({
         { name = 'path' },
     }, {
         { name = 'buffer' },
-        {
-            name = 'dictionary',
-            keyword_length = 2,
-        },
+        -- {
+        --     name = 'dictionary',
+        --     keyword_length = 2,
+        -- },
     }),
     matching = {
         disallow_fuzzy_matching = false,
@@ -83,12 +83,12 @@ cmp.setup({
     }
 })
 -- Set configuration for specific filetype.
-cmp.setup.filetype('gitcommit', {
-    sources = cmp.config.sources({
-        { name = 'cmp_git' },
-        { name = 'buffer' },
-    })
-})
+-- cmp.setup.filetype('gitcommit', {
+--     sources = cmp.config.sources({
+--         { name = 'cmp_git' },
+--         { name = 'buffer' },
+--     })
+-- })
 
 cmp.setup.cmdline('/', {
     mapping = cmp.mapping.preset.cmdline(),

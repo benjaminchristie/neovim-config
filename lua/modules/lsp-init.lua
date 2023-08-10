@@ -166,13 +166,18 @@ lspconfig.asm_lsp.setup {
     capabilities = capabilities,
     autostart = true,
 }
-require("rust-tools").setup({
-    server = {
-        on_attach = on_attach_with_inlay_hints,
-        flags = lsp_flags,
-        capabilities = capabilities,
-        autostart = true,
-    }
+vim.api.nvim_create_autocmd({ "BufEnter" }, {
+    pattern = "*.rs",
+    callback = function()
+        require("rust-tools").setup({
+            server = {
+                on_attach = on_attach_with_inlay_hints,
+                flags = lsp_flags,
+                capabilities = capabilities,
+                autostart = true,
+            }
+        })
+    end
 })
 
 local clang_tidy_checks = {

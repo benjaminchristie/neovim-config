@@ -9,6 +9,7 @@ nnoremenu PopUp.Go\ To\ References          <Cmd>lua vim.fn.feedkeys("gr")<CR>
 nnoremenu PopUp.Toggle\ Breakpoint          <Cmd>lua vim.fn.feedkeys("<A-d><A-b>")<CR>
 nnoremenu PopUp.Open\ Debugger              <Cmd>lua require("dap").continue()<CR>
 nnoremenu PopUp.Peek\ Value                 <Cmd>lua require("dapui").eval(nil, {enter = true})<CR>
+anoremenu PopUp.-1-                         <Nop>
 anoremenu PopUp.Exit                        <Nop>
 ]])
 --- autocmds

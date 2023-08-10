@@ -25,8 +25,8 @@ else
     Plug 'hrsh7th/cmp-nvim-lsp'
     Plug 'hrsh7th/cmp-path'
     Plug 'hrsh7th/nvim-cmp'
-    Plug 'uga-rosa/cmp-dictionary'
-    Plug 'petertriho/cmp-git'
+    " Plug 'uga-rosa/cmp-dictionary'
+    " Plug 'petertriho/cmp-git'
 
     " DAP
     Plug 'LiadOz/nvim-dap-repl-highlights'
