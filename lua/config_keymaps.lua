@@ -22,6 +22,10 @@ vim.keymap.set('n', '}', '}zz')
 vim.keymap.set('n', '{', '{zz')
 
 vim.keymap.set('n', '<A-s>', require("mini.starter").open, { desc = "open mini.starter screen" })
+vim.keymap.set('n', '<A-f>', function()
+    print("Calling LSP buf format...")
+    vim.lsp.buf.format()
+end, { desc = "open mini.starter screen" })
 
 
 vim.keymap.set('n', '<C-h><C-q>', vim.diagnostic.open_float, { desc = "diagnostics assistance" })

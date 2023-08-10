@@ -29,13 +29,24 @@ fzf.setup({
     },
 })
 
+local help_opts = {
+    actions = {
+        ['ctrl-v'] = function(selected)
+            local last = selected[#selected]
+            local str = string.match(last, "%S+")
+            vim.cmd('help ' .. str)
+            vim.cmd('call feedkeys("\\<c-w>L")')
+        end
+    }
+}
+
 vim.keymap.set('n', '<C-p><C-p>',
     function() return fzf.files({ cmd = "find -type f | rg -v '.git' | rg -v '.cache' | rg -v 'bin/' | rg -v 'logs/' " }) end)
 vim.keymap.set('n', '<C-p><C-f>', function() return fzf.live_grep() end)
 vim.keymap.set('n', '#', function() return fzf.grep_cword() end)
 vim.keymap.set('n', '<C-p><C-d>', function() return fzf.lsp_document_symbols() end)
 vim.keymap.set('n', '<C-p><C-b>', function() return fzf.buffers() end)
-vim.keymap.set('n', '<C-p><C-h>', function() return fzf.help_tags() end)
+vim.keymap.set('n', '<C-p><C-h>', function() return fzf.help_tags(help_opts) end)
 -- vim.keymap.set('n', '<C-p><C-c>', function() return builtins.git_bcommits() end)
 vim.keymap.set('n', '<C-p><C-q>', function() return fzf.blines() end)
 vim.keymap.set('n', '<C-p><C-i>', function() return fzf.lsp_workspace_symbols() end)
@@ -44,3 +55,4 @@ vim.keymap.set('n', '<C-p><C-k>', function() return fzf.keymaps() end)
 vim.keymap.set('n', '<C-p><C-g><C-f>', function() return fzf.git_files() end)
 vim.keymap.set('n', '<C-p><C-g><C-b>', function() return fzf.git_branches() end)
 vim.keymap.set('n', '<C-p><C-g><C-l>', function() return fzf.git_commits() end)
+

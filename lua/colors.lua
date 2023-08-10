@@ -40,6 +40,11 @@ vim.api.nvim_set_hl(0, "WinBar", {
     bg = colors.bg_float,
     bold = true,
 })
+vim.api.nvim_set_hl(0, "WinBarLSP", {
+    fg = colors.fg_dark,
+    bg = colors.bg_float,
+    italic = true
+})
 vim.api.nvim_set_hl(0, "WinBarNC", {
     fg = colors.fg_float,
     bg = colors.bg_float,

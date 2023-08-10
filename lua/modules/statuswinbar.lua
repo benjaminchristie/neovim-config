@@ -1,3 +1,4 @@
+---@diagnostic disable: undefined-field
 local gitsigns = require("gitsigns")
 local parsers = require("nvim-treesitter.parsers")
 local ts_utils = require("nvim-treesitter.ts_utils")
@@ -38,10 +39,21 @@ local function hasvalue(table, value)
     end
     return false
 end
+
+local function get_clients()
+    local clients = vim.lsp.get_clients({bufnr = 0})
+    if #clients == 0 then
+        return ""
+    else
+        return clients[1]["name"]
+    end
+end
+
 local function winbarstring()
     local path = vim.fn.expand("%:f")
     local branch = vim.b.gitsigns_head
     local harpoon_idx = require("harpoon.mark").get_current_index()
+    local str = ""
     if branch ~= nil and harpoon_idx ~= nil then
         local hunks_tb = gitsigns.get_hunks(vim.api.nvim_get_current_buf())
         local added_count = "0"
@@ -56,7 +68,7 @@ local function winbarstring()
                 end
             end
         end
-        return string.format(path ..
+        str = string.format(path ..
         " 🡕  " .. harpoon_idx .. "    " .. branch .. ": +" .. added_count .. " -" .. removed_count)
     elseif branch ~= nil and harpoon_idx == nil then
         local hunks_tb = gitsigns.get_hunks(vim.api.nvim_get_current_buf())
@@ -72,12 +84,13 @@ local function winbarstring()
                 end
             end
         end
-        return string.format(path .. "    " .. branch .. ": +" .. added_count .. " -" .. removed_count)
+        str = string.format(path .. "    " .. branch .. ": +" .. added_count .. " -" .. removed_count)
     elseif branch == nil and harpoon_idx ~= nil then
-        return string.format(path .. " 🡕  " .. harpoon_idx)
+        str = string.format(path .. " 🡕  " .. harpoon_idx)
     else
-        return string.format(path)
+        str = string.format(path)
     end
+    return str .. "%#WinBarLSP# " .. get_clients()
 end
 vim.api.nvim_create_autocmd('User', {
     pattern = 'GitSignsUpdate',

@@ -13,12 +13,14 @@ anoremenu PopUp.-1-                         <Nop>
 anoremenu PopUp.Exit                        <Nop>
 ]])
 --- autocmds
-vim.api.nvim_create_autocmd("BufWritePre", {
-    pattern = "*.lua",
-    callback = function()
-        vim.lsp.buf.format()
-    end
-})
+-- vim.api.nvim_create_augroup("LspFormattingLua", { clear = true })
+-- vim.api.nvim_create_autocmd("BufWritePre", {
+--     group = "LspFormattingLua",
+--     pattern = "*.lua",
+--     callback = function()
+--         vim.lsp.buf.format()
+--     end
+-- })
 vim.api.nvim_create_augroup("Oil", { clear = true })
 vim.api.nvim_create_autocmd({ "BufEnter" }, {
     group = "Oil",
