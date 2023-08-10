@@ -40,10 +40,6 @@ require("oil").setup({
 })
 require("plugins.nvim-gpg")
 require("plugins.make-flow")
-require('nvim-autopairs').setup({
-    ignored_next_char = "[%w%.]",
-    enable_check_bracket_line = false,
-})
 require("indent_blankline").setup {
     show_current_context = true,
     show_current_context_start = false,
