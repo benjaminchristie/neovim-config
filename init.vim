@@ -25,8 +25,8 @@ else
     Plug 'hrsh7th/cmp-nvim-lsp'
     Plug 'hrsh7th/cmp-path'
     Plug 'hrsh7th/nvim-cmp'
-    Plug 'uga-rosa/cmp-dictionary'
-    Plug 'petertriho/cmp-git'
+    " Plug 'uga-rosa/cmp-dictionary'
+    " Plug 'petertriho/cmp-git'
 
     " DAP
     Plug 'LiadOz/nvim-dap-repl-highlights'
@@ -48,14 +48,14 @@ else
     Plug 'kyazdani42/nvim-web-devicons'
     Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build' }
     Plug 'nvim-telescope/telescope.nvim', { 'branch': '0.1.x' }
-    Plug 'stevearc/oil.nvim'
+    Plug 'stevearc/oil.nvim', { 'on': 'Oil' }
 
     " QoL
     Plug 'IMOKURI/line-number-interval.nvim'
     Plug 'ThePrimeagen/refactoring.nvim'
     Plug 'akinsho/toggleterm.nvim'
     Plug 'benjaminchristie/csgithub.nvim', { 'branch': 'master'}
-    Plug 'ethanholz/nvim-lastplace'
+    Plug 'vladdoster/remember.nvim'
     Plug 'kevinhwang91/nvim-ufo'
     Plug 'kevinhwang91/promise-async'
     Plug 'kylechui/nvim-surround'
@@ -89,7 +89,7 @@ else
     endif
     if executable('pip')
         Plug 'regen100/cmake-language-server', { 'do': '$HOME/.config/nvim/bin/pip-script.sh testresources cmake-language-server'}
-        Plug 'microsoft/pyright',              { 'do': '$HOME/.config/nvim/bin/pip-script.sh testresources pyright'}
+        Plug 'RobertCraigie/pyright-python',   { 'do': '$HOME/.config/nvim/bin/pip-script.sh testresources pyright'}
         Plug 'wbolster/black-macchiato',       { 'do': '$HOME/.config/nvim/bin/pip-script.sh black-macchiato'}
     endif
     if executable('cargo')

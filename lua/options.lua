@@ -1,6 +1,8 @@
 vim.api.nvim_set_var("line_number_interval#custom_interval", { 1, 2, 3, 4, 5 })
 vim.api.nvim_set_var("line_number_interval#use_custom", 1)
 vim.api.nvim_set_option_value('omnifunc', 'v:lua.vim.lsp.omnifunc', {})
+vim.cmd("set shm+=I")
+vim.g.plug_threads = 64
 vim.g.plug_window = [[vertical topleft new]]
 vim.g.dispatch_no_maps = 1
 vim.g.editorconfig_trim_trailing_whitespace = true

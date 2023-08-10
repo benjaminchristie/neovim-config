@@ -1,5 +1,5 @@
 name: Neovim Launch
-run-name: does neovim launch?
+run-name: Neovim Launch
 on:
   push:
     branches: 
@@ -12,9 +12,9 @@ jobs:
         shell: bash
     steps:
       - uses: actions/checkout@v3
-      - name: setup neovim
+      - name: Setup neovim
         run: ${{ github.workspace }}/bin/setup.sh
-      - name: check neovim status
+      - name: Does neovim launch without error?
         run: |
           nvim --headless +q 2> error_file
           if [[ $(grep "Error" error_file) ]]; then
