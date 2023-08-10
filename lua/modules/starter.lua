@@ -161,8 +161,10 @@ local function ascii_headers(rand)
 |___|,  \\         }|{
     ]]
     elseif rand < 9 then
-        return [[
-   .   ,- To the Moon Benjamin !
+        local username = os.getenv("USER")
+        username = string.gsub(username, "^%l", string.upper)
+        return string.format([[
+   .   ,- To the Moon %s !
   .'.            .       .
   |o|      .  *      .        .  *   .
  .'o'.       * .        .   *    ..
@@ -171,7 +173,7 @@ local function ascii_headers(rand)
   ( )     .  *      .        .  *   .
    )    ..    *    .      *  .  ..  *
   ( )      *            .      *   *
-    ]]
+    ]], username)
     end
 end
 
