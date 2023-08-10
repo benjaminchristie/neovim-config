@@ -48,14 +48,14 @@ else
     Plug 'kyazdani42/nvim-web-devicons'
     Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build' }
     Plug 'nvim-telescope/telescope.nvim', { 'branch': '0.1.x' }
-    Plug 'stevearc/oil.nvim'
+    Plug 'stevearc/oil.nvim', { 'on': 'Oil' }
 
     " QoL
     Plug 'IMOKURI/line-number-interval.nvim'
     Plug 'ThePrimeagen/refactoring.nvim'
     Plug 'akinsho/toggleterm.nvim'
     Plug 'benjaminchristie/csgithub.nvim', { 'branch': 'master'}
-    Plug 'ethanholz/nvim-lastplace'
+    Plug 'vladdoster/remember.nvim'
     Plug 'kevinhwang91/nvim-ufo'
     Plug 'kevinhwang91/promise-async'
     Plug 'kylechui/nvim-surround'
