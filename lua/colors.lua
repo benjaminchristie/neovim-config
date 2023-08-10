@@ -40,13 +40,28 @@ vim.api.nvim_set_hl(0, "WinBar", {
     bg = colors.bg_float,
     bold = true,
 })
+vim.api.nvim_set_hl(0, "WinBarNC", {
+    fg = colors.fg_float,
+    bg = colors.bg_float,
+})
 vim.api.nvim_set_hl(0, "WinBarLSP", {
     fg = colors.fg_dark,
     bg = colors.bg_float,
-    italic = true
 })
-vim.api.nvim_set_hl(0, "WinBarNC", {
-    fg = colors.fg_float,
+vim.api.nvim_set_hl(0, "WinBarHarpoon", {
+    fg = colors.purple,
+    bg = colors.bg_float,
+})
+vim.api.nvim_set_hl(0, "WinBarGit", {
+    fg = colors.blue,
+    bg = colors.bg_float,
+})
+vim.api.nvim_set_hl(0, "WinBarGitAdded", {
+    fg = colors.green,
+    bg = colors.bg_float,
+})
+vim.api.nvim_set_hl(0, "WinBarGitSubbed", {
+    fg = colors.red,
     bg = colors.bg_float,
 })
 vim.api.nvim_set_hl(0, "StatusLine", {

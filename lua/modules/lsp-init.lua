@@ -27,7 +27,7 @@ vim.lsp.handlers["textDocument/signatureHelp"] =
 local on_attach = function(client, bufnr)
     vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
 end
-Lsp_inlay_hints_enabled = true
+Lsp_inlay_hints_enabled = false
 local on_attach_with_inlay_hints = function(client, bufnr)
     vim.lsp.inlay_hint(bufnr, Lsp_inlay_hints_enabled)
     return on_attach(client, bufnr)

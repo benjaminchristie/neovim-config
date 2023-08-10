@@ -70,5 +70,8 @@
         "/tmp/lua-language-server.WMfB/meta/71c3da14",
         "/tmp/lua-language-server.yRQw/meta/71c3da14",
         "/tmp/lua-language-server.JBsh/meta/71c3da14"
+    ],
+    "diagnostics.disable": [
+        "missing-parameter"
     ]
 }
