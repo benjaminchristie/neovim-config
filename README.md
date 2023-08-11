@@ -14,4 +14,4 @@ my config
 
 ## Misc.
 
-![misc](https://github.com/benjaminchristie/neovim-config/assets/52015426/1268f086-c3f5-43bf-b7fe-86b1ff361d12)
+![misc](https://github.com/benjaminchristie/neovim-config/assets/52015426/faed2b71-0371-4af1-9f2b-104d654f6136)
