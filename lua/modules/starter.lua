@@ -186,33 +186,11 @@ local function ascii_main()
 end
 local ascii_art = ascii_headers(8.5)
 
-local function path_modifier(str, max_count)
-    -- can use vim.regex() for this...
-    local tail = vim.fn.fnamemodify(str, ":t")
-    local head = vim.fn.fnamemodify(str, ":h")
-    local new_str = ""
-    local count = 0
-    if head == nil or #head <= max_count then
-        return str
-    else
-        for c in string.gmatch(head, '.') do
-            if c == "/" then
-                count = 0
-            end
-            if count < max_count then
-                new_str = new_str .. c
-                count = count + 1
-            end
-        end
-    end
-    new_str = new_str .. "/"
-    return new_str .. tail
-end
 starter.setup({
     evaluate_single = false,
     header = ascii_art,
     items = {
-        starter.sections.recent_files(7, false, true, function(x) return path_modifier(x, 6) end),
+        starter.sections.recent_files(7, false, true, function(x) return vim.fn.pathshorten(x, 4) end),
         extra_items(),
     },
     content_hooks = {
