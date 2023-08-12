@@ -2,6 +2,7 @@
 local gitsigns = require("gitsigns")
 local parsers = require("nvim-treesitter.parsers")
 local ts_utils = require("nvim-treesitter.ts_utils")
+local harpoon = require("harpoon.mark")
 local force_inactive_filetypes = {
     'NvimTree',
     'dap-repl',
@@ -41,56 +42,70 @@ local function hasvalue(table, value)
 end
 
 local function get_clients()
-    local clients = vim.lsp.get_clients({bufnr = 0})
+    local clients = vim.lsp.get_clients({ bufnr = 0 })
     if #clients == 0 then
         return ""
     else
-        return clients[1]["name"]
+        local tb = {
+            "%#WinBarLSP#",
+            clients[1]["name"],
+        }
+        return table.concat(tb, "")
     end
 end
 
+local function get_changed_hunks()
+    local branch = vim.b.gitsigns_head
+    if branch ~= nil then
+        local hunks_tb = gitsigns.get_hunks(vim.api.nvim_get_current_buf())
+        local added_count = "0"
+        local removed_count = "0"
+        if hunks_tb ~= nil then
+            for _, hunks in pairs(hunks_tb) do
+                if hunks["added"] ~= nil then
+                    added_count = hunks["added"]["count"]
+                end
+                if hunks["removed"] ~= nil then
+                    removed_count = hunks["removed"]["count"]
+                end
+            end
+        end
+        local tb = {
+            "%#WinBarGit#",
+            "  ",
+            branch,
+            "%#WinBarGitAdded#",
+            " +",
+            added_count,
+            "%#WinBarGitSubbed#",
+            " -",
+            removed_count,
+        }
+        return table.concat(tb, "")
+    else
+        return ""
+    end
+end
+
+local function get_harpoon_idx()
+    local harpoon_idx = harpoon.get_current_index()
+    if harpoon_idx ~= nil then
+        local tb = {
+            "%#WinBarHarpoon#",
+            "🡕  ",
+            harpoon_idx,
+            " "
+        }
+        return table.concat(tb, "")
+    else
+        return ""
+    end
+end
+
+
 local function winbarstring()
     local path = vim.fn.expand("%:f")
-    local branch = vim.b.gitsigns_head
-    local harpoon_idx = require("harpoon.mark").get_current_index()
-    local str = ""
-    if branch ~= nil and harpoon_idx ~= nil then
-        local hunks_tb = gitsigns.get_hunks(vim.api.nvim_get_current_buf())
-        local added_count = "0"
-        local removed_count = "0"
-        if hunks_tb ~= nil then
-            for _, hunks in pairs(hunks_tb) do
-                if hunks["added"] ~= nil then
-                    added_count = hunks["added"]["count"]
-                end
-                if hunks["removed"] ~= nil then
-                    removed_count = hunks["removed"]["count"]
-                end
-            end
-        end
-        str = string.format(path ..
-        " 🡕  " .. harpoon_idx .. "    " .. branch .. ": +" .. added_count .. " -" .. removed_count)
-    elseif branch ~= nil and harpoon_idx == nil then
-        local hunks_tb = gitsigns.get_hunks(vim.api.nvim_get_current_buf())
-        local added_count = "0"
-        local removed_count = "0"
-        if hunks_tb ~= nil then
-            for _, hunks in pairs(hunks_tb) do
-                if hunks["added"] ~= nil then
-                    added_count = hunks["added"]["count"]
-                end
-                if hunks["removed"] ~= nil then
-                    removed_count = hunks["removed"]["count"]
-                end
-            end
-        end
-        str = string.format(path .. "    " .. branch .. ": +" .. added_count .. " -" .. removed_count)
-    elseif branch == nil and harpoon_idx ~= nil then
-        str = string.format(path .. " 🡕  " .. harpoon_idx)
-    else
-        str = string.format(path)
-    end
-    return str .. "%#WinBarLSP# " .. get_clients()
+    return string.format("%s %s %s %s", path, get_harpoon_idx(), get_changed_hunks(), get_clients())
 end
 vim.api.nvim_create_autocmd('User', {
     pattern = 'GitSignsUpdate',
