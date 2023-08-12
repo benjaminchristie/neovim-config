@@ -7,6 +7,8 @@ else
     call plug#begin()
     """ Internal plugins """
     " Essential
+    Plug 'hrsh7th/nvim-cmp'
+    Plug 'neovim/nvim-lspconfig'
     Plug 'nvim-lua/plenary.nvim'
     Plug 'nvim-lua/popup.nvim'
     Plug 'nvim-treesitter/nvim-treesitter', { 'do': ':TSUpdate' }
@@ -14,17 +16,15 @@ else
     " LSP
     Plug 'L3MON4D3/LuaSnip'
     Plug 'folke/neodev.nvim'
-    Plug 'neovim/nvim-lspconfig'
+    Plug 'hrsh7th/cmp-buffer'
+    Plug 'hrsh7th/cmp-cmdline'
+    Plug 'hrsh7th/cmp-nvim-lsp'
+    Plug 'hrsh7th/cmp-path'
     Plug 'nvim-treesitter/nvim-treesitter-textobjects'
     Plug 'saadparwaiz1/cmp_luasnip'
     Plug 'simrat39/rust-tools.nvim', { 'for': 'rust' }
     Plug 'windwp/nvim-autopairs'
     Plug 'windwp/nvim-ts-autotag'
-    Plug 'hrsh7th/cmp-buffer'
-    Plug 'hrsh7th/cmp-cmdline'
-    Plug 'hrsh7th/cmp-nvim-lsp'
-    Plug 'hrsh7th/cmp-path'
-    Plug 'hrsh7th/nvim-cmp'
     " Plug 'uga-rosa/cmp-dictionary'
     " Plug 'petertriho/cmp-git'
 
@@ -55,24 +55,24 @@ else
     Plug 'ThePrimeagen/refactoring.nvim'
     Plug 'akinsho/toggleterm.nvim'
     Plug 'benjaminchristie/csgithub.nvim', { 'branch': 'master'}
-    Plug 'vladdoster/remember.nvim'
+    Plug 'chrisgrieser/nvim-early-retirement'
     Plug 'kevinhwang91/nvim-ufo'
     Plug 'kevinhwang91/promise-async'
     Plug 'kylechui/nvim-surround'
     Plug 'lukas-reineke/indent-blankline.nvim'
     Plug 'mbbill/undotree', { 'on': 'UndotreeToggle' }
-    Plug 'tzachar/highlight-undo.nvim'
+    Plug 'rhysd/vim-clang-format', { 'on': 'ClangFormat', 'for': 'cpp' }
     Plug 't-troebst/perfanno.nvim'
     Plug 'tpope/vim-commentary'
     Plug 'tpope/vim-dispatch', { 'on': 'Dispatch' }
     Plug 'tpope/vim-eunuch'
-    Plug 'rhysd/vim-clang-format', { 'on': 'ClangFormat', 'for': 'cpp' }
-    Plug 'chrisgrieser/nvim-early-retirement'
+    Plug 'tzachar/highlight-undo.nvim'
+    Plug 'vladdoster/remember.nvim'
 
     " Accessory
+    Plug 'benjaminchristie/mini.starter'
     Plug 'benjaminchristie/nvim-colorizer.lua', { 'on': 'ColorizerToggle' }
     Plug 'dstein64/vim-startuptime', { 'on': 'StartupTime' }
-    Plug 'benjaminchristie/mini.starter'
     Plug 'folke/tokyonight.nvim'
 
 
