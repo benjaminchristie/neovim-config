@@ -117,7 +117,7 @@ vim.api.nvim_create_autocmd('User', {
         end
     end
 })
-vim.api.nvim_create_autocmd({ "BufEnter", "DirChanged" }, {
+vim.api.nvim_create_autocmd({ "BufEnter", "DirChanged", "LspAttach" }, {
     pattern = "*",
     callback = function()
         gitsigns.refresh()
