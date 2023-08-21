@@ -133,7 +133,10 @@ lspconfig.dockerls.setup {
     autostart = true,
 }
 lspconfig.marksman.setup {
-    on_attach = on_attach,
+    on_attach = function (client, bufnr)
+        on_attach(client, bufnr)
+        vim.wo.conceallevel = 3
+    end,
     flags = lsp_flags,
     capabilities = capabilities,
     autostart = true,
