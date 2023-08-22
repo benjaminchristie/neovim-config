@@ -24,6 +24,7 @@ vim.lsp.handlers["textDocument/signatureHelp"] =
 -- Use an on_attach function to only map the following keys
 -- after the language server attaches to the current buffer
 
+---@diagnostic disable-next-line: unused-local
 local on_attach = function(client, bufnr)
     vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
 end
@@ -135,7 +136,7 @@ lspconfig.dockerls.setup {
 lspconfig.marksman.setup {
     on_attach = function (client, bufnr)
         on_attach(client, bufnr)
-        vim.wo.conceallevel = 3
+        vim.wo.conceallevel = 2
     end,
     flags = lsp_flags,
     capabilities = capabilities,

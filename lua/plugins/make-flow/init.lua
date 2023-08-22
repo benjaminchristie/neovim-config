@@ -89,7 +89,8 @@ local function compileCallback(filename, command, timeout)
 end
 local function pandocCompile()
     local filename = vim.api.nvim_buf_get_name(0)
-    compileCallback(filename, { "pandoc", filename, "-o", filename .. ".pdf" })
+    compileCallback(filename,
+        { "pandoc", "-V", "geometry:margin=1in", filename, "-o", filename .. ".pdf" })
 end
 local function cppCompile()
     local filename = vim.api.nvim_buf_get_name(0)

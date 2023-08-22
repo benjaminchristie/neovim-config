@@ -1,0 +1,1 @@
+syntax match markdownCustomConceal "##" conceal

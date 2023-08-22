@@ -28,6 +28,14 @@ local function mergetool()
     end
 end
 
+local function ws_files()
+    if vim.b.gitsigns_head ~= nil then
+        vim.cmd("FzfLua git_files")
+    else
+        vim.cmd("FzfLua files")
+    end
+end
+
 local extra_items = function()
     return function()
         return {
@@ -35,7 +43,7 @@ local extra_items = function()
             { action = 'FzfLua help_tags', name = 'Help',            section = 'Actions' },
             { action = 'FzfLua oldfiles',  name = 'History',         section = 'Actions' },
             { action = cached_repos,       name = 'Projects',        section = 'Actions' },
-            { action = 'FzfLua git_files', name = 'Workspace files', section = 'Actions' },
+            { action = ws_files,           name = 'Workspace files', section = 'Actions' },
             { action = difftool,           name = 'Diff tool',       section = 'Actions' },
             { action = mergetool,          name = 'Merge tool',      section = 'Actions' },
             { action = statustool,         name = 'Status',          section = 'Actions' },
