@@ -26,7 +26,7 @@
    (atx_h3_marker)
    (atx_h4_marker)
    (atx_h5_marker)
-] @heading_conceal (#set! conceal ""))
+] @heading_conceal (#set! conceal "|"))
 
 (list
   (list_item

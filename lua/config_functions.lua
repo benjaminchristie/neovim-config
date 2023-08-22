@@ -143,7 +143,6 @@ vim.api.nvim_create_user_command("Plug", change_plug_options, {
 local function markdown_preview_function()
     local fn = vim.api.nvim_buf_get_name(0)
     local cached_pdf_fn = vim.fn.stdpath("cache") .. "/" .. string.gsub(fn .. ".pdf", "/", "&")
-    vim.fn.input(cached_pdf_fn)
     vim.system(
         { "pandoc", "-V", "geometry:margin=1in", fn, "-o", cached_pdf_fn},
         {},
