@@ -32,6 +32,7 @@ vim.keymap.set('n', '<C-h><C-q>', vim.diagnostic.open_float, { desc = "diagnosti
 vim.keymap.set('n', '<C-k>', vim.diagnostic.goto_prev, { desc = "diagnostics assistance" })
 vim.keymap.set('n', '<C-j>', vim.diagnostic.goto_next, { desc = "diagnostics assistance" })
 vim.keymap.set('n', 'gh', vim.diagnostic.setloclist, { desc = "diagnostics assistance" })
+vim.keymap.set('n', 'gH', vim.diagnostic.setqflist, { desc = "diagnostics assistance" })
 vim.keymap.set('n', 'gd', vim.lsp.buf.definition)
 vim.keymap.set('n', '<space>', vim.lsp.buf.hover)
 vim.keymap.set('n', 'gi', vim.lsp.buf.implementation)
