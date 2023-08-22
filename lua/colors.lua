@@ -10,7 +10,7 @@ require("tokyonight").setup({
 })
 vim.cmd("color tokyonight-moon")
 local colors = require("tokyonight.colors").setup()
-local etc_colors = { '#7ac2ca', '#7cb4c6', '#7da8c3', '#7f9bdf', '#8093bc' }
+local cursor_line_nr_colors = { '#7ac2ca', '#7cb4c6', '#7da8c3', '#7f9bdf', '#8093bc' }
 local conceal_colors = {colors.red, '#d2cb8a', '#e1af86', '#f09283', colors.green}
 vim.api.nvim_set_hl(0, 'SpellBad', { bg = "#ff2929" })
 vim.api.nvim_set_hl(0, "CursorLine", { bg = colors.bg_float })
@@ -87,11 +87,11 @@ vim.api.nvim_set_hl(0, 'DiagnosticUnnecessary', {
 })
 vim.api.nvim_set_hl(0, "IndentBlanklineContextChar", { fg = colors.blue })
 vim.api.nvim_set_hl(0, "DimLineNr", { fg = colors.fg_dark })
-vim.api.nvim_set_hl(0, 'HighlightedLineNr1', { fg = etc_colors[1] })
-vim.api.nvim_set_hl(0, 'HighlightedLineNr2', { fg = etc_colors[2] })
-vim.api.nvim_set_hl(0, 'HighlightedLineNr3', { fg = etc_colors[3] })
-vim.api.nvim_set_hl(0, 'HighlightedLineNr4', { fg = etc_colors[4] })
-vim.api.nvim_set_hl(0, 'HighlightedLineNr5', { fg = etc_colors[5] })
+vim.api.nvim_set_hl(0, 'HighlightedLineNr1', { fg = cursor_line_nr_colors[1] })
+vim.api.nvim_set_hl(0, 'HighlightedLineNr2', { fg = cursor_line_nr_colors[2] })
+vim.api.nvim_set_hl(0, 'HighlightedLineNr3', { fg = cursor_line_nr_colors[3] })
+vim.api.nvim_set_hl(0, 'HighlightedLineNr4', { fg = cursor_line_nr_colors[4] })
+vim.api.nvim_set_hl(0, 'HighlightedLineNr5', { fg = cursor_line_nr_colors[5] })
 
 vim.api.nvim_set_hl(0, 'DapBreakpoint', { fg = colors.red })
 vim.api.nvim_set_hl(0, 'DapBreakpointCondition', { fg = colors.purple })
@@ -102,11 +102,6 @@ vim.fn.sign_define('DapBreakpointCondition', { text = 'C', texthl = 'DapBreakpoi
 vim.fn.sign_define('DapLogPoint', { text = 'L', texthl = 'DapLogPoint' })
 vim.fn.sign_define('DapStopped', { text = '→', texthl = 'DapStopped' })
 for i = 1, 5, 1 do
-    vim.api.nvim_set_hl(0, string.format('@text.title.%d.marker.markdown', i), {
-        fg = conceal_colors[i],
-        bg = colors.bg_highlight,
-        bold = true,
-    })
     vim.api.nvim_set_hl(0, string.format('@text.title.%d.markdown', i), {
         fg = conceal_colors[i],
         bg = colors.bg_highlight,
@@ -114,7 +109,7 @@ for i = 1, 5, 1 do
     })
 end
 vim.api.nvim_set_hl(0, "@marker_conceal.markdown", {
-    fg = etc_colors[1],
+    fg = colors.blue,
     bold = true,
 })
 vim.api.nvim_set_hl(0, "@heading_conceal.markdown", {

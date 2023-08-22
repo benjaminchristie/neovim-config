@@ -137,6 +137,7 @@ lspconfig.marksman.setup {
     on_attach = function (client, bufnr)
         on_attach(client, bufnr)
         vim.wo.conceallevel = 2
+        vim.wo.spell = true
     end,
     flags = lsp_flags,
     capabilities = capabilities,
