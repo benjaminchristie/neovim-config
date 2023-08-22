@@ -139,3 +139,29 @@ end
 vim.api.nvim_create_user_command("Plug", change_plug_options, {
     desc = "queue a floating window for vim-plug"
 })
+
+local function markdown_preview_function()
+    local fn = vim.api.nvim_buf_get_name(0)
+    local cached_pdf_fn = vim.fn.stdpath("cache") .. "/" .. string.gsub(fn .. ".pdf", "/", "&")
+    vim.fn.input(cached_pdf_fn)
+    vim.system(
+        { "pandoc", "-V", "geometry:margin=1in", fn, "-o", cached_pdf_fn},
+        {},
+        function (_) vim.system({"zathura", cached_pdf_fn}) end
+    )
+    -- vim.system({"zathura", cached_pdf_fn})
+    vim.api.nvim_create_augroup("MarkdownPreview" .. fn, {clear = true})
+    vim.api.nvim_create_autocmd({"BufWrite"}, {
+        group = "MarkdownPreview" .. fn,
+        pattern = fn,
+        callback = function ()
+            vim.system(
+                { "pandoc", "-V", "geometry:margin=1in", fn, "-o", cached_pdf_fn}
+            )
+        end
+    })
+end
+
+vim.api.nvim_create_user_command("MarkdownPreview", markdown_preview_function, {
+    desc = "Markdown previewer with pandoc and live updating"
+})
