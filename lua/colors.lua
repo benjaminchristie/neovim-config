@@ -11,7 +11,7 @@ require("tokyonight").setup({
 vim.cmd("color tokyonight-moon")
 local colors = require("tokyonight.colors").setup()
 local cursor_line_nr_colors = { '#7ac2ca', '#7cb4c6', '#7da8c3', '#7f9bdf', '#8093bc' }
-local conceal_colors = {colors.red, '#d2cb8a', '#e1af86', '#f09283', colors.green}
+local conceal_colors = { colors.red, '#d2cb8a', '#e1af86', '#f09283', colors.green }
 vim.api.nvim_set_hl(0, 'SpellBad', { bg = "#ff2929" })
 vim.api.nvim_set_hl(0, "CursorLine", { bg = colors.bg_float })
 vim.api.nvim_set_hl(0, "CursorLineNr", { fg = colors.orange })
@@ -108,6 +108,10 @@ for i = 1, 5, 1 do
         bold = true,
     })
 end
+vim.api.nvim_set_hl(0, "@punctuation.special.markdown", {
+    fg = colors.blue,
+    bold = true,
+})
 vim.api.nvim_set_hl(0, "@marker_conceal.markdown", {
     fg = colors.blue,
     bold = true,

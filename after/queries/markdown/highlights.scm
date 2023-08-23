@@ -28,10 +28,10 @@
    (atx_h5_marker)
 ] @heading_conceal (#set! conceal "|"))
 
-(list
-  (list_item
-    (list_marker_minus) @marker_conceal (#set! conceal "•")
-))
+; (list
+;   (list_item
+;     (list_marker_minus) @marker_conceal (#set! conceal "•")
+; ))
 ([
  (task_list_marker_checked)
 ] @conceal (#set! conceal "✔"))

@@ -33,7 +33,7 @@ require("oil").setup({
     },
     use_default_keymaps = false,
     view_options = {
-        is_hidden_file = function(name, buffer)
+        is_hidden_file = function(name, _)
             return vim.startswith(name, ".") and not vim.startswith(name, ".gitignore")
         end
     }
