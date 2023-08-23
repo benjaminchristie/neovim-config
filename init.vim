@@ -22,6 +22,7 @@ else
     Plug 'hrsh7th/cmp-path'
     Plug 'nvim-treesitter/nvim-treesitter-textobjects'
     Plug 'saadparwaiz1/cmp_luasnip'
+    Plug 'michaelb/sniprun', {'do': 'sh install.sh'}
     Plug 'simrat39/rust-tools.nvim', { 'for': 'rust' }
     Plug 'windwp/nvim-autopairs'
     Plug 'windwp/nvim-ts-autotag'
@@ -74,6 +75,7 @@ else
     Plug 'benjaminchristie/nvim-colorizer.lua', { 'on': 'ColorizerToggle' }
     Plug 'dstein64/vim-startuptime', { 'on': 'StartupTime' }
     Plug 'folke/tokyonight.nvim'
+    Plug 'projekt0n/github-nvim-theme'
     Plug 'kosayoda/nvim-lightbulb'
 
 

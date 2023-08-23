@@ -110,7 +110,7 @@ vim.keymap.set('n', 'gss', gitsigns.stage_hunk, { desc = "gitsigns stage hunk" }
 -- equivalent to Gwrite
 vim.keymap.set('n', 'gsa', gitsigns.stage_buffer, { desc = "gitsigns stage buffer" })
 -- equivalent to Gread
-vim.keymap.set('n', 'gsr', gitsigns.reset_buffer, { desc = "gitsigns reset buffer, same as :Gread" })
+vim.keymap.set('n', 'gsr', gitsigns.reset_hunk, { desc = "gitsigns reset hunk" })
 
 -- cd to current working file
 vim.keymap.set('n', '<A-c>', function()

@@ -21,7 +21,7 @@ anoremenu PopUp.Exit                        <Nop>
 --         vim.lsp.buf.format()
 --     end
 -- })
-vim.api.nvim_create_augroup("MarkdownMagic", {clear = true})
+vim.api.nvim_create_augroup("MarkdownMagic", { clear = true })
 vim.api.nvim_create_autocmd({ "BufEnter" }, {
     group = "MarkdownMagic",
     pattern = "*.md",
@@ -38,11 +38,14 @@ vim.api.nvim_create_autocmd({ "BufLeave" }, {
         vim.wo.spell = false
     end
 })
-vim.api.nvim_create_augroup("Oil", { clear = true })
-vim.api.nvim_create_autocmd({ "BufEnter" }, {
+vim.api.nvim_create_augroup("Oil", { clear = false })
+vim.api.nvim_create_autocmd({ "BufLeave" }, {
     group = "Oil",
     pattern = "*",
     callback = function()
+        if vim.o.filetype ~= "oil" then
+            return
+        end
         vim.o.number = true
         vim.o.relativenumber = true
     end

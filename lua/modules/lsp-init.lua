@@ -64,6 +64,14 @@ lspconfig.pyright.setup {
     flags = lsp_flags,
     capabilities = capabilities,
     autostart = true,
+    settings = {
+        python = {
+            analysis = {
+                autoSearchPaths = true,
+            }
+        }
+    },
+    root_dir = require('lspconfig/util').root_pattern('.git'),
 }
 lspconfig['tsserver'].setup {
     on_attach = on_attach,
