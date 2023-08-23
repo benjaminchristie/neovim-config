@@ -21,9 +21,8 @@ local function difftool()
 end
 
 local function mergetool()
-    local branch = vim.fn.input("Perform mergetool on : ")
     vim.cmd("echon ' '")
-    if not pcall(function() vim.cmd("Git mergetool -y " .. branch) end) then
+    if not pcall(function() vim.cmd("Git mergetool -y ") end) then
         vim.cmd('echohl WarningMsg | echo "Directory is not a git repository" | echohl None')
     end
 end
