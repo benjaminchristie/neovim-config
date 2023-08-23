@@ -21,6 +21,23 @@ anoremenu PopUp.Exit                        <Nop>
 --         vim.lsp.buf.format()
 --     end
 -- })
+vim.api.nvim_create_augroup("MarkdownMagic", {clear = true})
+vim.api.nvim_create_autocmd({ "BufEnter" }, {
+    group = "MarkdownMagic",
+    pattern = "*.md",
+    callback = function()
+        vim.wo.conceallevel = 2
+        vim.wo.spell = true
+    end
+})
+vim.api.nvim_create_autocmd({ "BufLeave" }, {
+    group = "MarkdownMagic",
+    pattern = "*.md",
+    callback = function()
+        vim.wo.conceallevel = 0
+        vim.wo.spell = false
+    end
+})
 vim.api.nvim_create_augroup("Oil", { clear = true })
 vim.api.nvim_create_autocmd({ "BufEnter" }, {
     group = "Oil",
