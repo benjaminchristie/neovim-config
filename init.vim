@@ -7,7 +7,7 @@ else
     call plug#begin()
     """ Internal plugins """
     " Essential
-    Plug 'hrsh7th/nvim-cmp'
+    Plug 'hrsh7th/nvim-cmp', { 'commit': '969c5a' }
     Plug 'neovim/nvim-lspconfig'
     Plug 'nvim-lua/plenary.nvim'
     Plug 'nvim-lua/popup.nvim'
@@ -26,7 +26,7 @@ else
     Plug 'windwp/nvim-autopairs'
     Plug 'windwp/nvim-ts-autotag'
     " Plug 'uga-rosa/cmp-dictionary'
-    " Plug 'petertriho/cmp-git'
+    Plug 'petertriho/cmp-git'
 
     " DAP
     Plug 'LiadOz/nvim-dap-repl-highlights'

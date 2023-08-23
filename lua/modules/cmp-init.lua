@@ -1,7 +1,7 @@
 -- Setup nvim-cmp.
 local cmp = require('cmp')
 local luasnip = require("luasnip")
--- require("cmp_git").setup()
+require("cmp_git").setup()
 -- local dict = require("cmp_dictionary")
 -- dict.setup({
 --     exact = 2,
@@ -83,12 +83,12 @@ cmp.setup({
     }
 })
 -- Set configuration for specific filetype.
--- cmp.setup.filetype('gitcommit', {
---     sources = cmp.config.sources({
---         { name = 'cmp_git' },
---         { name = 'buffer' },
---     })
--- })
+cmp.setup.filetype('gitcommit', {
+    sources = cmp.config.sources({
+        { name = 'cmp_git' },
+        { name = 'buffer' },
+    })
+})
 
 cmp.setup.cmdline('/', {
     mapping = cmp.mapping.preset.cmdline(),
