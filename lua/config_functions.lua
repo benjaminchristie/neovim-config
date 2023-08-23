@@ -136,7 +136,7 @@ local change_plug_options = function()
         vim.g.plug_window = [[vertical topleft new]]
     end)
 end
-vim.api.nvim_create_user_command("Plug", change_plug_options, {
+vim.api.nvim_create_user_command("PlugFloat", change_plug_options, {
     desc = "queue a floating window for vim-plug"
 })
 

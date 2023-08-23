@@ -74,6 +74,7 @@ else
     Plug 'benjaminchristie/nvim-colorizer.lua', { 'on': 'ColorizerToggle' }
     Plug 'dstein64/vim-startuptime', { 'on': 'StartupTime' }
     Plug 'folke/tokyonight.nvim'
+    Plug 'kosayoda/nvim-lightbulb'
 
 
     """ External plugins """
