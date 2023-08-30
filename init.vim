@@ -52,7 +52,7 @@ else
     Plug 'stevearc/oil.nvim', { 'on': 'Oil' }
 
     " QoL
-    Plug 'IMOKURI/line-number-interval.nvim'
+    " Plug 'IMOKURI/line-number-interval.nvim'
     Plug 'ThePrimeagen/refactoring.nvim'
     Plug 'akinsho/toggleterm.nvim'
     Plug 'benjaminchristie/csgithub.nvim', { 'branch': 'master'}
@@ -65,7 +65,7 @@ else
     Plug 'rhysd/vim-clang-format', { 'on': 'ClangFormat', 'for': 'cpp' }
     Plug 't-troebst/perfanno.nvim'
     Plug 'tpope/vim-commentary'
-    Plug 'tpope/vim-dispatch', { 'on': 'Dispatch' }
+    Plug 'tpope/vim-dispatch'
     Plug 'tpope/vim-eunuch'
     Plug 'tzachar/highlight-undo.nvim'
     Plug 'vladdoster/remember.nvim'
@@ -77,6 +77,8 @@ else
     Plug 'folke/tokyonight.nvim'
     Plug 'projekt0n/github-nvim-theme'
     Plug 'kosayoda/nvim-lightbulb'
+    Plug 'chentoast/marks.nvim'
+    Plug 'p00f/godbolt.nvim'
 
 
     """ External plugins """

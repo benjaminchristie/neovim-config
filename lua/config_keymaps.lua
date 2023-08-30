@@ -93,6 +93,7 @@ end, { desc = "toggle comment while preserving place on line" })
 vim.keymap.set('n', 'gM', ':Git mergetool ')
 vim.keymap.set('n', 'gV', ':Git difftool -y ')
 vim.keymap.set('n', 'gR', ':Git rebase --interactive -i HEAD~')
+vim.keymap.set('n', 'gC', ':Git rebase --continue<CR>')
 vim.keymap.set('n', 'dl', ':diffget //3<CR>')
 vim.keymap.set('n', 'dh', ':diffget //2<CR>')
 vim.keymap.set('n', 'gD', ':Gvdiffsplit!<CR>')
@@ -183,3 +184,11 @@ vim.keymap.set('n', "<A-h>", function() return require("harpoon.ui").toggle_quic
 vim.keymap.set('n', "<A-m>", function() return require("harpoon.mark").add_file() end)
 vim.keymap.set('n', "<A-k>", function() return require("harpoon.ui").nav_prev() end)
 vim.keymap.set('n', "<A-j>", function() return require("harpoon.ui").nav_next() end)
+
+
+
+local function on_demand_autogroup()
+    vim.fn.feedkeys(":lua vim.api.nvim_create_autocmd({\"\"}, {pattern=vim.api.nvim_buf_get_name(0), callback = function() end})")
+end
+
+vim.keymap.set('n', "<A-e>", on_demand_autogroup)
