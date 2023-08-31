@@ -12,24 +12,7 @@ nnoremenu PopUp.Peek\ Value                 <Cmd>lua require("dapui").eval(nil, 
 anoremenu PopUp.-1-                         <Nop>
 anoremenu PopUp.Exit                        <Nop>
 ]])
---- autocmds
--- vim.api.nvim_create_augroup("LspFormattingLua", { clear = true })
--- vim.api.nvim_create_autocmd("BufWritePre", {
---     group = "LspFormattingLua",
---     pattern = "*.lua",
---     callback = function()
---         vim.lsp.buf.format()
---     end
--- })
 vim.api.nvim_create_augroup("MarkdownMagic", { clear = true })
-vim.api.nvim_create_autocmd({ "BufEnter" }, {
-    group = "MarkdownMagic",
-    pattern = "*.md",
-    callback = function()
-        vim.wo.conceallevel = 2
-        vim.wo.spell = true
-    end
-})
 vim.api.nvim_create_autocmd({ "BufLeave" }, {
     group = "MarkdownMagic",
     pattern = "*.md",
@@ -72,30 +55,7 @@ vim.api.nvim_create_autocmd({ "BufEnter" }, {
         vim.opt_local.filetype = "html"
     end
 })
-vim.api.nvim_create_augroup("MatchPairs", { clear = true })
-vim.api.nvim_create_autocmd({ "BufEnter" }, {
-    group = "MatchPairs",
-    pattern = { "*.cpp", "*.h", "*.hpp", "*.c" },
-    callback = function()
-        vim.bo.matchpairs = "(:),{:},[:],<:>,=:;,"
-    end
-})
-vim.api.nvim_create_augroup("LspFormatting", { clear = true })
 vim.api.nvim_create_autocmd({ "BufWritePre" }, {
-    group = "LspFormatting",
     pattern = { "*.cpp", "*.h", "*.cxx", "*.hpp" },
     command = "ClangFormat",
-
-})
-local params = {
-    command = 'pyright.organizeimports',
-    arguments = { vim.uri_from_bufnr(0) },
-}
-vim.api.nvim_create_augroup("PythonFormatting", { clear = true })
-vim.api.nvim_create_autocmd({ "BufEnter" }, {
-    group = "PythonFormatting",
-    pattern = "*.py",
-    callback = function()
-        vim.lsp.buf.execute_command(params)
-    end
 })

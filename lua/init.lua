@@ -40,10 +40,6 @@ require("oil").setup({
 })
 require("plugins.nvim-gpg")
 require("plugins.make-flow")
-require('nvim-autopairs').setup({
-    ignored_next_char = "[%w%.]",
-    enable_check_bracket_line = false,
-})
 require("indent_blankline").setup {
     show_current_context = true,
     show_current_context_start = false,
@@ -100,8 +96,8 @@ require("godbolt").setup({
         -- any_additional_filetype = { compiler = ..., options = ... },
     },
     quickfix = {
-        enable = false, -- whether to populate the quickfix list in case of errors
-        auto_open = false -- whether to open the quickfix list in case of errors
+        enable = false,         -- whether to populate the quickfix list in case of errors
+        auto_open = false       -- whether to open the quickfix list in case of errors
     },
     url = "https://godbolt.org" -- can be changed to a different godbolt instance
 })
@@ -114,8 +110,8 @@ require("godbolt").setup({
 --   cyclic = true,
 --   -- whether the shada file is updated after modifying uppercase marks. default false
 --   force_write_shada = false,
---   -- how often (in ms) to redraw signs/recompute mark positions. 
---   -- higher values will have better performance but may cause visual lag, 
+--   -- how often (in ms) to redraw signs/recompute mark positions.
+--   -- higher values will have better performance but may cause visual lag,
 --   -- while lower values may cause performance penalties. default 150.
 --   refresh_interval = 250,
 --   -- sign priorities for each type of mark - builtin marks, uppercase marks, lowercase

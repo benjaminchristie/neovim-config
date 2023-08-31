@@ -1,4 +1,9 @@
 vim.keymap.set('n', "<A-f>", function()
+    local params = {
+        command = 'pyright.organizeimports',
+        arguments = { vim.uri_from_bufnr(0) },
+    }
+    vim.lsp.buf.execute_command(params)
     vim.bo.swapfile = false
     local line_num = vim.api.nvim_win_get_cursor(0)[1]
     local _pre = vim.api.nvim_buf_get_lines(0, 0, -1, false)
