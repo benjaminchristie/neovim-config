@@ -12,15 +12,6 @@ nnoremenu PopUp.Peek\ Value                 <Cmd>lua require("dapui").eval(nil, 
 anoremenu PopUp.-1-                         <Nop>
 anoremenu PopUp.Exit                        <Nop>
 ]])
-vim.api.nvim_create_augroup("MarkdownMagic", { clear = true })
-vim.api.nvim_create_autocmd({ "BufLeave" }, {
-    group = "MarkdownMagic",
-    pattern = "*.md",
-    callback = function()
-        vim.wo.conceallevel = 0
-        vim.wo.spell = false
-    end
-})
 vim.api.nvim_create_augroup("Oil", { clear = false })
 vim.api.nvim_create_autocmd({ "BufLeave" }, {
     group = "Oil",
