@@ -22,7 +22,7 @@ else
     Plug 'hrsh7th/cmp-path'
     Plug 'nvim-treesitter/nvim-treesitter-textobjects'
     Plug 'saadparwaiz1/cmp_luasnip'
-    Plug 'michaelb/sniprun', {'do': 'sh install.sh'}
+    Plug 'michaelb/sniprun', { 'do': 'sh install.sh'}
     Plug 'simrat39/rust-tools.nvim', { 'for': 'rust' }
     Plug 'windwp/nvim-autopairs'
     Plug 'windwp/nvim-ts-autotag'
@@ -52,7 +52,7 @@ else
     Plug 'stevearc/oil.nvim', { 'on': 'Oil' }
 
     " QoL
-    " Plug 'IMOKURI/line-number-interval.nvim'
+    Plug 'IMOKURI/line-number-interval.nvim'
     Plug 'ThePrimeagen/refactoring.nvim'
     Plug 'akinsho/toggleterm.nvim'
     Plug 'benjaminchristie/csgithub.nvim', { 'branch': 'master'}
