@@ -2,23 +2,6 @@
 local cmp = require('cmp')
 local luasnip = require("luasnip")
 require("cmp_git").setup()
--- local dict = require("cmp_dictionary")
--- dict.setup({
---     exact = 2,
---     first_case_insensitive = true,
---     document = true,
---     document_command = "wn %s -over",
---     async = true,
---     sqlite = false,
---     max_items = 10,
---     capacity = 50,
---     debug = true,
--- })
--- dict.switcher({
---     spelllang = {
---         en = "/home/benjamin/.config/nvim/bin/dictionary/my.dict"
---     },
--- })
 cmp.setup({
     snippet = {
         -- REQUIRED - you must specify a snippet engine

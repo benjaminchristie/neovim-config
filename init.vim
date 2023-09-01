@@ -105,5 +105,4 @@ else
     Plug 'junegunn/vim-plug' 
 
     call plug#end()
-    lua require('init')
 endif
