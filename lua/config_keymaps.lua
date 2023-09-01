@@ -14,12 +14,51 @@ vim.keymap.set('n', '`3', ':3winc-<CR>', { desc = "Change window size" })
 vim.keymap.set('n', 'zs', 'zMzO', { desc = "Open all folds" })
 vim.keymap.set('v', "J", ":m '>+1<CR>gv=gv", { desc = "Move text as block" })
 vim.keymap.set('v', "K", ":m '<-2<CR>gv=gv", { desc = "Move text as block" })
-vim.keymap.set('n', 'n', 'nzz')
-vim.keymap.set('n', 'N', 'Nzz')
 vim.keymap.set('n', '<C-d>', '<C-d>zz')
 vim.keymap.set('n', '<C-u>', '<C-u>zz')
 vim.keymap.set('n', '}', '}zz')
 vim.keymap.set('n', '{', '{zz')
+
+local timers = {}
+local search_timer_timeout = 20000
+local search_timer_iter = 50
+local bg_highlight = "#3E68D7"
+local bg_highlight_vals = { '#3B62C8', '#395CBA', '#3655AB', '#344F9C', '#31498E', '#2F437F', '#2C3D71', '#2A3762',
+    '#273053', '#252A45', '#222436' }
+local function timed_color_change()
+    for _, t in ipairs(timers) do
+        vim.fn.timer_stop(t)
+    end
+    timers = {}
+    local search_timer = vim.fn.timer_start(search_timer_timeout, function()
+        for i = 1, #bg_highlight_vals, 1 do
+            local timer = vim.fn.timer_start(i * search_timer_iter, function()
+                vim.api.nvim_set_hl(0, "IncSearch", { bg = bg_highlight_vals[i] })
+                vim.api.nvim_set_hl(0, "Search", { bg = bg_highlight_vals[i] })
+            end)
+            table.insert(timers, timer)
+        end
+        local timer = vim.fn.timer_start((#bg_highlight_vals + 1) * search_timer_iter + search_timer_iter, function()
+            vim.cmd("nohl")
+        end)
+        table.insert(timers, timer)
+    end)
+    table.insert(timers, search_timer)
+end
+vim.keymap.set('n', 'n', function()
+        vim.api.nvim_set_hl(0, "IncSearch", { bg = bg_highlight })
+        vim.api.nvim_set_hl(0, "Search", { bg = bg_highlight })
+        vim.fn.feedkeys('nzz', "n")
+        timed_color_change()
+    end,
+    { noremap = true })
+vim.keymap.set('n', 'N', function()
+        vim.api.nvim_set_hl(0, "IncSearch", { bg = bg_highlight })
+        vim.api.nvim_set_hl(0, "Search", { bg = bg_highlight })
+        vim.fn.feedkeys('Nzz', "n")
+        timed_color_change()
+    end,
+    { noremap = true })
 
 vim.keymap.set('n', '<A-s>', require("mini.starter").open, { desc = "open mini.starter screen" })
 vim.keymap.set('n', '<A-f>', function()
@@ -188,7 +227,8 @@ vim.keymap.set('n', "<A-j>", function() return require("harpoon.ui").nav_next() 
 
 
 local function on_demand_autogroup()
-    vim.fn.feedkeys(":lua vim.api.nvim_create_autocmd({\"\"}, {pattern=vim.api.nvim_buf_get_name(0), callback = function() end})")
+    vim.fn.feedkeys(
+        ":lua vim.api.nvim_create_autocmd({\"\"}, {pattern=vim.api.nvim_buf_get_name(0), callback = function() end})")
 end
 
 vim.keymap.set('n', "<A-e>", on_demand_autogroup)

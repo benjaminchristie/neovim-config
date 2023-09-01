@@ -13,7 +13,7 @@ local function whereami()
         "#90a0e6", "#95a4e8", "#9aa9ea", "#9faeec", "#a5b2ee", "#aab7ef", "#afbcf1", "#b5c0f2", "#bac5f4", "#c0caf5"
     }
     local length = #cursor_colors
-    for i = 0, length, 1 do
+    for i = 1, length, 1 do
         vim.fn.timer_start((i + 1) * uptime, function()
             vim.wo.cursorline = true
             vim.wo.cursorcolumn = true
