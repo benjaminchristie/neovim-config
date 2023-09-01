@@ -1,7 +1,22 @@
 lua vim.loader.enable()
 if exists('g:vscode')
     " VSCode extension
-    lua require("vscode-init")
+    lua vim.o.hlsearch = true
+    lua vim.o.incsearch = true
+
+    lua vim.keymap.set('v', "J", ":m '>+1<CR>gv=gv")
+    lua vim.keymap.set('v', "K", ":m '<-2<CR>gv=gv")
+    lua vim.keymap.set('n', 'n', 'nzz')
+    lua vim.keymap.set('n', 'N', 'Nzz')
+    lua vim.keymap.set('n', '<C-d>', '<C-d>zz')
+    lua vim.keymap.set('n', '<C-u>', '<C-u>zz')
+    lua vim.keymap.set('n', '}', '}zz')
+    lua vim.keymap.set('n', '{', '{zz')
+    lua vim.keymap.set('n', '<Up>', '<C-b>')
+    lua vim.keymap.set('n', '<Down>', '<C-f>')
+    lua vim.keymap.set('n', '<Left>', 'gT')
+    lua vim.keymap.set('n', '<Right>', 'gt')
+
 else
 
     call plug#begin()
