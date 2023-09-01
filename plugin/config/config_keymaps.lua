@@ -1,8 +1,3 @@
-local gitsigns = require("gitsigns")
-local dap = require("dap")
-local dapui = require("dapui")
-local pbreakpoints = require('persistent-breakpoints.api')
-
 vim.keymap.set('n', '<Left>', 'gT', { desc = "Go to left tab" })
 vim.keymap.set('n', '<Right>', 'gt', { desc = "Go to right tab" })
 vim.keymap.set('i', '<Left>', '<Esc>gT', { desc = "Go to left tab" })
@@ -84,26 +79,26 @@ vim.keymap.set('n', 'gr', vim.lsp.buf.references)
 vim.keymap.set('n', '<A-d><A-v>', function()
     vim.cmd("DapVirtualTextEnable")
 end, { desc = "enable virtual text when debugging" })
-vim.keymap.set('n', '<A-d><A-r>', dap.restart, { desc = "restart debugger" })
-vim.keymap.set('n', '<A-d><A-t>', dap.run_to_cursor, { desc = "run to cursor" })
-vim.keymap.set('n', '<A-d><A-d>', dap.continue, { desc = "continue debugger" })
+vim.keymap.set('n', '<A-d><A-r>', require("dap").restart, { desc = "restart debugger" })
+vim.keymap.set('n', '<A-d><A-t>', require("dap").run_to_cursor, { desc = "run to cursor" })
+vim.keymap.set('n', '<A-d><A-d>', require("dap").continue, { desc = "continue debugger" })
 vim.keymap.set('n', '<A-d><A-q>', function()
-    dap.close()
-    dapui.close()
+    require("dap").close()
+    require("dapui").close()
 end)
 vim.keymap.set('n', '<A-d><A-l>', function()
-    dap.toggle_breakpoint(nil, nil, vim.fn.input("Log : "))
+    require("dap").toggle_breakpoint(nil, nil, vim.fn.input("Log : "))
 end)
 vim.keymap.set('n', '<A-d><A-b>', function()
-    pbreakpoints.toggle_breakpoint(vim.fn.input("Condition : "))
+     require('persistent-breakpoints.api').toggle_breakpoint(vim.fn.input("Condition : "))
 end)
 vim.keymap.set('n', '<A-d><A-p>', function()
-    dapui.eval(nil, {
+    require("dapui").eval(nil, {
         enter = true
     })
 end)
-vim.keymap.set('n', '<A-d><A-n>', dap.step_over, { desc = "step over function" })
-vim.keymap.set('n', '<A-d><A-s>', dap.step_into, { desc = "step into function" })
+vim.keymap.set('n', '<A-d><A-n>', require("dap").step_over, { desc = "step over function" })
+vim.keymap.set('n', '<A-d><A-s>', require("dap").step_into, { desc = "step into function" })
 
 local search_github = function()
     local csgithub = require("csgithub")
@@ -140,17 +135,17 @@ vim.keymap.set('n', 'gD', ':Gvdiffsplit!<CR>')
 local is_gitsigns_toggled = false
 vim.keymap.set('n', 'gst', function()
     is_gitsigns_toggled = not is_gitsigns_toggled
-    gitsigns.toggle_current_line_blame(is_gitsigns_toggled)
-    gitsigns.toggle_linehl(is_gitsigns_toggled)
-    gitsigns.toggle_deleted(is_gitsigns_toggled)
-    gitsigns.toggle_numhl(is_gitsigns_toggled)
+    require("gitsigns").toggle_current_line_blame(is_gitsigns_toggled)
+    require("gitsigns").toggle_linehl(is_gitsigns_toggled)
+    require("gitsigns").toggle_deleted(is_gitsigns_toggled)
+    require("gitsigns").toggle_numhl(is_gitsigns_toggled)
 end, { desc = "toggle gitsigns blame and buffer changes" })
 
-vim.keymap.set('n', 'gss', gitsigns.stage_hunk, { desc = "gitsigns stage hunk" })
+vim.keymap.set('n', 'gss', require("gitsigns").stage_hunk, { desc = "gitsigns stage hunk" })
 -- equivalent to Gwrite
-vim.keymap.set('n', 'gsa', gitsigns.stage_buffer, { desc = "gitsigns stage buffer" })
+vim.keymap.set('n', 'gsa', require("gitsigns").stage_buffer, { desc = "gitsigns stage buffer" })
 -- equivalent to Gread
-vim.keymap.set('n', 'gsr', gitsigns.reset_hunk, { desc = "gitsigns reset hunk" })
+vim.keymap.set('n', 'gsr', require("gitsigns").reset_hunk, { desc = "gitsigns reset hunk" })
 
 -- cd to current working file
 vim.keymap.set('n', '<A-c>', function()
@@ -232,3 +227,20 @@ local function on_demand_autogroup()
 end
 
 vim.keymap.set('n', "<A-e>", on_demand_autogroup)
+
+vim.keymap.set('n', '<C-p><C-p>',
+    function() return require("fzf-lua").files({ cmd = "find -type f | rg -v '.git' | rg -v '.cache' | rg -v 'bin/' | rg -v 'logs/' " }) end)
+vim.keymap.set('n', '<C-p><C-f>', function() return require("fzf-lua").live_grep() end)
+vim.keymap.set('n', '#', function() return require("fzf-lua").grep_cword() end)
+vim.keymap.set('n', '<C-p><C-d>', function() return require("fzf-lua").lsp_document_symbols() end)
+vim.keymap.set('n', '<C-p><C-b>', function() return require("fzf-lua").buffers() end)
+vim.keymap.set('n', '<C-p><C-h>', function() return require("fzf-lua").help_tags(help_opts) end)
+-- vim.keymap.set('n', '<C-p><C-c>', function() return builtins.git_bcommits() end)
+vim.keymap.set('n', '<C-p><C-q>', function() return require("fzf-lua").blines() end)
+vim.keymap.set('n', '<C-p><C-i>', function() return require("fzf-lua").lsp_workspace_symbols() end)
+vim.keymap.set('n', '<C-p><C-l>', function() return require("fzf-lua").commands() end)
+vim.keymap.set('n', '<C-p><C-k>', function() return require("fzf-lua").keymaps() end)
+vim.keymap.set('n', '<C-p><C-g><C-f>', function() return require("fzf-lua").git_files() end)
+vim.keymap.set('n', '<C-p><C-g><C-b>', function() return require("fzf-lua").git_branches() end)
+vim.keymap.set('n', '<C-p><C-g><C-l>', function() return require("fzf-lua").git_commits() end)
+

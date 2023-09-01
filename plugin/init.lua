@@ -1,6 +1,3 @@
-require("config")
-require("colors")
-require("options")
 require("highlight-undo").setup({})
 require("early-retirement").setup({
     retirementAgeMins = 10,
@@ -38,8 +35,6 @@ require("oil").setup({
         end
     }
 })
-require("plugins.nvim-gpg")
-require("plugins.make-flow")
 require("indent_blankline").setup {
     show_current_context = true,
     show_current_context_start = false,
