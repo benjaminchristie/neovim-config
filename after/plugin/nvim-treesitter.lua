@@ -1,4 +1,3 @@
-require('nvim-dap-repl-highlights').setup()
 require("nvim-treesitter.configs").setup({
     auto_install = true,
     highlight = {
@@ -14,38 +13,46 @@ require("nvim-treesitter.configs").setup({
             node_decremental = '<S-TAB>',
         }
     },
-    text_objects = {
+    textobjects = {
         select = {
             enable = true,
             lookahead = true,
+            keymaps = {
+                ["af"] = "@function.outer",
+                ["if"] = "@function.inner",
+                ["ac"] = "@class.outer",
+                ["ic"] = "@class.inner",
+                ['al'] = '@loop.outer',
+                ['il'] = '@loop.inner',
+            }
         },
         move = {
             enable = true,
             set_jumps = true,
             goto_next_start = {
-                [']m'] = '@function.outer',
-                [']im'] = '@function.inner',
+                [']f'] = '@function.outer',
+                [']if'] = '@function.inner',
                 [')'] = '@parameter.inner',
                 [']c'] = '@call.outer',
                 [']ic'] = '@call.inner',
             },
             goto_next_end = {
-                [']M'] = '@function.outer',
-                [']iM'] = '@function.inner',
+                [']F'] = '@function.outer',
+                [']iF'] = '@function.inner',
                 ['g)'] = '@parameter.inner',
                 [']C'] = '@call.outer',
                 [']iC'] = '@call.inner',
             },
             goto_previous_start = {
-                ['[m'] = '@function.outer',
-                ['[im'] = '@function.inner',
+                ['[f'] = '@function.outer',
+                ['[if'] = '@function.inner',
                 ['('] = '@parameter.inner',
                 ['[c'] = '@call.outer',
                 ['[ic'] = '@call.inner',
             },
             goto_previous_end = {
-                ['[M'] = '@function.outer',
-                ['[iM'] = '@function.inner',
+                ['[F'] = '@function.outer',
+                ['[iF'] = '@function.inner',
                 ['g('] = '@parameter.inner',
                 ['[C'] = '@call.outer',
                 ['[iC'] = '@call.inner',

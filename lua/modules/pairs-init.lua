@@ -24,7 +24,7 @@ npairs.add_rules({
 npairs.add_rules({
     Rule("):", "return", "python")
     :end_wise(function(opts)
-        return string.match(opts.line, "^%s*def")
+        return string.match(opts.line, "^%s*def %.%*$")
     end),
     Rule("if __name__", " == \"__main__\":", "python")
     :with_cr(false)

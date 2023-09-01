@@ -137,13 +137,13 @@ vim.keymap.set('n', 'dl', ':diffget //3<CR>')
 vim.keymap.set('n', 'dh', ':diffget //2<CR>')
 vim.keymap.set('n', 'gD', ':Gvdiffsplit!<CR>')
 
-IsGitsignsToggled = false
+local is_gitsigns_toggled = false
 vim.keymap.set('n', 'gst', function()
-    IsGitSignsToggled = not IsGitSignsToggled
-    gitsigns.toggle_current_line_blame(IsGitSignsToggled)
-    gitsigns.toggle_linehl(IsGitSignsToggled)
-    gitsigns.toggle_deleted(IsGitSignsToggled)
-    gitsigns.toggle_numhl(IsGitSignsToggled)
+    is_gitsigns_toggled = not is_gitsigns_toggled
+    gitsigns.toggle_current_line_blame(is_gitsigns_toggled)
+    gitsigns.toggle_linehl(is_gitsigns_toggled)
+    gitsigns.toggle_deleted(is_gitsigns_toggled)
+    gitsigns.toggle_numhl(is_gitsigns_toggled)
 end, { desc = "toggle gitsigns blame and buffer changes" })
 
 vim.keymap.set('n', 'gss', gitsigns.stage_hunk, { desc = "gitsigns stage hunk" })
