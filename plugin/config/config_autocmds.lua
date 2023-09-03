@@ -12,14 +12,12 @@ nnoremenu PopUp.Peek\ Value                 <Cmd>lua require("dapui").eval(nil, 
 anoremenu PopUp.-1-                         <Nop>
 anoremenu PopUp.Exit                        <Nop>
 ]])
-vim.api.nvim_create_augroup("Oil", { clear = false })
-vim.api.nvim_create_autocmd({ "BufLeave" }, {
-    group = "Oil",
+vim.api.nvim_create_autocmd({ "BufWinEnter" }, {
     pattern = "*",
     callback = function()
-        if vim.o.filetype ~= "oil" then
-            return
-        end
+        -- if vim.o.filetype ~= "oil" then
+        --     return
+        -- end
         vim.o.number = true
         vim.o.relativenumber = true
     end
