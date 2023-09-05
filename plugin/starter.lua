@@ -28,11 +28,12 @@ local function mergetool()
 end
 
 local function ws_files()
-    if vim.b.gitsigns_head ~= nil then
-        vim.cmd("FzfLua git_files")
-    else
-        vim.cmd("FzfLua files")
-    end
+    -- if vim.b.gitsigns_head ~= nil then
+    --     vim.cmd("FzfLua git_files")
+    -- else
+    --     vim.cmd("FzfLua files")
+    -- end
+    vim.cmd("FzfLua git_files")
 end
 
 local extra_items = function()

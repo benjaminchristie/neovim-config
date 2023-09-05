@@ -17,6 +17,9 @@ if exists('g:vscode')
     lua vim.keymap.set('n', '<Left>', 'gT')
     lua vim.keymap.set('n', '<Right>', 'gt')
 
+    set noloadplugins
+
+
 else
 
     call plug#begin()
