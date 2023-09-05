@@ -86,7 +86,12 @@ lspconfig['gopls'].setup {
     autostart = true,
 }
 lspconfig['texlab'].setup {
-    on_attach = on_attach,
+    on_attach = function(client, buffer)
+        on_attach(client, buffer)
+        client.server_capabilities.semanticTokensProvider = nil
+        vim.treesitter.stop()
+        vim.cmd('call TexNewMathZone("D","align",1)')
+    end,
     flags = lsp_flags,
     capabilities = capabilities,
     autostart = true,
