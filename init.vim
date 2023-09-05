@@ -75,7 +75,7 @@ else
     Plug 'kevinhwang91/nvim-ufo'
     Plug 'kevinhwang91/promise-async'
     Plug 'kylechui/nvim-surround'
-    Plug 'lukas-reineke/indent-blankline.nvim'
+    Plug 'lukas-reineke/indent-blankline.nvim', { 'branch': 'v3' }
     Plug 'mbbill/undotree', { 'on': 'UndotreeToggle' }
     Plug 'rhysd/vim-clang-format', { 'on': 'ClangFormat', 'for': 'cpp' }
     Plug 't-troebst/perfanno.nvim'
