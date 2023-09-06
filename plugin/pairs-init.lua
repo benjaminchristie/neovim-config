@@ -3,22 +3,58 @@ local npairs = require('nvim-autopairs')
 local cond = require('nvim-autopairs.conds')
 -- local ts_conds = require('nvim-autopairs.ts-conds')
 
-npairs.setup({
+local function quote_creator(opt)
+    local quote = function(...)
+        local move_func = opt.enable_moveright and cond.move_right or cond.none
+        local rule = Rule(...):with_move(move_func()):with_pair(cond.not_add_quote_inside_quote())
+
+        if #opt.ignored_next_char > 1 then
+            rule:with_pair(cond.not_after_regex(opt.ignored_next_char))
+        end
+        rule:use_undo(opt.break_undo)
+        return rule
+    end
+    return quote
+end
+
+local function bracket_creator(opt)
+    local quote = quote_creator(opt)
+    local bracket = function(...)
+        local rule = quote(...)
+        if opt.enable_check_bracket_line == true then
+            rule:with_pair(cond.is_bracket_line()):with_move(cond.is_bracket_line_move())
+        end
+        if opt.enable_bracket_in_quote then
+            -- still add bracket if text is quote "|" and next_char have "
+            rule:with_pair(cond.is_bracket_in_quote(), 1)
+        end
+        return rule
+    end
+    return bracket
+end
+
+local g_opts = {
     ignored_next_char = "[%w%.%\"%']",
     enable_check_bracket_line = false,
     fast_wrap = {
         map = '<C-w>',
-        chars = { "{", "<", "[", "(", "\"", "'"},
-    }
-})
-npairs.add_rule(Rule("<", ">"))
+        chars = { "{", "<", "[", "(", "\"", "'", "*", "$"},
+    },
+    enable_moveright = true,
+    disable_in_visualblock = true,
+}
+
+local bracket = bracket_creator(g_opts)
+local quote = quote_creator(g_opts)
+
+npairs.setup(g_opts)
 -- latex
 npairs.add_rules({
     Rule("\\left[", "\\right]", { "tex", "latex", "markdown" }),
     Rule("\\left{", "\\right}", { "tex", "latex", "markdown" }),
     Rule("\\left(", "\\right)", { "tex", "latex", "markdown" }),
     Rule("\\frac{", "}{}", { "tex", "latex", "markdown" }),
-    Rule("$", "$", {"tex", "latex", "markdown"}),
+    quote("$", "$", {"tex", "latex", "markdown"})
 })
 -- python
 npairs.add_rules({
@@ -49,7 +85,8 @@ npairs.add_rules({
 -- markdown, add latex rules to this as well
 npairs.add_rules({
     Rule("```", "```", "markdown"),
-    Rule("| ", " |", "markdown"),
+    quote("*", "*", "markdown"),
+    bracket("| ", " |", "markdown"),
     Rule("\\begin{bmatrix}", "\\end{bmatrix", "markdown"),
     Rule("\\begin{equation}", "\\end{equation", "markdown"),
     Rule("\\begin{align}", "\\end{align", "markdown"),
