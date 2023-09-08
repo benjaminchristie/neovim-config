@@ -224,13 +224,12 @@ vim.keymap.set('n', "<A-j>", function() return require("harpoon.ui").nav_next() 
 
 local function on_demand_autogroup()
     vim.fn.feedkeys(
-        ":lua vim.api.nvim_create_autocmd({\"\"}, {pattern=vim.api.nvim_buf_get_name(0), callback = function() end})")
+    ":lua vim.api.nvim_create_autocmd({\"BufWrite\"}, {pattern=vim.api.nvim_buf_get_name(0), callback = function() <todo> end})")
 end
 
 vim.keymap.set('n', "<A-e>", on_demand_autogroup)
 
-vim.keymap.set('n', '<C-p><C-p>',
-    function() return require("fzf-lua").files({ cmd = "find -type f | rg -v '.git' | rg -v '.cache' | rg -v 'bin/' | rg -v 'logs/' " }) end)
+vim.keymap.set('n', '<C-p><C-p>', function() return require("fzf-lua").files({ cmd = "find -type f | rg -v '.git' | rg -v '.cache' | rg -v 'bin/' | rg -v 'logs/' " }) end)
 vim.keymap.set('n', '<C-p><C-f>', function() return require("fzf-lua").live_grep() end)
 vim.keymap.set('n', '#', function() return require("fzf-lua").grep_cword() end)
 vim.keymap.set('n', '<C-p><C-d>', function() return require("fzf-lua").lsp_document_symbols() end)
