@@ -106,6 +106,10 @@ end
 
 local function winbarstring()
     local path = vim.fn.expand("%:f")
+    local win_width = vim.api.nvim_win_get_width(0)
+    if string.len(path) > win_width then
+        path = vim.fn.pathshorten(path)
+    end
     local str = nil
     if vim.o.diff then
         str = string.format("%s [%s] %s", path, vim.fn.bufnr(), get_changed_hunks())
@@ -193,10 +197,14 @@ function M.setup()
             end
         end
     })
-    vim.api.nvim_create_autocmd({"WinNew"}, {
+    vim.api.nvim_create_autocmd({ "WinNew" }, {
         pattern = "*",
         group = "StatusWinBar",
-        callback = apply_winbar
+        callback = function()
+            for _, winnr in ipairs(vim.api.nvim_list_wins()) do
+                vim.api.nvim_win_call(winnr, apply_winbar)
+            end
+        end
     })
     vim.api.nvim_create_autocmd({ "VimEnter", "BufEnter", "DirChanged", "LspAttach", "LspDetach" }, {
         pattern = "*",
