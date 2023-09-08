@@ -1,4 +1,5 @@
 ---@diagnostic disable: undefined-field
+local M = {}
 local gitsigns = require("gitsigns")
 local parsers = require("nvim-treesitter.parsers")
 local ts_utils = require("nvim-treesitter.ts_utils")
@@ -107,33 +108,12 @@ local function winbarstring()
     local path = vim.fn.expand("%:f")
     local str = nil
     if vim.o.diff then
-        str = string.format("%s [%s] %s %s %s", path, vim.fn.bufnr(), get_harpoon_idx(), get_changed_hunks(), get_clients())
+        str = string.format("%s [%s] %s", path, vim.fn.bufnr(), get_changed_hunks())
     else
         str = string.format("%s %s %s %s", path, get_harpoon_idx(), get_changed_hunks(), get_clients())
     end
     return str
 end
-vim.api.nvim_create_autocmd('User', {
-    pattern = 'GitSignsUpdate',
-    callback = function()
-        if hasvalue(force_inactive_buftypes, vim.bo.buftype) or hasvalue(force_inactive_filetypes, vim.bo.filetype) then
-            vim.opt_local.winbar = nil
-        else
-            vim.opt_local.winbar = winbarstring()
-        end
-    end
-})
-vim.api.nvim_create_autocmd({ "BufEnter", "DirChanged", "LspAttach", "LspDetach" }, {
-    pattern = "*",
-    callback = function()
-        gitsigns.refresh()
-        if hasvalue(force_inactive_buftypes, vim.bo.buftype) or hasvalue(force_inactive_filetypes, vim.bo.filetype) then
-            vim.opt_local.winbar = nil
-        else
-            vim.opt_local.winbar = winbarstring()
-        end
-    end
-})
 
 
 -- Trim spaces and opening brackets from end
@@ -178,6 +158,7 @@ local function trimmed_ts_statusline(opts)
 
     return lines[1]
 end
+
 function MyFunc()
     local x = string.format("[%s]", vim.bo.filetype)
     x = "%r" .. x .. " [%l/%L] "
@@ -190,17 +171,55 @@ function MyFunc()
     return x
 end
 
-vim.o.showtabline = 1
-vim.o.laststatus = 3
-vim.api.nvim_create_autocmd({ "BufEnter", "CursorMoved" }, {
-    pattern = "*",
-    callback = function()
-        vim.opt_local.statusline = "%!v:lua.MyFunc()"
+
+function M.setup()
+    vim.o.showtabline = 1
+    vim.o.laststatus = 3
+    vim.api.nvim_create_augroup("StatusWinBar", { clear = true })
+    vim.api.nvim_create_autocmd('User', {
+        pattern = 'GitSignsUpdate',
+        group = "StatusWinBar",
+        callback = function()
+            if hasvalue(force_inactive_buftypes, vim.bo.buftype) or hasvalue(force_inactive_filetypes, vim.bo.filetype) then
+                vim.opt_local.winbar = nil
+            else
+                vim.opt_local.winbar = winbarstring()
+            end
+        end
+    })
+    vim.api.nvim_create_autocmd({ "BufEnter", "DirChanged", "LspAttach", "LspDetach" }, {
+        pattern = "*",
+        group = "StatusWinBar",
+        callback = function()
+            gitsigns.refresh()
+            if hasvalue(force_inactive_buftypes, vim.bo.buftype) or hasvalue(force_inactive_filetypes, vim.bo.filetype) then
+                vim.opt_local.winbar = nil
+            else
+                vim.opt_local.winbar = winbarstring()
+            end
+        end
+    })
+    vim.api.nvim_create_autocmd({ "BufEnter", "CursorMoved" }, {
+        group = "StatusWinBar",
+        pattern = "*",
+        callback = function()
+            vim.opt_local.statusline = "%!v:lua.MyFunc()"
+        end
+    })
+    vim.api.nvim_create_autocmd({ "BufLeave" }, {
+        group = "StatusWinBar",
+        pattern = "*",
+        callback = function()
+            vim.opt_local.statusline = string.format("[%s] - %s", vim.bo.filetype, vim.fn.bufnr())
+        end
+    })
+    if hasvalue(force_inactive_buftypes, vim.bo.buftype) or hasvalue(force_inactive_filetypes, vim.bo.filetype) then
+        vim.opt_local.winbar = nil
+    else
+        vim.opt_local.winbar = winbarstring()
     end
-})
-vim.api.nvim_create_autocmd({ "BufLeave" }, {
-    pattern = "*",
-    callback = function()
-        vim.opt_local.statusline = string.format("[%s] - %s", vim.bo.filetype, vim.fn.bufnr())
-    end
-})
+end
+
+M.setup()
+
+return M

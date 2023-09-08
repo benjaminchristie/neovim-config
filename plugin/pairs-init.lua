@@ -34,10 +34,10 @@ local function bracket_creator(opt)
 end
 
 local g_opts = {
-    ignored_next_char = "[%w%.%\"%']",
+    ignored_next_char = "[%w%.%\"%'%\\]",
     enable_check_bracket_line = false,
     fast_wrap = {
-        map = '<C-w>',
+        map = '<C-e>',
         chars = { "{", "<", "[", "(", "\"", "'", "*", "$"},
     },
     enable_moveright = true,

@@ -164,3 +164,33 @@ end
 vim.api.nvim_create_user_command("MarkdownPreview", markdown_preview_function, {
     desc = "Markdown previewer with pandoc and live updating"
 })
+
+
+ZEN_ENABLED = false
+local function toggle_zen()
+    ZEN_ENABLED = not ZEN_ENABLED
+    if ZEN_ENABLED then
+        vim.api.nvim_del_augroup_by_name("StatusWinBar")
+        vim.o.cmdheight = 0
+        vim.o.laststatus = 0
+        vim.o.winbar = ""
+        vim.o.number = false
+        vim.o.relativenumber = false
+        vim.o.signcolumn = "no"
+        vim.o.showtabline = 0
+        require("ibl").update({ enabled = false })
+    else
+        vim.o.cmdheight = 1
+        vim.o.laststatus = 3
+        vim.o.number = true
+        vim.o.relativenumber = true
+        vim.o.signcolumn = "yes:1"
+        vim.o.showtabline = 1
+        require("plugin/statuswinbar").setup()
+        require("ibl").update({ enabled = true })
+    end
+end
+
+vim.api.nvim_create_user_command("ZenToggle", toggle_zen, {
+    desc = "call toggle_zen function"
+})
