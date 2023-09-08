@@ -31,9 +31,27 @@ vim.lsp.handlers["textDocument/signatureHelp"] =
 -- Use an on_attach function to only map the following keys
 -- after the language server attaches to the current buffer
 
+-- TODO: make this better. since some filetypes define their own A-f formatting call, this needs to be improved
+vim.keymap.set('n', '<A-f>', function()
+    print("Calling LSP buf format...")
+    vim.lsp.buf.format()
+end, { desc = "calls lsp buf format" })
 ---@diagnostic disable-next-line: unused-local
 local on_attach = function(client, bufnr)
     vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
+    vim.keymap.set('n', '<C-h><C-q>', vim.diagnostic.open_float, { desc = "diagnostics assistance" })
+    vim.keymap.set('n', '<C-k>', vim.diagnostic.goto_prev, { desc = "diagnostics assistance" })
+    vim.keymap.set('n', '<C-j>', vim.diagnostic.goto_next, { desc = "diagnostics assistance" })
+    vim.keymap.set('n', 'gh', vim.diagnostic.setloclist, { desc = "diagnostics assistance" })
+    vim.keymap.set('n', 'gH', vim.diagnostic.setqflist, { desc = "diagnostics assistance" })
+    vim.keymap.set('n', 'gd', vim.lsp.buf.definition)
+    vim.keymap.set('n', '<space>', vim.lsp.buf.hover)
+    vim.keymap.set('n', 'gi', vim.lsp.buf.implementation)
+    vim.keymap.set('n', '<C-h><C-g>', vim.lsp.buf.signature_help)
+    vim.keymap.set('n', '<C-h><C-d>', vim.lsp.buf.type_definition)
+    vim.keymap.set('n', '<C-h><C-r><C-m>', vim.lsp.buf.rename)
+    vim.keymap.set('n', '<C-h><C-e>', vim.lsp.buf.code_action)
+    vim.keymap.set('n', 'gr', vim.lsp.buf.references)
 end
 Lsp_inlay_hints_enabled = false
 local on_attach_with_inlay_hints = function(client, bufnr)

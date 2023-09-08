@@ -194,7 +194,7 @@ local function toggle_zen()
                 vim.o.showtabline = 1
             end)
         end
-        require("plugin/statuswinbar").setup()
+        dofile(vim.fn.stdpath("config") .. "/plugin/statuswinbar.lua")
         require("ibl").update({ enabled = true })
     end
 end
