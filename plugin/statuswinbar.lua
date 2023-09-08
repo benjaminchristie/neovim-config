@@ -182,6 +182,7 @@ end
 function M.setup()
     vim.o.showtabline = 1
     vim.o.laststatus = 3
+    apply_winbar()
     vim.api.nvim_create_augroup("StatusWinBar", { clear = true })
     vim.api.nvim_create_autocmd('User', {
         pattern = 'GitSignsUpdate',

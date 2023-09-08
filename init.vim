@@ -98,6 +98,12 @@ else
     Plug 'chentoast/marks.nvim'
     Plug 'p00f/godbolt.nvim'
 
+    " Devel
+    Plug 'tpope/vim-repeat'
+    Plug 'CKolkey/ts-node-action'
+    Plug 'VidocqH/lsp-lens.nvim'
+    Plug 'tzachar/local-highlight.nvim'
+
 
     """ External plugins """
     """ REQUIRES: node, pnpm, pip, dotnet-sdk """

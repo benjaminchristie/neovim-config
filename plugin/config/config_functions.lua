@@ -144,18 +144,18 @@ local function markdown_preview_function()
     local fn = vim.api.nvim_buf_get_name(0)
     local cached_pdf_fn = vim.fn.stdpath("run") .. "/" .. string.gsub(fn .. ".pdf", "/", "&")
     vim.system(
-        { "pandoc", "-V", "geometry:margin=1in", fn, "-o", cached_pdf_fn},
+        { "pandoc", "-V", "geometry:margin=1in", fn, "-o", cached_pdf_fn },
         {},
-        function (_) vim.system({"zathura", cached_pdf_fn}) end
+        function(_) vim.system({ "zathura", cached_pdf_fn }) end
     )
     -- vim.system({"zathura", cached_pdf_fn})
-    vim.api.nvim_create_augroup("MarkdownPreview" .. fn, {clear = true})
-    vim.api.nvim_create_autocmd({"BufWrite"}, {
+    vim.api.nvim_create_augroup("MarkdownPreview" .. fn, { clear = true })
+    vim.api.nvim_create_autocmd({ "BufWrite" }, {
         group = "MarkdownPreview" .. fn,
         pattern = fn,
-        callback = function ()
+        callback = function()
             vim.system(
-                { "pandoc", "-V", "geometry:margin=1in", fn, "-o", cached_pdf_fn}
+                { "pandoc", "-V", "geometry:margin=1in", fn, "-o", cached_pdf_fn }
             )
         end
     })
@@ -171,21 +171,29 @@ local function toggle_zen()
     ZEN_ENABLED = not ZEN_ENABLED
     if ZEN_ENABLED then
         vim.api.nvim_del_augroup_by_name("StatusWinBar")
-        vim.o.cmdheight = 0
-        vim.o.laststatus = 0
-        vim.o.winbar = ""
-        vim.o.number = false
-        vim.o.relativenumber = false
-        vim.o.signcolumn = "no"
-        vim.o.showtabline = 0
+        for _, winnr in ipairs(vim.api.nvim_list_wins()) do
+            vim.api.nvim_win_call(winnr, function()
+                vim.o.cmdheight = 0
+                vim.o.laststatus = 0
+                vim.o.winbar = ""
+                vim.o.number = false
+                vim.o.relativenumber = false
+                vim.o.signcolumn = "no"
+                vim.o.showtabline = 0
+            end)
+        end
         require("ibl").update({ enabled = false })
     else
-        vim.o.cmdheight = 1
-        vim.o.laststatus = 3
-        vim.o.number = true
-        vim.o.relativenumber = true
-        vim.o.signcolumn = "yes:1"
-        vim.o.showtabline = 1
+        for _, winnr in ipairs(vim.api.nvim_list_wins()) do
+            vim.api.nvim_win_call(winnr, function()
+                vim.o.cmdheight = 1
+                vim.o.laststatus = 3
+                vim.o.number = true
+                vim.o.relativenumber = true
+                vim.o.signcolumn = "yes:1"
+                vim.o.showtabline = 1
+            end)
+        end
         require("plugin/statuswinbar").setup()
         require("ibl").update({ enabled = true })
     end

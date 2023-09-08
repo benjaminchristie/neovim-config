@@ -19,6 +19,8 @@ vim.api.nvim_set_hl(0, "LineNr", { fg = colors.fg_dark })
 vim.api.nvim_set_hl(0, "Comment", { fg = colors.dark5 })
 vim.api.nvim_set_hl(0, "Folded", { bg = colors.black })
 vim.api.nvim_set_hl(0, 'WinSeparator', { fg = colors.fg_dark })
+vim.api.nvim_set_hl(0, 'LocalHighlight', { bg = colors.bg_highlight })
+vim.api.nvim_set_hl(0, 'LspCodeLens', { italic = true })
 vim.api.nvim_set_hl(0, "LspInlayHint", {
     fg = "#5B5F76",
     bg = colors.bg_float,
