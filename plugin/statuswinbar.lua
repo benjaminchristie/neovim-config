@@ -106,6 +106,10 @@ end
 
 local function winbarstring()
     local path = vim.fn.expand("%:f")
+    local win_width = vim.api.nvim_win_get_width(0)
+    if string.len(path) > win_width then
+        path = vim.fn.pathshorten(path)
+    end
     local str = nil
     if vim.o.diff then
         str = string.format("%s [%s] %s", path, vim.fn.bufnr(), get_changed_hunks())
@@ -171,35 +175,43 @@ function MyFunc()
     return x
 end
 
+local function apply_winbar()
+    if hasvalue(force_inactive_buftypes, vim.bo.buftype) or hasvalue(force_inactive_filetypes, vim.bo.filetype) then
+        vim.opt_local.winbar = nil
+    else
+        vim.opt_local.winbar = winbarstring()
+    end
+end
 
 function M.setup()
     vim.o.showtabline = 1
     vim.o.laststatus = 3
+    apply_winbar()
     vim.api.nvim_create_augroup("StatusWinBar", { clear = true })
     vim.api.nvim_create_autocmd('User', {
         pattern = 'GitSignsUpdate',
         group = "StatusWinBar",
         callback = function()
-            if hasvalue(force_inactive_buftypes, vim.bo.buftype) or hasvalue(force_inactive_filetypes, vim.bo.filetype) then
-                vim.opt_local.winbar = nil
-            else
-                vim.opt_local.winbar = winbarstring()
+            for _, winnr in ipairs(vim.api.nvim_list_wins()) do
+                vim.api.nvim_win_call(winnr, apply_winbar)
             end
         end
     })
-    vim.api.nvim_create_autocmd({ "BufEnter", "DirChanged", "LspAttach", "LspDetach" }, {
+    vim.api.nvim_create_autocmd({ "WinNew" }, {
         pattern = "*",
         group = "StatusWinBar",
         callback = function()
-            gitsigns.refresh()
-            if hasvalue(force_inactive_buftypes, vim.bo.buftype) or hasvalue(force_inactive_filetypes, vim.bo.filetype) then
-                vim.opt_local.winbar = nil
-            else
-                vim.opt_local.winbar = winbarstring()
+            for _, winnr in ipairs(vim.api.nvim_list_wins()) do
+                vim.api.nvim_win_call(winnr, apply_winbar)
             end
         end
     })
-    vim.api.nvim_create_autocmd({ "BufEnter", "CursorMoved" }, {
+    vim.api.nvim_create_autocmd({ "VimEnter", "BufEnter", "DirChanged", "LspAttach", "LspDetach" }, {
+        pattern = "*",
+        group = "StatusWinBar",
+        callback = apply_winbar
+    })
+    vim.api.nvim_create_autocmd({ "VimEnter", "BufEnter", "CursorMoved" }, {
         group = "StatusWinBar",
         pattern = "*",
         callback = function()
@@ -213,13 +225,6 @@ function M.setup()
             vim.opt_local.statusline = string.format("[%s] - %s", vim.bo.filetype, vim.fn.bufnr())
         end
     })
-    if hasvalue(force_inactive_buftypes, vim.bo.buftype) or hasvalue(force_inactive_filetypes, vim.bo.filetype) then
-        vim.opt_local.winbar = nil
-    else
-        vim.opt_local.winbar = winbarstring()
-    end
 end
-
-M.setup()
 
 return M
