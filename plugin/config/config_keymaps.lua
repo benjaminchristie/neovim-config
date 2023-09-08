@@ -147,6 +147,9 @@ vim.keymap.set('n', 'gss', require("gitsigns").stage_hunk, { desc = "gitsigns st
 vim.keymap.set('n', 'gsa', require("gitsigns").stage_buffer, { desc = "gitsigns stage buffer" })
 -- equivalent to Gread
 vim.keymap.set('n', 'gsr', require("gitsigns").reset_hunk, { desc = "gitsigns reset hunk" })
+-- toggle file history
+vim.keymap.set('n', 'gsoo', ':DiffviewFileHistory<CR>')
+vim.keymap.set('n', 'gsoc', ':DiffviewFileHistory %<CR>')
 
 -- cd to current working file
 vim.keymap.set('n', '<A-c>', function()

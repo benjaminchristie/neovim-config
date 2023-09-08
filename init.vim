@@ -103,6 +103,7 @@ else
     Plug 'CKolkey/ts-node-action'
     Plug 'VidocqH/lsp-lens.nvim'
     Plug 'tzachar/local-highlight.nvim'
+    Plug 'sindrets/diffview.nvim'
 
 
     """ External plugins """
