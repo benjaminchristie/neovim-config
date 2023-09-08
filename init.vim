@@ -104,6 +104,8 @@ else
     Plug 'VidocqH/lsp-lens.nvim'
     Plug 'tzachar/local-highlight.nvim'
     Plug 'sindrets/diffview.nvim'
+    Plug 'nguyenvukhang/nvim-toggler'
+    Plug 'itchyny/vim-qfedit'
 
 
     """ External plugins """
