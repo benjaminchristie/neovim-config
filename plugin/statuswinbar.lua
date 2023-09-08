@@ -105,7 +105,13 @@ end
 
 local function winbarstring()
     local path = vim.fn.expand("%:f")
-    return string.format("%s %s %s %s", path, get_harpoon_idx(), get_changed_hunks(), get_clients())
+    local str = nil
+    if vim.o.diff then
+        str = string.format("%s [%s] %s %s %s", path, vim.fn.bufnr(), get_harpoon_idx(), get_changed_hunks(), get_clients())
+    else
+        str = string.format("%s %s %s %s", path, get_harpoon_idx(), get_changed_hunks(), get_clients())
+    end
+    return str
 end
 vim.api.nvim_create_autocmd('User', {
     pattern = 'GitSignsUpdate',
@@ -173,7 +179,8 @@ local function trimmed_ts_statusline(opts)
     return lines[1]
 end
 function MyFunc()
-    local x = string.format("[%s] - %s", vim.bo.filetype, vim.fn.bufnr())
+    local x = string.format("[%s]", vim.bo.filetype)
+    x = "%r" .. x .. " [%l/%L] "
     if not (hasvalue(force_inactive_buftypes, vim.bo.buftype) or hasvalue(force_inactive_filetypes, vim.bo.filetype)) then
         local status = trimmed_ts_statusline()
         if status ~= "" and status ~= nil then

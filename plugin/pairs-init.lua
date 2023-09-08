@@ -50,10 +50,10 @@ local quote = quote_creator(g_opts)
 npairs.setup(g_opts)
 -- latex
 npairs.add_rules({
-    Rule("\\left[", "\\right]", { "tex", "latex", "markdown" }),
-    Rule("\\left{", "\\right}", { "tex", "latex", "markdown" }),
-    Rule("\\left(", "\\right)", { "tex", "latex", "markdown" }),
-    Rule("\\frac{", "}{}", { "tex", "latex", "markdown" }),
+    bracket("\\left[", "\\right]", { "tex", "latex", "markdown" }),
+    bracket("\\left{", "\\right}", { "tex", "latex", "markdown" }),
+    bracket("\\left(", "\\right)", { "tex", "latex", "markdown" }),
+    -- bracket("\\frac{", "}{}", { "tex", "latex", "markdown" }),
     quote("$", "$", {"tex", "latex", "markdown"})
 })
 -- python
@@ -86,7 +86,7 @@ npairs.add_rules({
 npairs.add_rules({
     Rule("```", "```", "markdown"),
     quote("*", "*", "markdown"),
-    bracket("| ", " |", "markdown"),
+    quote("|", "|", "markdown"),
     Rule("\\begin{bmatrix}", "\\end{bmatrix", "markdown"),
     Rule("\\begin{equation}", "\\end{equation", "markdown"),
     Rule("\\begin{align}", "\\end{align", "markdown"),

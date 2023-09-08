@@ -128,6 +128,7 @@ vim.keymap.set('n', 'gM', ':Git mergetool ')
 vim.keymap.set('n', 'gV', ':Git difftool -y ')
 vim.keymap.set('n', 'gR', ':Git rebase --interactive -i HEAD~')
 vim.keymap.set('n', 'gC', ':Git rebase --continue<CR>')
+vim.keymap.set('n', 'gP', ':Git checkout --patch <branch> <filename>') --- TODO: make this better
 vim.keymap.set('n', 'dl', ':diffget //3<CR>')
 vim.keymap.set('n', 'dh', ':diffget //2<CR>')
 vim.keymap.set('n', 'gD', ':Gvdiffsplit!<CR>')
@@ -165,7 +166,7 @@ end, { desc = "find and replace across scope and file" })
 
 local handler = function(virtText, lnum, endLnum, width, truncate)
     local newVirtText = {}
-    local suffix = ('  %d '):format(endLnum - lnum)
+    local suffix = (' 󰁂 %d '):format(endLnum - lnum)
     local sufWidth = vim.fn.strdisplaywidth(suffix)
     local targetWidth = width - sufWidth
     local curWidth = 0
