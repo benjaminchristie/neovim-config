@@ -1,4 +1,11 @@
 -- Setup lspconfig.
+local ok, wf = pcall(require, "vim.lsp._watchfiles")
+if ok then
+    -- disable lsp watcher. Too slow on linux
+    wf._watchfunc = function()
+        return function() end
+    end
+end
 -- neodev must be called before lspconfig
 require("neodev").setup({
     library = { plugins = { "nvim-dap-ui" }, types = true },
@@ -24,6 +31,7 @@ vim.lsp.handlers["textDocument/signatureHelp"] =
 -- Use an on_attach function to only map the following keys
 -- after the language server attaches to the current buffer
 
+---@diagnostic disable-next-line: unused-local
 local on_attach = function(client, bufnr)
     vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
 end
@@ -56,6 +64,14 @@ lspconfig.pyright.setup {
     flags = lsp_flags,
     capabilities = capabilities,
     autostart = true,
+    settings = {
+        python = {
+            analysis = {
+                autoSearchPaths = true,
+            }
+        }
+    },
+    root_dir = require('lspconfig/util').root_pattern('.git'),
 }
 lspconfig['tsserver'].setup {
     on_attach = on_attach,
@@ -70,7 +86,12 @@ lspconfig['gopls'].setup {
     autostart = true,
 }
 lspconfig['texlab'].setup {
-    on_attach = on_attach,
+    on_attach = function(client, buffer)
+        on_attach(client, buffer)
+        client.server_capabilities.semanticTokensProvider = nil
+        vim.treesitter.stop()
+        vim.cmd('call TexNewMathZone("D","align",1)')
+    end,
     flags = lsp_flags,
     capabilities = capabilities,
     autostart = true,

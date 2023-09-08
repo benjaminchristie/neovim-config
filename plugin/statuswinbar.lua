@@ -1,7 +1,9 @@
 ---@diagnostic disable: undefined-field
+local M = {}
 local gitsigns = require("gitsigns")
 local parsers = require("nvim-treesitter.parsers")
 local ts_utils = require("nvim-treesitter.ts_utils")
+local harpoon = require("harpoon.mark")
 local force_inactive_filetypes = {
     'NvimTree',
     'dap-repl',
@@ -41,78 +43,77 @@ local function hasvalue(table, value)
 end
 
 local function get_clients()
-    local clients = vim.lsp.get_clients({bufnr = 0})
+    local clients = vim.lsp.get_clients({ bufnr = 0 })
     if #clients == 0 then
         return ""
     else
-        return clients[1]["name"]
+        local tb = {
+            "%#WinBarLSP#",
+            clients[1]["name"],
+        }
+        return table.concat(tb, "")
     end
 end
 
+local function get_changed_hunks()
+    local branch = vim.b.gitsigns_head
+    if branch ~= nil then
+        local hunks_tb = gitsigns.get_hunks(vim.api.nvim_get_current_buf())
+        local added_count = "0"
+        local removed_count = "0"
+        if hunks_tb ~= nil then
+            for _, hunks in pairs(hunks_tb) do
+                if hunks["added"] ~= nil then
+                    added_count = hunks["added"]["count"]
+                end
+                if hunks["removed"] ~= nil then
+                    removed_count = hunks["removed"]["count"]
+                end
+            end
+        end
+        local tb = {
+            "%#WinBarGit#",
+            "  ",
+            branch,
+            "%#WinBarGitAdded#",
+            " +",
+            added_count,
+            "%#WinBarGitSubbed#",
+            " -",
+            removed_count,
+        }
+        return table.concat(tb, "")
+    else
+        return ""
+    end
+end
+
+local function get_harpoon_idx()
+    local harpoon_idx = harpoon.get_current_index()
+    if harpoon_idx ~= nil then
+        local tb = {
+            "%#WinBarHarpoon#",
+            "🡕  ",
+            harpoon_idx,
+            " "
+        }
+        return table.concat(tb, "")
+    else
+        return ""
+    end
+end
+
+
 local function winbarstring()
     local path = vim.fn.expand("%:f")
-    local branch = vim.b.gitsigns_head
-    local harpoon_idx = require("harpoon.mark").get_current_index()
-    local str = ""
-    if branch ~= nil and harpoon_idx ~= nil then
-        local hunks_tb = gitsigns.get_hunks(vim.api.nvim_get_current_buf())
-        local added_count = "0"
-        local removed_count = "0"
-        if hunks_tb ~= nil then
-            for _, hunks in pairs(hunks_tb) do
-                if hunks["added"] ~= nil then
-                    added_count = hunks["added"]["count"]
-                end
-                if hunks["removed"] ~= nil then
-                    removed_count = hunks["removed"]["count"]
-                end
-            end
-        end
-        str = string.format(path ..
-        " 🡕  " .. harpoon_idx .. "    " .. branch .. ": +" .. added_count .. " -" .. removed_count)
-    elseif branch ~= nil and harpoon_idx == nil then
-        local hunks_tb = gitsigns.get_hunks(vim.api.nvim_get_current_buf())
-        local added_count = "0"
-        local removed_count = "0"
-        if hunks_tb ~= nil then
-            for _, hunks in pairs(hunks_tb) do
-                if hunks["added"] ~= nil then
-                    added_count = hunks["added"]["count"]
-                end
-                if hunks["removed"] ~= nil then
-                    removed_count = hunks["removed"]["count"]
-                end
-            end
-        end
-        str = string.format(path .. "    " .. branch .. ": +" .. added_count .. " -" .. removed_count)
-    elseif branch == nil and harpoon_idx ~= nil then
-        str = string.format(path .. " 🡕  " .. harpoon_idx)
+    local str = nil
+    if vim.o.diff then
+        str = string.format("%s [%s] %s", path, vim.fn.bufnr(), get_changed_hunks())
     else
-        str = string.format(path)
+        str = string.format("%s %s %s %s", path, get_harpoon_idx(), get_changed_hunks(), get_clients())
     end
-    return str .. "%#WinBarLSP# " .. get_clients()
+    return str
 end
-vim.api.nvim_create_autocmd('User', {
-    pattern = 'GitSignsUpdate',
-    callback = function()
-        if hasvalue(force_inactive_buftypes, vim.bo.buftype) or hasvalue(force_inactive_filetypes, vim.bo.filetype) then
-            vim.opt_local.winbar = nil
-        else
-            vim.opt_local.winbar = winbarstring()
-        end
-    end
-})
-vim.api.nvim_create_autocmd({ "BufEnter", "DirChanged" }, {
-    pattern = "*",
-    callback = function()
-        gitsigns.refresh()
-        if hasvalue(force_inactive_buftypes, vim.bo.buftype) or hasvalue(force_inactive_filetypes, vim.bo.filetype) then
-            vim.opt_local.winbar = nil
-        else
-            vim.opt_local.winbar = winbarstring()
-        end
-    end
-})
 
 
 -- Trim spaces and opening brackets from end
@@ -157,8 +158,10 @@ local function trimmed_ts_statusline(opts)
 
     return lines[1]
 end
+
 function MyFunc()
-    local x = string.format("[%s] - %s", vim.bo.filetype, vim.fn.bufnr())
+    local x = string.format("[%s]", vim.bo.filetype)
+    x = "%r" .. x .. " [%l/%L] "
     if not (hasvalue(force_inactive_buftypes, vim.bo.buftype) or hasvalue(force_inactive_filetypes, vim.bo.filetype)) then
         local status = trimmed_ts_statusline()
         if status ~= "" and status ~= nil then
@@ -168,17 +171,51 @@ function MyFunc()
     return x
 end
 
-vim.o.showtabline = 1
-vim.o.laststatus = 3
-vim.api.nvim_create_autocmd({ "BufEnter", "CursorMoved" }, {
-    pattern = "*",
-    callback = function()
-        vim.opt_local.statusline = "%!v:lua.MyFunc()"
+local function apply_winbar()
+    if hasvalue(force_inactive_buftypes, vim.bo.buftype) or hasvalue(force_inactive_filetypes, vim.bo.filetype) then
+        vim.opt_local.winbar = nil
+    else
+        vim.opt_local.winbar = winbarstring()
     end
-})
-vim.api.nvim_create_autocmd({ "BufLeave" }, {
-    pattern = "*",
-    callback = function()
-        vim.opt_local.statusline = string.format("[%s] - %s", vim.bo.filetype, vim.fn.bufnr())
-    end
-})
+end
+
+function M.setup()
+    vim.o.showtabline = 1
+    vim.o.laststatus = 3
+    vim.api.nvim_create_augroup("StatusWinBar", { clear = true })
+    vim.api.nvim_create_autocmd('User', {
+        pattern = 'GitSignsUpdate',
+        group = "StatusWinBar",
+        callback = function()
+            for _, winnr in ipairs(vim.api.nvim_list_wins()) do
+                vim.api.nvim_win_call(winnr, apply_winbar)
+            end
+        end
+    })
+    vim.api.nvim_create_autocmd({"WinNew"}, {
+        pattern = "*",
+        group = "StatusWinBar",
+        callback = apply_winbar
+    })
+    vim.api.nvim_create_autocmd({ "VimEnter", "BufEnter", "DirChanged", "LspAttach", "LspDetach" }, {
+        pattern = "*",
+        group = "StatusWinBar",
+        callback = apply_winbar
+    })
+    vim.api.nvim_create_autocmd({ "VimEnter", "BufEnter", "CursorMoved" }, {
+        group = "StatusWinBar",
+        pattern = "*",
+        callback = function()
+            vim.opt_local.statusline = "%!v:lua.MyFunc()"
+        end
+    })
+    vim.api.nvim_create_autocmd({ "BufLeave" }, {
+        group = "StatusWinBar",
+        pattern = "*",
+        callback = function()
+            vim.opt_local.statusline = string.format("[%s] - %s", vim.bo.filetype, vim.fn.bufnr())
+        end
+    })
+end
+
+return M

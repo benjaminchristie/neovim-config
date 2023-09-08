@@ -13,7 +13,7 @@ local function whereami()
         "#90a0e6", "#95a4e8", "#9aa9ea", "#9faeec", "#a5b2ee", "#aab7ef", "#afbcf1", "#b5c0f2", "#bac5f4", "#c0caf5"
     }
     local length = #cursor_colors
-    for i = 0, length, 1 do
+    for i = 1, length, 1 do
         vim.fn.timer_start((i + 1) * uptime, function()
             vim.wo.cursorline = true
             vim.wo.cursorcolumn = true
@@ -136,6 +136,61 @@ local change_plug_options = function()
         vim.g.plug_window = [[vertical topleft new]]
     end)
 end
-vim.api.nvim_create_user_command("Plug", change_plug_options, {
+vim.api.nvim_create_user_command("PlugFloat", change_plug_options, {
     desc = "queue a floating window for vim-plug"
+})
+
+local function markdown_preview_function()
+    local fn = vim.api.nvim_buf_get_name(0)
+    local cached_pdf_fn = vim.fn.stdpath("run") .. "/" .. string.gsub(fn .. ".pdf", "/", "&")
+    vim.system(
+        { "pandoc", "-V", "geometry:margin=1in", fn, "-o", cached_pdf_fn},
+        {},
+        function (_) vim.system({"zathura", cached_pdf_fn}) end
+    )
+    -- vim.system({"zathura", cached_pdf_fn})
+    vim.api.nvim_create_augroup("MarkdownPreview" .. fn, {clear = true})
+    vim.api.nvim_create_autocmd({"BufWrite"}, {
+        group = "MarkdownPreview" .. fn,
+        pattern = fn,
+        callback = function ()
+            vim.system(
+                { "pandoc", "-V", "geometry:margin=1in", fn, "-o", cached_pdf_fn}
+            )
+        end
+    })
+end
+
+vim.api.nvim_create_user_command("MarkdownPreview", markdown_preview_function, {
+    desc = "Markdown previewer with pandoc and live updating"
+})
+
+
+ZEN_ENABLED = false
+local function toggle_zen()
+    ZEN_ENABLED = not ZEN_ENABLED
+    if ZEN_ENABLED then
+        vim.api.nvim_del_augroup_by_name("StatusWinBar")
+        vim.o.cmdheight = 0
+        vim.o.laststatus = 0
+        vim.o.winbar = ""
+        vim.o.number = false
+        vim.o.relativenumber = false
+        vim.o.signcolumn = "no"
+        vim.o.showtabline = 0
+        require("ibl").update({ enabled = false })
+    else
+        vim.o.cmdheight = 1
+        vim.o.laststatus = 3
+        vim.o.number = true
+        vim.o.relativenumber = true
+        vim.o.signcolumn = "yes:1"
+        vim.o.showtabline = 1
+        require("plugin/statuswinbar").setup()
+        require("ibl").update({ enabled = true })
+    end
+end
+
+vim.api.nvim_create_user_command("ZenToggle", toggle_zen, {
+    desc = "call toggle_zen function"
 })

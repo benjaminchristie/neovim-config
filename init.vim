@@ -1,12 +1,32 @@
 lua vim.loader.enable()
 if exists('g:vscode')
     " VSCode extension
-    lua require("vscode-init")
+    lua vim.o.hlsearch = true
+    lua vim.o.incsearch = true
+
+    lua vim.keymap.set('v', "J", ":m '>+1<CR>gv=gv")
+    lua vim.keymap.set('v', "K", ":m '<-2<CR>gv=gv")
+    lua vim.keymap.set('n', 'n', 'nzz')
+    lua vim.keymap.set('n', 'N', 'Nzz')
+    lua vim.keymap.set('n', '<C-d>', '<C-d>zz')
+    lua vim.keymap.set('n', '<C-u>', '<C-u>zz')
+    lua vim.keymap.set('n', '}', '}zz')
+    lua vim.keymap.set('n', '{', '{zz')
+    lua vim.keymap.set('n', '<Up>', '<C-b>')
+    lua vim.keymap.set('n', '<Down>', '<C-f>')
+    lua vim.keymap.set('n', '<Left>', 'gT')
+    lua vim.keymap.set('n', '<Right>', 'gt')
+
+    set noloadplugins
+
+
 else
 
     call plug#begin()
     """ Internal plugins """
     " Essential
+    Plug 'hrsh7th/nvim-cmp', { 'commit': '969c5a' }
+    Plug 'neovim/nvim-lspconfig'
     Plug 'nvim-lua/plenary.nvim'
     Plug 'nvim-lua/popup.nvim'
     Plug 'nvim-treesitter/nvim-treesitter', { 'do': ':TSUpdate' }
@@ -14,19 +34,18 @@ else
     " LSP
     Plug 'L3MON4D3/LuaSnip'
     Plug 'folke/neodev.nvim'
-    Plug 'neovim/nvim-lspconfig'
-    Plug 'nvim-treesitter/nvim-treesitter-textobjects'
-    Plug 'saadparwaiz1/cmp_luasnip'
-    Plug 'simrat39/rust-tools.nvim', { 'for': 'rust' }
-    Plug 'windwp/nvim-autopairs'
-    Plug 'windwp/nvim-ts-autotag'
     Plug 'hrsh7th/cmp-buffer'
     Plug 'hrsh7th/cmp-cmdline'
     Plug 'hrsh7th/cmp-nvim-lsp'
     Plug 'hrsh7th/cmp-path'
-    Plug 'hrsh7th/nvim-cmp'
+    Plug 'nvim-treesitter/nvim-treesitter-textobjects'
+    Plug 'saadparwaiz1/cmp_luasnip'
+    Plug 'michaelb/sniprun', { 'do': 'sh install.sh'}
+    Plug 'simrat39/rust-tools.nvim', { 'for': 'rust' }
+    Plug 'windwp/nvim-autopairs'
+    Plug 'windwp/nvim-ts-autotag'
     " Plug 'uga-rosa/cmp-dictionary'
-    " Plug 'petertriho/cmp-git'
+    Plug 'petertriho/cmp-git'
 
     " DAP
     Plug 'LiadOz/nvim-dap-repl-highlights'
@@ -55,25 +74,29 @@ else
     Plug 'ThePrimeagen/refactoring.nvim'
     Plug 'akinsho/toggleterm.nvim'
     Plug 'benjaminchristie/csgithub.nvim', { 'branch': 'master'}
-    Plug 'vladdoster/remember.nvim'
+    Plug 'chrisgrieser/nvim-early-retirement'
     Plug 'kevinhwang91/nvim-ufo'
     Plug 'kevinhwang91/promise-async'
     Plug 'kylechui/nvim-surround'
-    Plug 'lukas-reineke/indent-blankline.nvim'
+    Plug 'lukas-reineke/indent-blankline.nvim', { 'branch': 'v3' }
     Plug 'mbbill/undotree', { 'on': 'UndotreeToggle' }
-    Plug 'tzachar/highlight-undo.nvim'
+    Plug 'rhysd/vim-clang-format', { 'on': 'ClangFormat', 'for': 'cpp' }
     Plug 't-troebst/perfanno.nvim'
     Plug 'tpope/vim-commentary'
-    Plug 'tpope/vim-dispatch', { 'on': 'Dispatch' }
+    Plug 'tpope/vim-dispatch'
     Plug 'tpope/vim-eunuch'
-    Plug 'rhysd/vim-clang-format', { 'on': 'ClangFormat', 'for': 'cpp' }
-    Plug 'chrisgrieser/nvim-early-retirement'
+    Plug 'tzachar/highlight-undo.nvim'
+    Plug 'vladdoster/remember.nvim'
 
     " Accessory
+    Plug 'benjaminchristie/mini.starter'
     Plug 'benjaminchristie/nvim-colorizer.lua', { 'on': 'ColorizerToggle' }
     Plug 'dstein64/vim-startuptime', { 'on': 'StartupTime' }
-    Plug 'benjaminchristie/mini.starter'
     Plug 'folke/tokyonight.nvim'
+    Plug 'projekt0n/github-nvim-theme'
+    Plug 'kosayoda/nvim-lightbulb'
+    Plug 'chentoast/marks.nvim'
+    Plug 'p00f/godbolt.nvim'
 
 
     """ External plugins """
@@ -100,5 +123,4 @@ else
     Plug 'junegunn/vim-plug' 
 
     call plug#end()
-    lua require('init')
 endif

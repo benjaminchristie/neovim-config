@@ -21,11 +21,19 @@ local function difftool()
 end
 
 local function mergetool()
-    local branch = vim.fn.input("Perform mergetool on : ")
     vim.cmd("echon ' '")
-    if not pcall(function() vim.cmd("Git mergetool -y " .. branch) end) then
+    if not pcall(function() vim.cmd("Git mergetool -y ") end) then
         vim.cmd('echohl WarningMsg | echo "Directory is not a git repository" | echohl None')
     end
+end
+
+local function ws_files()
+    -- if vim.b.gitsigns_head ~= nil then
+    --     vim.cmd("FzfLua git_files")
+    -- else
+    --     vim.cmd("FzfLua files")
+    -- end
+    vim.cmd("FzfLua git_files")
 end
 
 local extra_items = function()
@@ -35,7 +43,7 @@ local extra_items = function()
             { action = 'FzfLua help_tags', name = 'Help',            section = 'Actions' },
             { action = 'FzfLua oldfiles',  name = 'History',         section = 'Actions' },
             { action = cached_repos,       name = 'Projects',        section = 'Actions' },
-            { action = 'FzfLua git_files', name = 'Workspace files', section = 'Actions' },
+            { action = ws_files,           name = 'Workspace files', section = 'Actions' },
             { action = difftool,           name = 'Diff tool',       section = 'Actions' },
             { action = mergetool,          name = 'Merge tool',      section = 'Actions' },
             { action = statustool,         name = 'Status',          section = 'Actions' },
@@ -186,11 +194,33 @@ local function ascii_main()
 end
 local ascii_art = ascii_headers(8.5)
 
+-- local function path_modifier(str, max_count)
+--     -- can use vim.regex() for this...
+--     local tail = vim.fn.fnamemodify(str, ":t")
+--     local head = vim.fn.fnamemodify(str, ":h")
+--     local new_str = ""
+--     local count = 0
+--     if head == nil or #head <= max_count then
+--         return str
+--     else
+--         for c in string.gmatch(head, '.') do
+--             if c == "/" then
+--                 count = 0
+--             end
+--             if count < max_count then
+--                 new_str = new_str .. c
+--                 count = count + 1
+--             end
+--         end
+--     end
+--     new_str = new_str .. "/"
+--     return new_str .. tail
+-- end
 starter.setup({
     evaluate_single = false,
     header = ascii_art,
     items = {
-        starter.sections.recent_files(7, false, true, function(x) return vim.fn.pathshorten(x, 4) end),
+        starter.sections.recent_files(7, false, true, function(x) return vim.fn.pathshorten(x, 3) end),
         extra_items(),
     },
     content_hooks = {
