@@ -75,6 +75,7 @@ vim.keymap.set('n', '<C-h><C-d>', vim.lsp.buf.type_definition)
 vim.keymap.set('n', '<C-h><C-r><C-m>', vim.lsp.buf.rename)
 vim.keymap.set('n', '<C-h><C-e>', vim.lsp.buf.code_action)
 vim.keymap.set('n', 'gr', vim.lsp.buf.references)
+vim.keymap.set({'n', 'v'}, 'gtt', require('nvim-toggler').toggle)
 --- DAP
 vim.keymap.set('n', '<A-d><A-v>', function()
     vim.cmd("DapVirtualTextEnable")
