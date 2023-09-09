@@ -28,6 +28,7 @@ vim.o.foldenable = true
 vim.o.foldlevel = 99   -- Using ufo provider need a large value, feel free to decrease the value
 vim.o.foldlevelstart = 99
 vim.o.hlsearch = true
+vim.o.ignorecase = true
 vim.o.incsearch = true
 vim.o.matchpairs = "(:),{:},[:],<:>"
 vim.o.mouse = "inv"
@@ -37,6 +38,7 @@ vim.o.relativenumber = true
 vim.o.shiftwidth = 4
 vim.o.showcmd = true
 vim.o.signcolumn = "yes:1"
+vim.o.smartcase = true
 vim.o.so = 0
 vim.o.softtabstop = 8
 vim.o.sol = false
@@ -53,4 +55,4 @@ vim.o.wildmenu = true
 vim.o.wrap = false
 vim.opt.fillchars = ""
 vim.opt.list = false
-vim.opt.listchars = { eol = "", trail = "▓", extends = '' }
+vim.opt.listchars = { eol = "↵", trail = "▓", extends = '' }
