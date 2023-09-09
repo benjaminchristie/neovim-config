@@ -15,6 +15,7 @@ vim.g.term_buf = 0
 vim.g.term_win = 0
 vim.g.tokyonight_italic_functions = true
 vim.o.autoindent = true
+vim.o.autoread = true
 vim.o.backup = false
 vim.o.ch = 1
 vim.o.clipboard = "unnamedplus"

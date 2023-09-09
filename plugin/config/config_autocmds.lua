@@ -29,3 +29,9 @@ vim.api.nvim_create_autocmd({ "BufEnter" }, {
         vim.opt_local.filetype = "html"
     end
 })
+vim.api.nvim_create_augroup("checktime-autoread", { clear = true })
+vim.api.nvim_create_autocmd({ "FocusGained" }, {
+    pattern = "*",
+    group = "checktime-autoread",
+    command = "checktime"
+})
