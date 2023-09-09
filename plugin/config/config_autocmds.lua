@@ -12,16 +12,6 @@ nnoremenu PopUp.Peek\ Value                 <Cmd>lua require("dapui").eval(nil, 
 anoremenu PopUp.-1-                         <Nop>
 anoremenu PopUp.Exit                        <Nop>
 ]])
-vim.api.nvim_create_autocmd({ "BufWinEnter" }, {
-    pattern = "*",
-    callback = function()
-        -- if vim.o.filetype ~= "oil" then
-        --     return
-        -- end
-        vim.o.number = true
-        vim.o.relativenumber = true
-    end
-})
 vim.api.nvim_create_augroup("FormatTelescope", { clear = true })
 vim.api.nvim_create_autocmd('User', {
     pattern = "TelescopePreviewerLoaded",

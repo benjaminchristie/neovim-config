@@ -166,10 +166,10 @@ vim.api.nvim_create_user_command("MarkdownPreview", markdown_preview_function, {
 })
 
 
-ZEN_ENABLED = false
+local zen_enabled = false
 local function toggle_zen()
-    ZEN_ENABLED = not ZEN_ENABLED
-    if ZEN_ENABLED then
+    zen_enabled = not zen_enabled
+    if zen_enabled then
         vim.api.nvim_del_augroup_by_name("StatusWinBar")
         for _, winnr in ipairs(vim.api.nvim_list_wins()) do
             vim.api.nvim_win_call(winnr, function()
@@ -198,6 +198,15 @@ local function toggle_zen()
         require("ibl").update({ enabled = true })
     end
 end
+vim.api.nvim_create_autocmd({ "BufWinEnter" }, {
+    pattern = "*",
+    callback = function()
+        if not zen_enabled then
+            vim.o.number = true
+            vim.o.relativenumber = true
+        end
+    end
+})
 
 vim.api.nvim_create_user_command("ZenToggle", toggle_zen, {
     desc = "call toggle_zen function"
