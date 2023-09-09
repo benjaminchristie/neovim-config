@@ -178,21 +178,11 @@ require("lazy").setup({
             'neovim/nvim-lspconfig',
             dependencies = {
                 {
-                    {
-                        'folke/neodev.nvim',
-                    },
-                    {
-                        'j-hui/fidget.nvim',
-                    },
-                    {
-                        'nvim-treesitter/nvim-treesitter',
-                    },
-                    {
-                        'kosayoda/nvim-lightbulb',
-                    }
-                    -- {
-                    --     'hrsh7th/nvim-cmp',
-                    -- },
+                    'folke/neodev.nvim',
+                    'j-hui/fidget.nvim',
+                    'nvim-treesitter/nvim-treesitter',
+                    'kosayoda/nvim-lightbulb',
+                    'VidocqH/lsp-lens.nvim',
                 },
             },
             config = function()
@@ -525,8 +515,15 @@ require("lazy").setup({
         },
         {
             'VidocqH/lsp-lens.nvim',
-            dependencies = {
-                'neovim/nvim-lspconfig', }
+            opts = {
+                enable = false,
+                include_declaration = false, -- Reference include declaration
+                sections = {             -- Enable / Disable specific request
+                    definition = true,
+                    references = true,
+                    implements = false,
+                }
+            },
         },
         {
             'benjaminchristie/mini.starter',
@@ -661,7 +658,7 @@ require("lazy").setup({
             lazy = true
         },
         install = {
-            colorscheme = {"default"}
+            colorscheme = { "default" }
         },
         diff = {
             cmd = "diffview.nvim",
