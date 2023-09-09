@@ -39,7 +39,6 @@ else
     Plug 'hrsh7th/cmp-nvim-lsp'
     Plug 'hrsh7th/cmp-path'
     Plug 'nvim-treesitter/nvim-treesitter-textobjects'
-    Plug 'saadparwaiz1/cmp_luasnip'
     Plug 'michaelb/sniprun', { 'do': 'sh install.sh'}
     Plug 'simrat39/rust-tools.nvim', { 'for': 'rust' }
     Plug 'windwp/nvim-autopairs'
@@ -68,7 +67,6 @@ else
 
     " QoL
     Plug 'IMOKURI/line-number-interval.nvim'
-    Plug 'ThePrimeagen/refactoring.nvim'
     Plug 'akinsho/toggleterm.nvim'
     Plug 'benjaminchristie/csgithub.nvim', { 'branch': 'master'}
     Plug 'chrisgrieser/nvim-early-retirement'
@@ -79,7 +77,6 @@ else
     Plug 'lukas-reineke/indent-blankline.nvim', { 'branch': 'v3' }
     Plug 'mbbill/undotree', { 'on': 'UndotreeToggle' }
     Plug 'nguyenvukhang/nvim-toggler'
-    Plug 'rhysd/vim-clang-format', { 'on': 'ClangFormat', 'for': 'cpp' }
     Plug 'sindrets/diffview.nvim'
     Plug 't-troebst/perfanno.nvim'
     Plug 'tpope/vim-commentary'
@@ -94,7 +91,6 @@ else
     Plug 'VidocqH/lsp-lens.nvim'
     Plug 'benjaminchristie/mini.starter'
     Plug 'benjaminchristie/nvim-colorizer.lua', { 'on': 'ColorizerToggle' }
-    Plug 'chentoast/marks.nvim'
     Plug 'dstein64/vim-startuptime', { 'on': 'StartupTime' }
     Plug 'folke/tokyonight.nvim'
     Plug 'kosayoda/nvim-lightbulb'

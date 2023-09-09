@@ -29,7 +29,3 @@ vim.api.nvim_create_autocmd({ "BufEnter" }, {
         vim.opt_local.filetype = "html"
     end
 })
-vim.api.nvim_create_autocmd({ "BufWritePre" }, {
-    pattern = { "*.cpp", "*.h", "*.cxx", "*.hpp" },
-    command = "ClangFormat",
-})
