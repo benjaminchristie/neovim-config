@@ -132,6 +132,7 @@ vim.keymap.set('n', 'gsa', require("gitsigns").stage_buffer, { desc = "gitsigns 
 -- equivalent to Gread
 vim.keymap.set('n', 'gsr', require("gitsigns").reset_hunk, { desc = "gitsigns reset hunk" })
 -- toggle file history
+vim.keymap.set('n', 'gsov', ':DiffviewOpen<CR>')
 vim.keymap.set('n', 'gsoo', ':DiffviewFileHistory<CR>')
 vim.keymap.set('n', 'gsoc', ':DiffviewFileHistory %<CR>')
 
