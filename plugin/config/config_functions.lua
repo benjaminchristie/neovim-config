@@ -170,7 +170,7 @@ local zen_enabled = false
 local function toggle_zen()
     zen_enabled = not zen_enabled
     if zen_enabled then
-        vim.api.nvim_del_augroup_by_name("StatusWinBar")
+        pcall(vim.api.nvim_del_augroup_by_name, "StatusWinBar")
         for _, winnr in ipairs(vim.api.nvim_list_wins()) do
             vim.api.nvim_win_call(winnr, function()
                 vim.o.cmdheight = 0
@@ -194,7 +194,8 @@ local function toggle_zen()
                 vim.o.showtabline = 1
             end)
         end
-        dofile(vim.fn.stdpath("config") .. "/plugin/statuswinbar.lua")
+        local winbar = dofile(vim.fn.stdpath("config") .. "/plugin/statuswinbar.lua")
+        winbar.setup()
         require("ibl").update({ enabled = true })
     end
 end

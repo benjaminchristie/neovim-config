@@ -26,7 +26,6 @@ local force_inactive_buftypes = {
     'harpoon',
     'harpoon-menu',
     'nofile',
-    'nowrite',
     'prompt',
     'quickfix',
     'terminal',
@@ -104,6 +103,16 @@ local function get_harpoon_idx()
 end
 
 
+local in_diffview_nvim = false
+function M.in_diffview_hook()
+    in_diffview_nvim = true
+    pcall(vim.api.nvim_del_augroup_by_name, "StatusWinBar")
+end
+function M.out_diffview_hook()
+    in_diffview_nvim = false
+    M.setup()
+end
+
 local function winbarstring()
     local path = vim.fn.expand("%:f")
     local win_width = vim.api.nvim_win_get_width(0)
@@ -113,6 +122,9 @@ local function winbarstring()
     local str = nil
     if vim.o.diff then
         str = string.format("%s [%s] %s", path, vim.fn.bufnr(), get_changed_hunks())
+        if in_diffview_nvim then
+            return nil -- test for diffview
+        end
     else
         str = string.format("%s %s %s %s", path, get_harpoon_idx(), get_changed_hunks(), get_clients())
     end
@@ -179,7 +191,10 @@ local function apply_winbar()
     if hasvalue(force_inactive_buftypes, vim.bo.buftype) or hasvalue(force_inactive_filetypes, vim.bo.filetype) then
         vim.opt_local.winbar = nil
     else
-        vim.opt_local.winbar = winbarstring()
+        local str = winbarstring()
+        if str ~= nil then
+            vim.opt_local.winbar = str
+        end
     end
 end
 
@@ -226,7 +241,5 @@ function M.setup()
         end
     })
 end
-
-M.setup()
 
 return M
