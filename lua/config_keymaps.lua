@@ -13,6 +13,7 @@ vim.keymap.set('n', '<C-d>', '<C-d>zz')
 vim.keymap.set('n', '<C-u>', '<C-u>zz')
 vim.keymap.set('n', '}', '}zz')
 vim.keymap.set('n', '{', '{zz')
+vim.keymap.set('n', "U", ":UndotreeToggle<CR>")
 
 local timers = {}
 local search_timer_timeout = 20000
@@ -58,8 +59,8 @@ vim.keymap.set('n', 'N', function()
 vim.keymap.set('n', "<A-p>", ":cprev<CR>")
 vim.keymap.set('n', "<A-n>", ":cnext<CR>")
 
-vim.keymap.set('n', '<A-s>', require("mini.starter").open, { desc = "open mini.starter screen" })
-vim.keymap.set({'n', 'v'}, 'gtt', require('nvim-toggler').toggle)
+vim.keymap.set('n', '<A-s>', function() return require("mini.starter").open() end, { desc = "open mini.starter screen" })
+vim.keymap.set({'n', 'v'}, 'gtt', function() return require('nvim-toggler').toggle() end)
 --- DAP
 vim.keymap.set('n', '<A-d><A-v>', function()
     vim.cmd("DapVirtualTextEnable")
@@ -198,3 +199,18 @@ vim.keymap.set('n', '<C-p><C-g><C-f>', function() return require("fzf-lua").git_
 vim.keymap.set('n', '<C-p><C-g><C-b>', function() return require("fzf-lua").git_branches() end)
 vim.keymap.set('n', '<C-p><C-g><C-l>', function() return require("fzf-lua").git_commits() end)
 
+
+local ts_repeat_move = require "nvim-treesitter.textobjects.repeatable_move"
+local gs = require("gitsigns")
+
+-- Repeat movement with ; and ,
+-- ensure ; goes forward and , goes backward regardless of the last direction
+-- vim.keymap.set({ "n", "x", "o" }, ";", ts_repeat_move.repeat_last_move_next)
+-- vim.keymap.set({ "n", "x", "o" }, ",", ts_repeat_move.repeat_last_move_previous)
+
+-- make sure forward function comes first
+local next_hunk_repeat, prev_hunk_repeat = ts_repeat_move.make_repeatable_move_pair(gs.next_hunk, gs.prev_hunk)
+-- Or, use `make_repeatable_move` or `set_last_move` functions for more control. See the code for instructions.
+
+vim.keymap.set({ "n", "x", "o" }, "]g", next_hunk_repeat)
+vim.keymap.set({ "n", "x", "o" }, "[g", prev_hunk_repeat)

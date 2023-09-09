@@ -11,6 +11,25 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
+local lsp_configured_filetypes = {
+    "*.lua",
+    "*.py",
+    "CMakeLists.txt",
+    "*.md",
+    "*.tex",
+    "*.go",
+    "*.sh",
+    "*.html",
+    "*.css",
+    "Dockerfile",
+    "*.asm",
+    "*.nasm",
+    "*.h",
+    "*.hpp",
+    "*.c",
+    "*.cpp",
+}
+
 require("lazy").setup({
         {
             'benjaminchristie/csgithub.nvim',
@@ -20,10 +39,36 @@ require("lazy").setup({
             'p00f/godbolt.nvim',
             cmd = "Godbolt"
         },
-
+        { 'kevinhwang91/promise-async' },
+        {
+            "kevinhwang91/nvim-fundo",
+            dependencies = { 'kevinhwang91/promise-async' },
+            build = function()
+                require("fundo").install()
+            end,
+        },
         {
             'tzachar/highlight-undo.nvim',
-            event = "BufEnter",
+            dependencies = { "folke/tokyonight.nvim" },
+            opts = {
+                duration = 300,
+                undo = {
+                    hlgroup = 'HighlightUndo',
+                    mode = 'n',
+                    lhs = 'u',
+                    map = 'undo',
+                    opts = {}
+                },
+                redo = {
+                    hlgroup = 'HighlightUndo',
+                    mode = 'n',
+                    lhs = '<C-r>',
+                    map = 'redo',
+                    opts = {}
+                },
+                highlight_for_count = true,
+            },
+            lazy = false
         },
 
         {
@@ -46,6 +91,7 @@ require("lazy").setup({
                 require("colors")
             end
         },
+        "nvim-treesitter/nvim-treesitter-textobjects",
         'nvim-lua/plenary.nvim',
         {
             "nvim-treesitter/nvim-treesitter",
@@ -130,7 +176,6 @@ require("lazy").setup({
         },
         {
             'neovim/nvim-lspconfig',
-            lazy = false,
             dependencies = {
                 {
                     {
@@ -152,8 +197,8 @@ require("lazy").setup({
             },
             config = function()
                 require("lsp-init")
-            end
-
+            end,
+            event = { "BufReadPre", "BufNewFile" },
         },
         {
             'hrsh7th/cmp-nvim-lsp',
@@ -268,9 +313,12 @@ require("lazy").setup({
                     ignore_whitespace = true,
                 },
                 current_line_blame_formatter = " <author>, <author_time> - <abbrev_sha> - <summary>  "
-            }
+            },
         },
-        { 'tpope/vim-fugitive',    lazy = false },
+        {
+            'tpope/vim-fugitive',
+            lazy = false
+        },
         {
             'ibhagwan/fzf-lua',
             opts = {
@@ -302,6 +350,8 @@ require("lazy").setup({
                     },
                 },
             },
+            event = "VeryLazy",
+            cmd = "FzfLua",
         },
         'kyazdani42/nvim-web-devicons',
         {
@@ -434,8 +484,8 @@ require("lazy").setup({
                 vim.g.undotree_SetFocusWhenToggle = 1
                 vim.g.undotree_ShortIndicators = 1
                 vim.g.undotree_DiffCommand = "git diff -p"
-                vim.keymap.set('n', "U", vim.cmd.UndotreeToggle)
             end,
+            cmd = "UndotreeToggle"
         },
         {
             'nguyenvukhang/nvim-toggler',
@@ -466,9 +516,13 @@ require("lazy").setup({
                 disable_file_types = { 'tex' },
                 hlgroup = 'LocalHighlight',
                 cw_hlgroup = nil,
-            }
+            },
+            lazy = false,
+            dependencies = { "folke/tokyonight.nvim" }
         },
-        { 'vladdoster/remember.nvim', event = "BufEnter" },
+        {
+            'vladdoster/remember.nvim', event = "BufEnter"
+        },
         {
             'VidocqH/lsp-lens.nvim',
             dependencies = {
@@ -478,9 +532,13 @@ require("lazy").setup({
             'benjaminchristie/mini.starter',
             config = function()
                 require("starter-init")
-            end
+            end,
+            event = "VimEnter"
         },
-        'benjaminchristie/nvim-colorizer.lua',
+        {
+            'benjaminchristie/nvim-colorizer.lua',
+            cmd = "ColorizerToggle",
+        },
         {
             'dstein64/vim-startuptime',
             lazy = true,
@@ -518,20 +576,20 @@ require("lazy").setup({
 
         -- externally managed plugins
         {
-            'junegunn/fzf', build = "./install --all --no-fish", disable = true, pin = true,
+            'junegunn/fzf', build = "./install --all --no-fish", enabled = true, pin = true,
         },
         {
             'LuaLS/lua-language-server',
             commit = "d912dfc05636ca113eb074d637905f4b2514229d",
             build = table.concat({
-                        "./make.sh",
-                        "noglob echo \"" ..
-                        vim.fn.stdpath("data") ..
-                        "/lazy/lua-language-server/bin/lua-language-server \"\\$@\"\" > $HOME/.local/bin/lua-language-server",
-                        "chmod +x $HOME/.local/bin/lua-language-server"
-                    },
-                    " && "
-                ),
+                    "./make.sh",
+                    "noglob echo \"" ..
+                    vim.fn.stdpath("data") ..
+                    "/lazy/lua-language-server/bin/lua-language-server \"\\$@\"\" > $HOME/.local/bin/lua-language-server",
+                    "chmod +x $HOME/.local/bin/lua-language-server"
+                },
+                " && "
+            ),
             pin = true,
         },
         {
@@ -549,16 +607,16 @@ require("lazy").setup({
             end,
             pin = true,
             build = table.concat({
-                        "pnpm install",
-                        "pnpm compile",
-                        "npm i -g --prefix ./bin ./server",
-                        "noglob echo \"" ..
-                        vim.fn.stdpath("data") ..
-                        "/lazy/bash-language-server/bin/bin/bash-language-server \"\\$@\"\" > $HOME/.local/bin/bash-language-server",
-                        "chmod +x $HOME/.local/bin/bash-language-server",
-                    },
-                    " && "
-                )
+                    "pnpm install",
+                    "pnpm compile",
+                    "npm i -g --prefix ./bin ./server",
+                    "noglob echo \"" ..
+                    vim.fn.stdpath("data") ..
+                    "/lazy/bash-language-server/bin/bin/bash-language-server \"\\$@\"\" > $HOME/.local/bin/bash-language-server",
+                    "chmod +x $HOME/.local/bin/bash-language-server",
+                },
+                " && "
+            )
         },
         {
             'artempyanykh/marksman',
@@ -601,6 +659,12 @@ require("lazy").setup({
     {
         defaults = {
             lazy = true
+        },
+        install = {
+            colorscheme = {"default"}
+        },
+        diff = {
+            cmd = "diffview.nvim",
         }
     }
 )
