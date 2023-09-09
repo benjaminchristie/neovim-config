@@ -27,6 +27,7 @@
   "marksman": { "branch": "main", "commit": "a85401a8cbe3b1522dc3983a1a7afa2c53d04e02" },
   "mini.starter": { "branch": "main", "commit": "3a82e4b17837cbf5a8b5a0eacd77c3a213124a0d" },
   "neodev.nvim": { "branch": "main", "commit": "dcd34653b0f1d3e7ea9aeb3e37dc7c8da445c4fe" },
+  "numb.nvim": { "branch": "master", "commit": "3f7d4a74bd456e747a1278ea1672b26116e0824d" },
   "nvim-autopairs": { "branch": "master", "commit": "defad64afbf19381fe31488a7582bbac421d6e38" },
   "nvim-cmp": { "branch": "main", "commit": "969c5affa55111f8af95a0696316a0775c2af2c7" },
   "nvim-colorizer.lua": { "branch": "master", "commit": "36c610a9717cc9ec426a07c8e6bf3b3abcb139d6" },

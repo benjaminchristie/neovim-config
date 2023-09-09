@@ -11,6 +11,8 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
+require("options")
+
 local lsp_configured_filetypes = {
     "*.lua",
     "*.py",
@@ -37,7 +39,8 @@ require("lazy").setup({
         },
         {
             'p00f/godbolt.nvim',
-            cmd = "Godbolt"
+            cmd = "Godbolt",
+            event = "VeryLazy"
         },
         { 'kevinhwang91/promise-async' },
         {
@@ -46,10 +49,10 @@ require("lazy").setup({
             build = function()
                 require("fundo").install()
             end,
+            lazy = false,
         },
         {
             'tzachar/highlight-undo.nvim',
-            dependencies = { "folke/tokyonight.nvim" },
             opts = {
                 duration = 300,
                 undo = {
@@ -234,6 +237,7 @@ require("lazy").setup({
         {
             'michaelb/sniprun',
             build = "sh install.sh",
+            event = "VeryLazy",
             cmd = "SnipRun"
         },
         {
@@ -248,7 +252,8 @@ require("lazy").setup({
         {
             'windwp/nvim-ts-autotag',
             opts = { filetypes = { "html", "xml" } },
-            ft = { "html", "xml" }
+            ft = { "html", "xml" },
+            event = "VeryLazy",
         },
         {
             'mfussenegger/nvim-dap',
@@ -378,6 +383,7 @@ require("lazy").setup({
                     end
                 }
             },
+            cmd = "Oil"
         },
         {
             'IMOKURI/line-number-interval.nvim',
@@ -446,17 +452,14 @@ require("lazy").setup({
                         return { 'treesitter', 'indent' }
                     end
                 })
-                vim.keymap.set('n', 'zR', ufo.openAllFolds, { desc = "open all folds" })
-                vim.keymap.set('n', 'zM', ufo.closeAllFolds, { desc = "close all folds" })
-                vim.keymap.set('n', 'zr', ufo.openFoldsExceptKinds, { desc = "open most folds" })
-                vim.keymap.set('n', 'zm', ufo.closeFoldsWith) -- closeAllFolds == closeFoldsWith(0)
-                vim.keymap.set('n', 'K', function()
-                    local winid = ufo.peekFoldedLinesUnderCursor()
-                    if not winid then
-                        vim.lsp.buf.hover()
-                    end
-                end, { desc = "peek fold, or call lsp.buf.hover()" })
-            end
+            end,
+            keys = {
+                {"zR", function() return require("ufo").openAllFolds() end, desc = "open all folds"},
+                {"zM", function() return require("ufo").closeAllFolds() end, desc = "open all folds"},
+                {"zr", function() return require("ufo").openFoldsExceptKinds() end, desc = "open all folds"},
+                {"zm", function() return require("ufo").closeFoldsWith()() end, desc = "open all folds"},
+            },
+            event = "VeryLazy"
         },
         { 'kylechui/nvim-surround' },
         {
@@ -475,7 +478,10 @@ require("lazy").setup({
                 vim.g.undotree_ShortIndicators = 1
                 vim.g.undotree_DiffCommand = "git diff -p"
             end,
-            cmd = "UndotreeToggle"
+            cmd = "UndotreeToggle",
+            keys = {
+                {'U', ':UndotreeToggle<CR>'}
+            }
         },
         {
             'nguyenvukhang/nvim-toggler',
@@ -518,7 +524,7 @@ require("lazy").setup({
             opts = {
                 enable = false,
                 include_declaration = false, -- Reference include declaration
-                sections = {             -- Enable / Disable specific request
+                sections = {                 -- Enable / Disable specific request
                     definition = true,
                     references = true,
                     implements = false,
@@ -530,7 +536,7 @@ require("lazy").setup({
             config = function()
                 require("starter-init")
             end,
-            event = "VimEnter"
+            lazy = false,
         },
         {
             'benjaminchristie/nvim-colorizer.lua',
@@ -568,6 +574,14 @@ require("lazy").setup({
                 }
             },
             tag = "legacy"
+        },
+        {
+            'nacro90/numb.nvim',
+            event = "CmdlineEnter",
+            opts = {
+                show_numbers = true,
+                hide_relativenumbers = false,
+            }
         },
 
 
@@ -658,16 +672,15 @@ require("lazy").setup({
             lazy = true
         },
         install = {
-            colorscheme = { "default" }
+            colorscheme = { "torte" }
         },
         diff = {
             cmd = "diffview.nvim",
         }
     }
 )
--- local plugins
-require("config_keymaps")
-require("config_autocmds")
-require("config_functions")
-require("options")
+
 require("statuswinbar").setup()
+require("config_functions")
+require("config_autocmds")
+require("config_keymaps")

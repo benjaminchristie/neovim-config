@@ -24,6 +24,11 @@ vim.lsp.handlers["textDocument/signatureHelp"] =
             border = "single"
         }
     )
+vim.diagnostic.config({
+    underline = true,
+    update_in_insert = false,
+    severity_sort = true,
+})
 -- Use an on_attach function to only map the following keys
 -- after the language server attaches to the current buffer
 

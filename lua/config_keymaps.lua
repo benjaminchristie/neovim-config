@@ -13,7 +13,6 @@ vim.keymap.set('n', '<C-d>', '<C-d>zz')
 vim.keymap.set('n', '<C-u>', '<C-u>zz')
 vim.keymap.set('n', '}', '}zz')
 vim.keymap.set('n', '{', '{zz')
-vim.keymap.set('n', "U", ":UndotreeToggle<CR>")
 
 local timers = {}
 local search_timer_timeout = 20000
