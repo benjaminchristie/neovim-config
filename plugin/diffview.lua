@@ -52,6 +52,8 @@ require("diffview").setup({
             { "n", "<down>",         actions.next_entry,                     { desc = "Bring the cursor to the next file entry" } },
             { "n", "k",              actions.prev_entry,                     { desc = "Bring the cursor to the previous file entry" } },
             { "n", "<up>",           actions.prev_entry,                     { desc = "Bring the cursor to the previous file entry" } },
+            { "n", "zR",             actions.open_all_folds,                 { desc = "Expand all folds" } },
+            { "n", "zM",             actions.close_all_folds,                { desc = "Collapse all folds" } },
         },
         file_history_panel = {
             { "n", "L",              actions.open_commit_log,                { desc = "Show commit details" } },
@@ -64,6 +66,8 @@ require("diffview").setup({
             { "n", "<down>",         actions.next_entry,                     { desc = "Bring the cursor to the next file entry" } },
             { "n", "k",              actions.prev_entry,                     { desc = "Bring the cursor to the previous file entry" } },
             { "n", "<up>",           actions.prev_entry,                     { desc = "Bring the cursor to the previous file entry" } },
+            { "n", "zR",             actions.open_all_folds,                 { desc = "Expand all folds" } },
+            { "n", "zM",             actions.close_all_folds,                { desc = "Collapse all folds" } },
         },
         option_panel = {
           { "n", "<tab>",            actions.select_entry,          { desc = "Change the current option" } },
