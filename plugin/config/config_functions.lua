@@ -63,13 +63,16 @@ vim.api.nvim_create_user_command("Ex", function()
     vim.wo.relativenumber = false
     vim.api.nvim_win_set_height(0, HEIGHT)
 end, { desc = "open oil above" })
+
 vim.api.nvim_create_user_command("Lex", function()
     local WIDTH = 45
+    vim.o.splitright = false
     vim.cmd("vertical Oil")
+    vim.o.splitright = true
     vim.wo.number = false
     vim.wo.relativenumber = false
     vim.api.nvim_win_set_width(0, WIDTH)
-end, { desc = "open oil to the right" })
+end, { desc = "open oil to the left" })
 
 vim.api.nvim_create_user_command("Build", function()
     local build_tools = {
@@ -201,10 +204,10 @@ local function toggle_zen()
         require("ibl").update({ enabled = true })
     end
 end
-vim.api.nvim_create_autocmd({ "BufWinEnter" }, {
+vim.api.nvim_create_autocmd({ "BufEnter" }, {
     pattern = "*",
     callback = function()
-        if not zen_enabled then
+        if not zen_enabled and vim.o.filetype ~= "oil" then
             vim.o.number = true
             vim.o.relativenumber = true
         end
