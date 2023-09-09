@@ -207,9 +207,12 @@ end
 vim.api.nvim_create_autocmd({ "BufEnter" }, {
     pattern = "*",
     callback = function()
-        if not zen_enabled and vim.o.filetype ~= "oil" and vim.o.filetype ~= "starter" then
-            vim.o.number = true
-            vim.o.relativenumber = true
+        local res, ft = pcall(function() return vim.o.filetype end)
+        if res and not zen_enabled then
+            if ft ~= "oil" and ft ~= "starter" then
+                vim.o.number = true
+                vim.o.relativenumber = true
+            end
         end
     end
 })
