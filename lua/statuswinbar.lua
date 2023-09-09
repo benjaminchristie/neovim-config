@@ -221,12 +221,12 @@ function M.setup()
             end
         end
     })
-    vim.api.nvim_create_autocmd({ "VimEnter", "BufEnter", "DirChanged", "LspAttach", "LspDetach" }, {
+    vim.api.nvim_create_autocmd({ "BufEnter", "DirChanged", "LspAttach", "LspDetach" }, {
         pattern = "*",
         group = "StatusWinBar",
         callback = apply_winbar
     })
-    vim.api.nvim_create_autocmd({ "VimEnter", "BufEnter", "CursorMoved" }, {
+    vim.api.nvim_create_autocmd({ "BufEnter", "CursorMoved" }, {
         group = "StatusWinBar",
         pattern = "*",
         callback = function()
