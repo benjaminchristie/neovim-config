@@ -6,10 +6,6 @@ if ok then
         return function() end
     end
 end
--- neodev must be called before lspconfig
-require("neodev").setup({
-    library = { plugins = { "nvim-dap-ui" }, types = true },
-})
 local lspconfig = require("lspconfig")
 local capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities())
 capabilities.textDocument.completion.completionItem.snippetSupport = true

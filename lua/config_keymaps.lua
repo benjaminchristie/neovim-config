@@ -64,9 +64,9 @@ vim.keymap.set({'n', 'v'}, 'gtt', require('nvim-toggler').toggle)
 vim.keymap.set('n', '<A-d><A-v>', function()
     vim.cmd("DapVirtualTextEnable")
 end, { desc = "enable virtual text when debugging" })
-vim.keymap.set('n', '<A-d><A-r>', require("dap").restart, { desc = "restart debugger" })
-vim.keymap.set('n', '<A-d><A-t>', require("dap").run_to_cursor, { desc = "run to cursor" })
-vim.keymap.set('n', '<A-d><A-d>', require("dap").continue, { desc = "continue debugger" })
+vim.keymap.set('n', '<A-d><A-r>', function() return require("dap").restart() end, { desc = "restart debugger" })
+vim.keymap.set('n', '<A-d><A-t>', function() return require("dap").run_to_cursor() end, { desc = "run to cursor" })
+vim.keymap.set('n', '<A-d><A-d>', function() return require("dap").continue() end, { desc = "continue debugger" })
 vim.keymap.set('n', '<A-d><A-q>', function()
     require("dap").close()
     require("dapui").close()
@@ -78,12 +78,12 @@ vim.keymap.set('n', '<A-d><A-b>', function()
      require('persistent-breakpoints.api').toggle_breakpoint(vim.fn.input("Condition : "))
 end)
 vim.keymap.set('n', '<A-d><A-p>', function()
-    require("dapui").eval(nil, {
+    return require("dapui").eval(nil, {
         enter = true
     })
 end)
-vim.keymap.set('n', '<A-d><A-n>', require("dap").step_over, { desc = "step over function" })
-vim.keymap.set('n', '<A-d><A-s>', require("dap").step_into, { desc = "step into function" })
+vim.keymap.set('n', '<A-d><A-n>', function() return require("dap").step_over() end, { desc = "step over function" })
+vim.keymap.set('n', '<A-d><A-s>', function() return require("dap").step_into() end, { desc = "step into function" })
 
 local search_github = function()
     local csgithub = require("csgithub")
@@ -127,13 +127,13 @@ vim.keymap.set('n', 'gst', function()
     require("gitsigns").toggle_numhl(is_gitsigns_toggled)
 end, { desc = "toggle gitsigns blame and buffer changes" })
 
-vim.keymap.set('n', 'gss', require("gitsigns").stage_hunk, { desc = "gitsigns stage hunk" })
+vim.keymap.set('n', 'gss', function() return require("gitsigns").stage_hunk() end, { desc = "gitsigns stage hunk" })
 -- equivalent to Gwrite
-vim.keymap.set('n', 'gsa', require("gitsigns").stage_buffer, { desc = "gitsigns stage buffer" })
+vim.keymap.set('n', 'gsa', function() return require("gitsigns").stage_buffer() end, { desc = "gitsigns stage buffer" })
 -- equivalent to Gread
-vim.keymap.set('n', 'gsr', require("gitsigns").reset_hunk, { desc = "gitsigns reset hunk" })
+vim.keymap.set('n', 'gsr', function() return require("gitsigns").reset_hunk() end, { desc = "gitsigns reset hunk" })
 -- toggle file history
-vim.keymap.set('n', 'gsov', ':DiffviewFileHistory<CR>')
+vim.keymap.set('n', 'gsov', ':DiffviewOpen<CR>')
 vim.keymap.set('n', 'gsoo', ':DiffviewFileHistory<CR>')
 vim.keymap.set('n', 'gsoc', ':DiffviewFileHistory %<CR>')
 
@@ -153,52 +153,6 @@ vim.keymap.set('n', '\\s', function()
     vim.cmd(":" .. line_num)
 end, { desc = "find and replace across scope and file" })
 
-local handler = function(virtText, lnum, endLnum, width, truncate)
-    local newVirtText = {}
-    local suffix = (' 󰁂 %d '):format(endLnum - lnum)
-    local sufWidth = vim.fn.strdisplaywidth(suffix)
-    local targetWidth = width - sufWidth
-    local curWidth = 0
-    for _, chunk in ipairs(virtText) do
-        local chunkText = chunk[1]
-        local chunkWidth = vim.fn.strdisplaywidth(chunkText)
-        if targetWidth > curWidth + chunkWidth then
-            table.insert(newVirtText, chunk)
-        else
-            chunkText = truncate(chunkText, targetWidth - curWidth)
-            local hlGroup = chunk[2]
-            table.insert(newVirtText, { chunkText, hlGroup })
-            chunkWidth = vim.fn.strdisplaywidth(chunkText)
-            -- str width returned from truncate() may less than 2nd argument, need padding
-            if curWidth + chunkWidth < targetWidth then
-                suffix = suffix .. (' '):rep(targetWidth - curWidth - chunkWidth)
-            end
-            break
-        end
-        curWidth = curWidth + chunkWidth
-    end
-    table.insert(newVirtText, { suffix, 'MoreMsg' })
-    return newVirtText
-end
-local ufo = require("ufo")
-ufo.setup({
-    enable_get_fold_virt_text = true,
-    fold_virt_text_handler = handler,
-    provider_selector = function(_, _, _)
-        return { 'treesitter', 'indent' }
-    end
-})
-vim.keymap.set('n', 'zR', ufo.openAllFolds, { desc = "open all folds" })
-vim.keymap.set('n', 'zM', ufo.closeAllFolds, { desc = "close all folds" })
-vim.keymap.set('n', 'zr', ufo.openFoldsExceptKinds, { desc = "open most folds" })
-vim.keymap.set('n', 'zm', ufo.closeFoldsWith) -- closeAllFolds == closeFoldsWith(0)
-vim.keymap.set('n', 'K', function()
-    local winid = ufo.peekFoldedLinesUnderCursor()
-    if not winid then
-        vim.lsp.buf.hover()
-    end
-end, { desc = "peek fold, or call lsp.buf.hover()" })
-
 
 -- handle harpoon
 for i = 0, 9, 1 do
@@ -217,6 +171,17 @@ local function on_demand_autogroup()
 end
 
 vim.keymap.set('n', "<A-e>", on_demand_autogroup)
+
+local help_opts = {
+    actions = {
+        ['ctrl-v'] = function(selected)
+            local last = selected[#selected]
+            local str = string.match(last, "%S+")
+            vim.cmd('help ' .. str)
+            vim.cmd('call feedkeys("\\<c-w>L")')
+        end
+    }
+}
 
 vim.keymap.set('n', '<C-p><C-p>', function() return require("fzf-lua").files({ cmd = "find -type f | rg -v '.git' | rg -v '.cache' | rg -v 'bin/' | rg -v 'logs/' " }) end)
 vim.keymap.set('n', '<C-p><C-f>', function() return require("fzf-lua").live_grep() end)

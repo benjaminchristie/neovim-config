@@ -132,9 +132,6 @@ require("nvim-dap-virtual-text").setup({
     clear_on_continue = false,
     virt_text_pos = "eol",
 })
-require('persistent-breakpoints').setup {
-    load_breakpoints_event = { "BufReadPost" }
-}
 dapui.setup({
     expand_lines = false,
     layouts = { {

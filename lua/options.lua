@@ -1,14 +1,13 @@
 vim.api.nvim_set_var("line_number_interval#custom_interval", { 1, 2, 3, 4, 5 })
 vim.api.nvim_set_var("line_number_interval#use_custom", 1)
 vim.api.nvim_set_option_value('omnifunc', 'v:lua.vim.lsp.omnifunc', {})
+vim.g.indent_blankline_char_list_blankline = { '|', '|', '|', '|', '|', "", "", "", "", "" }
 vim.cmd("set shm+=I")
 vim.g.plug_threads = 64
 vim.g.plug_window = [[vertical topleft new]]
 vim.g.dispatch_no_maps = 1
 vim.g.editorconfig_trim_trailing_whitespace = true
 vim.g.editorconfig_indent_style = "space"
-vim.g.indent_blankline_char_list_blankline = { '|', '|', '|', '|', '|', "", "", "", "", "" }
-vim.g.line_number_interval_enable_at_startup = 1
 vim.g.loaded_2html_plugin = 0
 vim.g.syntastic_auto_jump = 1
 vim.g.term_buf = 0

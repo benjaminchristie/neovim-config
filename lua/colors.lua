@@ -127,3 +127,5 @@ vim.api.nvim_set_hl(0, "@heading_conceal.markdown", {
     bg = colors.bg_highlight,
     bold = true,
 })
+vim.api.nvim_set_hl(0, 'FidgetTitle', { bg = colors.bg_float })
+vim.api.nvim_set_hl(0, 'FidgetTask', { bg = colors.bg_float })

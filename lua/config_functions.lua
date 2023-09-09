@@ -103,7 +103,6 @@ local lazy_load = function()
         if vim.treesitter.language.get_lang(vim.o.filetype) ~= nil then
             vim.treesitter.start()
         end
-        vim.cmd("LspStart")
         vim.diagnostic.show(nil, 0)
     end)
 end
@@ -122,7 +121,6 @@ vim.api.nvim_create_autocmd({ "BufReadPost" }, {
             if vim.treesitter.language.get_lang(vim.o.filetype) ~= nil then
                 pcall(vim.treesitter.start)
             end
-            vim.cmd("LspStart")
         end
     end
 })
