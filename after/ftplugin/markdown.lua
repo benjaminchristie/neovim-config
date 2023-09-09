@@ -1,3 +1,5 @@
-vim.wo[0][0].conceallevel = 2
-vim.wo[0][0].spell = true
-vim.wo[0][0].wrap = true
+if not vim.o.readonly then
+    vim.wo[0][0].conceallevel = 2
+    vim.wo[0][0].spell = true
+    vim.wo[0][0].wrap = true
+end
