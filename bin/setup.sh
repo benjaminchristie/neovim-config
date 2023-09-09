@@ -113,6 +113,7 @@ print_style "Installing linters : \n"
 install_linters
 print_style "Installing vim-plug : \n"
 install_vimplug 
+cp $HOME/.config/nvim/bin/.clang-format $HOME/.clang-format
 
 # temporary configuration
 PATH=$HOME/.local/bin:$PATH
