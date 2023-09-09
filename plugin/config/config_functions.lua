@@ -167,6 +167,7 @@ vim.api.nvim_create_user_command("MarkdownPreview", markdown_preview_function, {
 
 
 local zen_enabled = false
+local winbar = require("statuswinbar")
 local function toggle_zen()
     zen_enabled = not zen_enabled
     if zen_enabled then
@@ -175,7 +176,9 @@ local function toggle_zen()
             vim.api.nvim_win_call(winnr, function()
                 vim.o.cmdheight = 0
                 vim.o.laststatus = 0
-                vim.o.winbar = ""
+                if not vim.o.diff or not winbar.in_diffview_nvim then
+                    vim.o.winbar = ""
+                end
                 vim.o.number = false
                 vim.o.relativenumber = false
                 vim.o.signcolumn = "no"
@@ -194,7 +197,6 @@ local function toggle_zen()
                 vim.o.showtabline = 1
             end)
         end
-        local winbar = dofile(vim.fn.stdpath("config") .. "/plugin/statuswinbar.lua")
         winbar.setup()
         require("ibl").update({ enabled = true })
     end

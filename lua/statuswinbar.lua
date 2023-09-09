@@ -102,14 +102,12 @@ local function get_harpoon_idx()
     end
 end
 
-
-local in_diffview_nvim = false
 function M.in_diffview_hook()
-    in_diffview_nvim = true
+    M.in_diffview_nvim = true
     pcall(vim.api.nvim_del_augroup_by_name, "StatusWinBar")
 end
 function M.out_diffview_hook()
-    in_diffview_nvim = false
+    M.in_diffview_nvim = false
     M.setup()
 end
 
@@ -122,7 +120,7 @@ local function winbarstring()
     local str = nil
     if vim.o.diff then
         str = string.format("%s [%s] %s", path, vim.fn.bufnr(), get_changed_hunks())
-        if in_diffview_nvim then
+        if M.in_diffview_nvim then
             return nil -- test for diffview
         end
     else
@@ -201,7 +199,9 @@ end
 function M.setup()
     vim.o.showtabline = 1
     vim.o.laststatus = 3
-    apply_winbar()
+    for _, winnr in ipairs(vim.api.nvim_list_wins()) do
+        vim.api.nvim_win_call(winnr, apply_winbar)
+    end
     vim.api.nvim_create_augroup("StatusWinBar", { clear = true })
     vim.api.nvim_create_autocmd('User', {
         pattern = 'GitSignsUpdate',

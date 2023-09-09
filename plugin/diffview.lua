@@ -1,5 +1,5 @@
 local actions = require('diffview.actions')
-local statuswinbar = dofile(vim.fn.stdpath("config") .. "/plugin/statuswinbar.lua")
+local statuswinbar = require("statuswinbar")
 require("diffview").setup({
     enhanced_diff_hl = true, -- See |diffview-config-enhanced_diff_hl|
     hooks = {

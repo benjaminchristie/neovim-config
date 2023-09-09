@@ -1,2 +1,2 @@
-local winbar = dofile(vim.fn.stdpath("config") .. "/plugin/statuswinbar.lua")
+local winbar = require("statuswinbar")
 winbar.setup()
