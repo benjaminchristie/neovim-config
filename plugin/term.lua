@@ -18,5 +18,5 @@ vim.api.nvim_create_autocmd({ "TermOpen" }, {
 
 local Terminal = require('toggleterm.terminal').Terminal
 local pyterm = Terminal:new({ cmd = "/usr/bin/python", hidden = true })
-vim.keymap.set('n', [[<A-p>]], function() pyterm:toggle() end)
-vim.keymap.set('t', [[<A-p>]], function() pyterm:toggle() end)
+vim.keymap.set('n', [[<A-y>]], function() pyterm:toggle() end)
+vim.keymap.set('t', [[<A-y>]], function() pyterm:toggle() end)

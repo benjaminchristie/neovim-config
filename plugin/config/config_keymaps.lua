@@ -13,8 +13,6 @@ vim.keymap.set('n', '<C-d>', '<C-d>zz')
 vim.keymap.set('n', '<C-u>', '<C-u>zz')
 vim.keymap.set('n', '}', '}zz')
 vim.keymap.set('n', '{', '{zz')
-vim.keymap.set('n', "<A-p>", ":cprev<CR>")
-vim.keymap.set('n', "<A-n>", ":cnext<CR>")
 
 local timers = {}
 local search_timer_timeout = 20000
@@ -56,6 +54,9 @@ vim.keymap.set('n', 'N', function()
         timed_color_change()
     end,
     { noremap = true })
+
+vim.keymap.set('n', "<A-p>", ":cprev<CR>")
+vim.keymap.set('n', "<A-n>", ":cnext<CR>")
 
 vim.keymap.set('n', '<A-s>', require("mini.starter").open, { desc = "open mini.starter screen" })
 vim.keymap.set({'n', 'v'}, 'gtt', require('nvim-toggler').toggle)
