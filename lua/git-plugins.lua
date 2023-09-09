@@ -147,7 +147,9 @@ local modules = {
                 }
             })
         end,
-        cmd = {"DiffviewOpen", "DiffviewFileHistory"}
+        cmd = {"DiffviewOpen", "DiffviewFileHistory"},
+        keys = {
+            {"gV", ":DiffviewOpen<CR>"}, {"gM", ":DiffviewOpen<CR>"}, {"gsov", ":DiffviewFileHistory<CR>" }},
     },
 
 }
