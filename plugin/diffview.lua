@@ -1,5 +1,6 @@
 local actions = require('diffview.actions')
 require("diffview").setup({
+    enhanced_diff_hl = true, -- See |diffview-config-enhanced_diff_hl|
     view = {
         default = {
           -- Config for changed files, and staged files in diff views.
@@ -20,6 +21,17 @@ require("diffview").setup({
     },
     keymaps = {
         disable_defaults = true,
+        view = {
+            { "n", "dh",  actions.conflict_choose("ours"),        { desc = "Choose the OURS version of a conflict" } },
+            { "n", "dl",  actions.conflict_choose("theirs"),      { desc = "Choose the THEIRS version of a conflict" } },
+            { "n", "g?",   actions.help({ "view", "diff3" }),  { desc = "Open the help panel" } },
+            { "n", "<C-f>",   actions.focus_files,                    { desc = "Bring focus to the file panel" } },
+        },
+        diff3 = {
+            { { "n", "x" }, "dh",  actions.diffget("ours"),            { desc = "Obtain the diff hunk from the OURS version of the file" } },
+            { { "n", "x" }, "dl",  actions.diffget("theirs"),          { desc = "Obtain the diff hunk from the THEIRS version of the file" } },
+            { "n",          "g?",   actions.help({ "view", "diff3" }),  { desc = "Open the help panel" } },
+        },
         file_panel = {
             { "n", "<tab>",          actions.select_next_entry,              { desc = "Open the diff for the next file" } },
             { "n", "<s-tab>",        actions.select_prev_entry,              { desc = "Open the diff for the previous file" } },
