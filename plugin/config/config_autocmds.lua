@@ -12,11 +12,6 @@ nnoremenu PopUp.Peek\ Value                 <Cmd>lua require("dapui").eval(nil, 
 anoremenu PopUp.-1-                         <Nop>
 anoremenu PopUp.Exit                        <Nop>
 ]])
-vim.api.nvim_create_augroup("FormatTelescope", { clear = true })
-vim.api.nvim_create_autocmd('User', {
-    pattern = "TelescopePreviewerLoaded",
-    command = "setlocal wrap",
-})
 vim.api.nvim_create_augroup("FormatGroup", { clear = true })
 vim.api.nvim_create_autocmd({ "BufEnter" }, {
     group = "FormatGroup",

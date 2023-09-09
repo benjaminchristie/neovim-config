@@ -1,11 +1,5 @@
 local starter = require('mini.starter')
 
-local function cached_repos()
-    return require("telescope").extensions.repo.cached_list { file_ignore_patterns = {
-        "/%.cache/", "/%.cargo/", "/%.local/share/", "/%.zsh/"
-    } }
-end
-
 local function statustool()
     if not pcall(function() vim.cmd('tab G') end) then
         vim.cmd('echohl WarningMsg | echo "Directory is not a git repository" | echohl None')
@@ -27,23 +21,14 @@ local function mergetool()
     end
 end
 
-local function ws_files()
-    -- if vim.b.gitsigns_head ~= nil then
-    --     vim.cmd("FzfLua git_files")
-    -- else
-    --     vim.cmd("FzfLua files")
-    -- end
-    vim.cmd("FzfLua git_files")
-end
-
 local extra_items = function()
     return function()
         return {
             { action = 'FzfLua live_grep', name = 'Grep',            section = 'Actions' },
             { action = 'FzfLua help_tags', name = 'Help',            section = 'Actions' },
             { action = 'FzfLua oldfiles',  name = 'History',         section = 'Actions' },
-            { action = cached_repos,       name = 'Projects',        section = 'Actions' },
-            { action = ws_files,           name = 'Workspace files', section = 'Actions' },
+            { action = "FzfLua git_files", name = 'Workspace files', section = 'Actions' },
+            { action = "FzfLua files",     name = 'All files',       section = 'Actions' },
             { action = difftool,           name = 'Diff tool',       section = 'Actions' },
             { action = mergetool,          name = 'Merge tool',      section = 'Actions' },
             { action = statustool,         name = 'Status',          section = 'Actions' },

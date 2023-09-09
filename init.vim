@@ -62,11 +62,8 @@ else
 
     " File finders
     Plug 'ThePrimeagen/harpoon'
-    Plug 'cljoly/telescope-repo.nvim'
     Plug 'ibhagwan/fzf-lua', { 'branch': 'main' }
     Plug 'kyazdani42/nvim-web-devicons'
-    Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build' }
-    Plug 'nvim-telescope/telescope.nvim', { 'branch': '0.1.x' }
     Plug 'stevearc/oil.nvim', { 'on': 'Oil' }
 
     " QoL
@@ -75,37 +72,34 @@ else
     Plug 'akinsho/toggleterm.nvim'
     Plug 'benjaminchristie/csgithub.nvim', { 'branch': 'master'}
     Plug 'chrisgrieser/nvim-early-retirement'
+    Plug 'itchyny/vim-qfedit'
     Plug 'kevinhwang91/nvim-ufo'
     Plug 'kevinhwang91/promise-async'
     Plug 'kylechui/nvim-surround'
     Plug 'lukas-reineke/indent-blankline.nvim', { 'branch': 'v3' }
     Plug 'mbbill/undotree', { 'on': 'UndotreeToggle' }
+    Plug 'nguyenvukhang/nvim-toggler'
     Plug 'rhysd/vim-clang-format', { 'on': 'ClangFormat', 'for': 'cpp' }
+    Plug 'sindrets/diffview.nvim'
     Plug 't-troebst/perfanno.nvim'
     Plug 'tpope/vim-commentary'
     Plug 'tpope/vim-dispatch'
     Plug 'tpope/vim-eunuch'
+    Plug 'tpope/vim-repeat'
     Plug 'tzachar/highlight-undo.nvim'
+    Plug 'tzachar/local-highlight.nvim'
     Plug 'vladdoster/remember.nvim'
 
     " Accessory
+    Plug 'VidocqH/lsp-lens.nvim'
     Plug 'benjaminchristie/mini.starter'
     Plug 'benjaminchristie/nvim-colorizer.lua', { 'on': 'ColorizerToggle' }
+    Plug 'chentoast/marks.nvim'
     Plug 'dstein64/vim-startuptime', { 'on': 'StartupTime' }
     Plug 'folke/tokyonight.nvim'
-    Plug 'projekt0n/github-nvim-theme'
     Plug 'kosayoda/nvim-lightbulb'
-    Plug 'chentoast/marks.nvim'
     Plug 'p00f/godbolt.nvim'
-
-    " Devel
-    Plug 'tpope/vim-repeat'
-    Plug 'VidocqH/lsp-lens.nvim'
-    Plug 'tzachar/local-highlight.nvim'
-    Plug 'sindrets/diffview.nvim'
-    Plug 'nguyenvukhang/nvim-toggler'
-    Plug 'itchyny/vim-qfedit'
-
+    Plug 'projekt0n/github-nvim-theme'
 
     """ External plugins """
     """ REQUIRES: node, pnpm, pip, dotnet-sdk """
