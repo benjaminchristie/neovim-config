@@ -228,6 +228,15 @@ local modules = {
         end,
         dir = "custom-functions",
         event = { "BufReadPre", "BufNewFile" },
+    },
+    {
+        name = "custom-keymaps",
+        config = function()
+            require("custom-keymaps")
+        end,
+        dir = "custom-keymaps",
+        event = { "BufReadPre", "BufNewFile" },
+
     }
 
 }

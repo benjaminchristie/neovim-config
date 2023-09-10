@@ -1,8 +1,6 @@
-vim.api.nvim_create_user_command("W", "w", { desc = "alias to :w" })
-vim.api.nvim_create_user_command("Q", "q", { desc = "alias to :q" })
-vim.api.nvim_create_user_command("TC", "tabclose", { desc = "alias to tabclose" })
-vim.api.nvim_create_user_command("TO", "tabclose", { desc = "alias to tabonly" })
-local function whereami()
+M = {}
+
+function M.whereami()
     local uptime = 7
     local downtime = 3
     local cursor_colors = {
@@ -37,24 +35,142 @@ local function whereami()
         end)
     end
 end
-vim.api.nvim_create_user_command("Where", whereami, { desc = "highlight cursor position" })
 
-Copygpg_filename = "" -- not proud of this
-local function copygpg()
-    local _use_saved = vim.fn.input("Use cached filename? [Y/n] : ")
-    local use_saved = (_use_saved ~= "n")
-    if ((Copygpg_filename == "") or (not use_saved)) then
-        Copygpg_filename = vim.fn.input("Enter path to gpg file : ")
+function M.build_func()
+    local build_tools = {
+        "make ",
+        "cmake --build build ",
+        "export TERM=dumb && catkin build --no-color --no-status ",
+    }
+    local prompt = ""
+    for i = 1, #build_tools do
+        prompt = prompt .. i .. " : " .. build_tools[i] .. "\n"
     end
-    vim.cmd("silent !copygpg " .. Copygpg_filename)
+    prompt = prompt .. "Enter your choice : "
+    local which_compiler = vim.fn.input(prompt)
+    local idx = tonumber(which_compiler)
+    if idx == nil then
+        return
+    end
+    vim.fn.feedkeys(":Dispatch " .. build_tools[idx])
 end
 
-vim.api.nvim_create_user_command("Copygpg", copygpg, { desc = "decrypt and copy contents of gpg file to clipboard" })
+--- used for large files or when treesitter + lsp is slow
+function M.lazy_load()
+    vim.o.syntax = "off"
+    vim.lsp.stop_client(vim.lsp.get_clients())
+    vim.treesitter.stop()
+    vim.diagnostic.hide(nil, 0)
+    vim.fn.timer_start(5000, function()
+        if vim.treesitter.language.get_lang(vim.o.filetype) ~= nil then
+            vim.treesitter.start()
+        end
+        vim.diagnostic.show(nil, 0)
+    end)
+end
 
-vim.api.nvim_create_user_command("TmpLua", function()
-    vim.cmd("e /tmp/tmp" .. vim.fn.reltimestr(vim.fn.reltime()))
-    vim.bo.filetype = "lua"
-end, { desc = "make a temporarily lua file" })
+function M.markdown_preview_function()
+    local fn = vim.api.nvim_buf_get_name(0)
+    local cached_pdf_fn = vim.fn.stdpath("run") .. "/" .. string.gsub(fn .. ".pdf", "/", "&")
+    vim.system(
+        { "pandoc", "-V", "geometry:margin=1in", fn, "-o", cached_pdf_fn },
+        {},
+        function(_) vim.system({ "zathura", cached_pdf_fn }) end
+    )
+    vim.api.nvim_create_augroup("MarkdownPreview" .. fn, { clear = true })
+    vim.api.nvim_create_autocmd({ "BufWrite" }, {
+        group = "MarkdownPreview" .. fn,
+        pattern = fn,
+        callback = function()
+            vim.system(
+                { "pandoc", "-V", "geometry:margin=1in", fn, "-o", cached_pdf_fn }
+            )
+        end
+    })
+end
+
+local zen_enabled = false
+function M.toggle_zen()
+    zen_enabled = not zen_enabled
+    if zen_enabled then
+        pcall(vim.api.nvim_del_augroup_by_name, "StatusWinBar")
+        for _, winnr in ipairs(vim.api.nvim_list_wins()) do
+            vim.api.nvim_win_call(winnr, function()
+                vim.o.cmdheight = 0
+                vim.o.laststatus = 0
+                if not vim.o.diff or not require("statuswinbar").in_diffview_nvim then
+                    vim.o.winbar = ""
+                end
+                vim.o.number = false
+                vim.o.relativenumber = false
+                vim.o.signcolumn = "no"
+                vim.o.showtabline = 0
+            end)
+        end
+        require("ibl").update({ enabled = false })
+    else
+        for _, winnr in ipairs(vim.api.nvim_list_wins()) do
+            vim.api.nvim_win_call(winnr, function()
+                vim.o.cmdheight = 1
+                vim.o.laststatus = 3
+                vim.o.number = true
+                vim.o.relativenumber = true
+                vim.o.signcolumn = "yes:1"
+                vim.o.showtabline = 1
+            end)
+        end
+        require("statuswinbar").setup()
+        require("ibl").update({ enabled = true })
+    end
+end
+
+vim.api.nvim_create_autocmd({ "BufEnter" }, {
+    pattern = "*",
+    callback = function()
+        local res, ft = pcall(function() return vim.o.filetype end)
+        if res and not zen_enabled then
+            if ft ~= "oil" and ft ~= "starter" then
+                vim.o.number = true
+                vim.o.relativenumber = true
+            end
+        end
+    end
+})
+
+vim.api.nvim_create_user_command("ZenToggle", M.toggle_zen, {
+    desc = "call toggle_zen function"
+})
+vim.api.nvim_create_user_command("MarkdownPreview", M.markdown_preview_function, {
+    desc = "Markdown previewer with pandoc and live updating"
+})
+vim.keymap.set("n", "<A-l>", M.lazy_load)
+vim.api.nvim_create_user_command("LazyLoad", M.lazy_load, { desc = "attempt to lazy load ts and lsp" })
+vim.api.nvim_create_augroup("LazyLoadLargeFiles", { clear = true })
+vim.api.nvim_create_autocmd({ "BufReadPost" }, {
+    group = "LazyLoadLargeFiles",
+    pattern = "*",
+    callback = function()
+        if vim.fn.getfsize(vim.api.nvim_buf_get_name(0)) > 65536 then
+            vim.notify("Lazy loading file...")
+            M.lazy_load()
+        else
+            vim.o.syntax = "on"
+            if vim.treesitter.language.get_lang(vim.o.filetype) ~= nil then
+                pcall(vim.treesitter.start)
+            end
+        end
+    end
+})
+
+vim.api.nvim_create_user_command("Build", M.build_func, { desc = "select build tool for dispatch, then call :Dispatch" })
+
+
+vim.api.nvim_create_user_command("W", "w", { desc = "alias to :w" })
+vim.api.nvim_create_user_command("Q", "q", { desc = "alias to :q" })
+vim.api.nvim_create_user_command("TC", "tabclose", { desc = "alias to tabclose" })
+vim.api.nvim_create_user_command("TO", "tabclose", { desc = "alias to tabonly" })
+
+vim.api.nvim_create_user_command("Where", M.whereami, { desc = "highlight cursor position" })
 
 vim.api.nvim_create_user_command("Ex", function()
     local HEIGHT = 12
@@ -81,148 +197,4 @@ vim.api.nvim_create_user_command("Lex", function()
     vim.wo.relativenumber = false
     vim.api.nvim_win_set_width(0, WIDTH)
 end, { desc = "open oil to the left" })
-
-vim.api.nvim_create_user_command("Build", function()
-    local build_tools = {
-        "make ",
-        "cmake --build build ",
-        "export TERM=dumb && catkin build --no-color --no-status ",
-    }
-    local prompt = ""
-    for i = 1, #build_tools do
-        prompt = prompt .. i .. " : " .. build_tools[i] .. "\n"
-    end
-    prompt = prompt .. "Enter your choice : "
-    local which_compiler = vim.fn.input(prompt)
-    local idx = tonumber(which_compiler)
-    if idx == nil then
-        return
-    end
-    vim.fn.feedkeys(":Dispatch " .. build_tools[idx])
-end, { desc = "select build tool for dispatch, then call :Dispatch" })
-
---- used for large files or when treesitter + lsp is slow
-local lazy_load = function()
-    vim.o.syntax = "off"
-    vim.lsp.stop_client(vim.lsp.get_clients())
-    vim.treesitter.stop()
-    vim.diagnostic.hide(nil, 0)
-    vim.fn.timer_start(5000, function()
-        if vim.treesitter.language.get_lang(vim.o.filetype) ~= nil then
-            vim.treesitter.start()
-        end
-        vim.diagnostic.show(nil, 0)
-    end)
-end
-vim.keymap.set("n", "<A-l>", lazy_load)
-vim.api.nvim_create_user_command("LazyLoad", lazy_load, { desc = "attempt to lazy load ts and lsp" })
-vim.api.nvim_create_augroup("LazyLoadLargeFiles", { clear = true })
-vim.api.nvim_create_autocmd({ "BufReadPost" }, {
-    group = "LazyLoadLargeFiles",
-    pattern = "*",
-    callback = function()
-        if vim.fn.getfsize(vim.api.nvim_buf_get_name(0)) > 65536 then
-            vim.notify("Lazy loading file...")
-            lazy_load()
-        else
-            vim.o.syntax = "on"
-            if vim.treesitter.language.get_lang(vim.o.filetype) ~= nil then
-                pcall(vim.treesitter.start)
-            end
-        end
-    end
-})
-local change_plug_options = function()
-    local w = [[width = math.ceil(vim.api.nvim_get_option("columns") * 0.8), ]]
-    local h = [[height = math.ceil(vim.api.nvim_get_option("lines") * 0.8), ]]
-    local r = [[col = math.ceil(vim.api.nvim_get_option("columns") * 0.1 - 1), ]]
-    local c = [[row = math.ceil(vim.api.nvim_get_option("lines") * 0.1 - 1), ]]
-    local floating_opts = [[relative = 'editor', style='minimal', border = "single"]]
-    vim.g.plug_window = [[lua vim.api.nvim_open_win(vim.api.nvim_create_buf(true, false), true, {]] ..
-        w .. h .. r .. c .. floating_opts .. "})"
-    vim.cmd("PlugUpdate")
-    vim.fn.timer_start(5000, function()
-        vim.g.plug_window = [[vertical topleft new]]
-    end)
-end
-vim.api.nvim_create_user_command("PlugFloat", change_plug_options, {
-    desc = "queue a floating window for vim-plug"
-})
-
-local function markdown_preview_function()
-    local fn = vim.api.nvim_buf_get_name(0)
-    local cached_pdf_fn = vim.fn.stdpath("run") .. "/" .. string.gsub(fn .. ".pdf", "/", "&")
-    vim.system(
-        { "pandoc", "-V", "geometry:margin=1in", fn, "-o", cached_pdf_fn },
-        {},
-        function(_) vim.system({ "zathura", cached_pdf_fn }) end
-    )
-    -- vim.system({"zathura", cached_pdf_fn})
-    vim.api.nvim_create_augroup("MarkdownPreview" .. fn, { clear = true })
-    vim.api.nvim_create_autocmd({ "BufWrite" }, {
-        group = "MarkdownPreview" .. fn,
-        pattern = fn,
-        callback = function()
-            vim.system(
-                { "pandoc", "-V", "geometry:margin=1in", fn, "-o", cached_pdf_fn }
-            )
-        end
-    })
-end
-
-vim.api.nvim_create_user_command("MarkdownPreview", markdown_preview_function, {
-    desc = "Markdown previewer with pandoc and live updating"
-})
-
-
-local zen_enabled = false
-local winbar = require("statuswinbar")
-local function toggle_zen()
-    zen_enabled = not zen_enabled
-    if zen_enabled then
-        pcall(vim.api.nvim_del_augroup_by_name, "StatusWinBar")
-        for _, winnr in ipairs(vim.api.nvim_list_wins()) do
-            vim.api.nvim_win_call(winnr, function()
-                vim.o.cmdheight = 0
-                vim.o.laststatus = 0
-                if not vim.o.diff or not winbar.in_diffview_nvim then
-                    vim.o.winbar = ""
-                end
-                vim.o.number = false
-                vim.o.relativenumber = false
-                vim.o.signcolumn = "no"
-                vim.o.showtabline = 0
-            end)
-        end
-        require("ibl").update({ enabled = false })
-    else
-        for _, winnr in ipairs(vim.api.nvim_list_wins()) do
-            vim.api.nvim_win_call(winnr, function()
-                vim.o.cmdheight = 1
-                vim.o.laststatus = 3
-                vim.o.number = true
-                vim.o.relativenumber = true
-                vim.o.signcolumn = "yes:1"
-                vim.o.showtabline = 1
-            end)
-        end
-        winbar.setup()
-        require("ibl").update({ enabled = true })
-    end
-end
-vim.api.nvim_create_autocmd({ "BufEnter" }, {
-    pattern = "*",
-    callback = function()
-        local res, ft = pcall(function() return vim.o.filetype end)
-        if res and not zen_enabled then
-            if ft ~= "oil" and ft ~= "starter" then
-                vim.o.number = true
-                vim.o.relativenumber = true
-            end
-        end
-    end
-})
-
-vim.api.nvim_create_user_command("ZenToggle", toggle_zen, {
-    desc = "call toggle_zen function"
-})
+return M
