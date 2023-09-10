@@ -8,9 +8,6 @@ local modules = {
         event = "VeryLazy",
         dependencies = {
             "rafamadriz/friendly-snippets",
-            config = function()
-                require("luasnip.loaders.from_vscode").lazy_load()
-            end,
         },
         opts = {
             history = true,
@@ -38,6 +35,13 @@ local modules = {
             { "<tab>",   function() require("luasnip").jump(1) end,  mode = { "s" } },
             { "<s-tab>", function() require("luasnip").jump(-1) end, mode = { "s" } },
         },
+    },
+    {
+        "rafamadriz/friendly-snippets",
+        config = function()
+            require("luasnip.loaders.from_vscode").lazy_load()
+        end,
+        event = "VeryLazy",
     },
     {
         'hrsh7th/cmp-buffer',
@@ -77,7 +81,7 @@ local modules = {
             local cmp = require('cmp')
             local luasnip = require("luasnip")
             require("cmp_git").setup()
-            cmp.setup({
+            local opts = {
                 snippet = {
                     -- REQUIRED - you must specify a snippet engine
                     expand = function(args)
@@ -117,7 +121,6 @@ local modules = {
                     { name = 'luasnip' }, -- For luasnip users.
                     { name = 'nvim_lsp' },
                     { name = 'path' },
-                }, {
                     { name = 'buffer' },
                     -- {
                     --     name = 'dictionary',
@@ -135,8 +138,10 @@ local modules = {
                     ghost_text = {
                         hl_group = "GhostText"
                     }
-                }
-            })
+                },
+                sorting = require("cmp.config.default")().sorting
+            }
+            cmp.setup(opts)
             -- Set configuration for specific filetype.
             cmp.setup.filetype('gitcommit', {
                 sources = cmp.config.sources({
