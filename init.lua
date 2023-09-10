@@ -23,7 +23,7 @@ local spec = {}
 
 spec = table_insert(spec, require("accessory-plugins"))
 spec = table_insert(spec, require("cmp-plugins"))
-spec = table_insert(spec, require("colors-plugins"))
+spec = table_insert(spec, require("color-plugins"))
 spec = table_insert(spec, require("dap-plugins"))
 spec = table_insert(spec, require("external-plugins"))
 spec = table_insert(spec, require("git-plugins"))

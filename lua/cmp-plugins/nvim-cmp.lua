@@ -14,13 +14,12 @@ return {
         -- Setup nvim-cmp.
         vim.o.completeopt = "menu,menuone,preview"
         local cmp = require('cmp')
-        local luasnip = require("luasnip")
         require("cmp_git").setup()
         local opts = {
             snippet = {
                 -- REQUIRED - you must specify a snippet engine
                 expand = function(args)
-                    luasnip.lsp_expand(args.body)     -- For `luasnip` users.
+                    require("luasnip").lsp_expand(args.body)     -- For `luasnip` users.
                 end,
             },
             window = {
@@ -36,8 +35,8 @@ return {
                 ["<Tab>"] = cmp.mapping(function(fallback)
                     if cmp.visible() then
                         cmp.select_next_item()
-                    elseif luasnip.expand_or_jumpable() then
-                        luasnip.expand_or_jump()
+                    elseif require("luasnip").expand_or_jumpable() then
+                        require("luasnip").expand_or_jump()
                     else
                         fallback()
                     end
@@ -45,8 +44,8 @@ return {
                 ["<S-Tab>"] = cmp.mapping(function(fallback)
                     if cmp.visible() then
                         cmp.select_prev_item()
-                    elseif luasnip.jumpable(-1) then
-                        luasnip.jump(-1)
+                    elseif require("luasnip").jumpable(-1) then
+                        require("luasnip").jump(-1)
                     else
                         fallback()
                     end
