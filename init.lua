@@ -12,23 +12,18 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
-local function table_insert(t1, t2)
-    for _, v in ipairs(t2) do
-        table.insert(t1, v)
-    end
-    return t1
-end
+local merge_tables = require("custom-utils").merge_tables
 
 local spec = {}
 
-spec = table_insert(spec, require("accessory-plugins"))
-spec = table_insert(spec, require("cmp-plugins"))
-spec = table_insert(spec, require("color-plugins"))
-spec = table_insert(spec, require("dap-plugins"))
-spec = table_insert(spec, require("external-plugins"))
-spec = table_insert(spec, require("git-plugins"))
-spec = table_insert(spec, require("lsp-plugins"))
-spec = table_insert(spec, require("qol-plugins"))
+spec = merge_tables(spec, require("accessory-plugins"))
+spec = merge_tables(spec, require("cmp-plugins"))
+spec = merge_tables(spec, require("color-plugins"))
+spec = merge_tables(spec, require("dap-plugins"))
+spec = merge_tables(spec, require("external-plugins"))
+spec = merge_tables(spec, require("git-plugins"))
+spec = merge_tables(spec, require("lsp-plugins"))
+spec = merge_tables(spec, require("qol-plugins"))
 
 require("lazy").setup(
     spec,
