@@ -275,7 +275,7 @@ local modules = {
     },
     {
         'kevinhwang91/nvim-ufo',
-        dependencies = 'kevinhwang91/promise-async',
+        dependencies = {'kevinhwang91/promise-async'},
         config = function()
             local handler = function(virtText, lnum, endLnum, width, truncate)
                 local newVirtText = {}
