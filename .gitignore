@@ -1,10 +1,5 @@
-lua/projects
-**/test.lua
-lua/plugins/gdb-nvim
-lua/plugins/nvim-make
 logs/
 colors/
 spell/
 bin/
-profiles/
-lua/forks/
+testing/

@@ -1,6 +1,8 @@
 local modules = {
     {
         'benjaminchristie/mini.starter',
+        enabled = true,
+        dev = false,
         config = function()
             local function statustool()
                 if not pcall(function() vim.cmd('tab G') end) then
@@ -59,6 +61,7 @@ local modules = {
 
             local starter_opts = {
                 evaluate_single = false,
+                autoopen = true,
                 header = ascii_art,
                 items = {
                     require("mini.starter").sections.recent_files(7, false, true,
@@ -81,9 +84,9 @@ local modules = {
             return require("mini.starter").setup(starter_opts)
         end,
         lazy = false,
-        keys = {
-            { '<A-s>', function() return require("mini.starter").open() end },
-        }
+        -- keys = {
+        --     { '<A-s>', function() return require("mini.starter").open() end },
+        -- }
     },
     {
         'benjaminchristie/nvim-colorizer.lua',

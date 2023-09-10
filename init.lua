@@ -42,6 +42,9 @@ require("lazy").setup(
         diff = {
             cmd = "diffview.nvim",
         },
+        dev = {
+            path = vim.fn.stdpath("config") .. "/testing",
+        },
         -- checker = { enabled = true }, -- automatically check for plugin updates
         performance = {
             rtp = {
@@ -50,7 +53,7 @@ require("lazy").setup(
                 -- "gzip",
                 -- "matchit",
                 -- "matchparen",
-                -- "netrwPlugin",
+                "netrwPlugin",
                 -- "tarPlugin",
                 -- "tohtml",
                 "tutor",

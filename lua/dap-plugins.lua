@@ -200,13 +200,13 @@ local modules = {
             {
                 '<A-d><A-l>',
                 function()
-                    require("dap").toggle_breakpoint(nil, nil, vim.fn.input("Log : "))
+                    return require("dap").toggle_breakpoint(nil, nil, vim.fn.input("Log : "))
                 end
             },
             {
                 '<A-d><A-b>',
                 function()
-                    require('persistent-breakpoints.api').toggle_breakpoint(vim.fn.input("Condition : "))
+                    return require('persistent-breakpoints.api').toggle_breakpoint(vim.fn.input("Condition : "))
                 end
             },
         }
@@ -219,6 +219,7 @@ local modules = {
     },
     {
         'Weissle/persistent-breakpoints.nvim',
+        event = "VeryLazy",
         opts = { load_breakpoints_event = { "BufReadPost" } }
     },
     {

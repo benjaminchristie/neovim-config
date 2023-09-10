@@ -165,7 +165,9 @@ local modules = {
                 })
             })
         end,
-        event = { "InsertEnter", "CmdlineEnter" }
+        -- event = { "BufReadPre", "BufNewFile", "InsertEnter", "CmdLineEnter" }, -- this is what it should be
+        -- event = { "User MiniStarterOpened", "BufReadPre", "BufNewFile", "CmdLineEnter" }, -- this is what I am currently PRing
+        event = { "CursorMoved", "BufReadPre", "BufNewFile", "CmdLineEnter" }, -- this is a temporary work around
     },
 }
 return modules
