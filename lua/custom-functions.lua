@@ -180,15 +180,15 @@ vim.api.nvim_create_user_command("Ex", function()
     vim.api.nvim_win_set_height(0, HEIGHT)
 end, { desc = "open oil above" })
 
-vim.api.nvim_create_user_command("Rex", function()
-    local HEIGHT = 12
+vim.api.nvim_create_user_command("Lex", function()
+    local WIDTH = 45
     vim.cmd("vertical Oil")
     vim.wo.number = false
     vim.wo.relativenumber = false
-    vim.api.nvim_win_set_height(0, HEIGHT)
+    vim.api.nvim_win_set_width(0, WIDTH)
 end, { desc = "open oil above" })
 
-vim.api.nvim_create_user_command("Lex", function()
+vim.api.nvim_create_user_command("Rex", function()
     local WIDTH = 45
     vim.o.splitright = false
     vim.cmd("vertical Oil")

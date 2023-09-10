@@ -25,7 +25,7 @@ local modules = {
     },
     {
         'hrsh7th/nvim-cmp',
-        commit = '969c5a',
+        commit = '969c5a', -- for some reason, ghost test does not work for me after this commit
         dependencies = {
             'L3MON4D3/LuaSnip',
             'hrsh7th/cmp-buffer',
