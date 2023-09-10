@@ -84,9 +84,9 @@ local modules = {
             return require("mini.starter").setup(starter_opts)
         end,
         lazy = false,
-        -- keys = {
-        --     { '<A-s>', function() return require("mini.starter").open() end },
-        -- }
+        keys = {
+            { '<A-s>', function() return require("mini.starter").open() end },
+        }
     },
     {
         'benjaminchristie/nvim-colorizer.lua',

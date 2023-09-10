@@ -12,6 +12,7 @@ nnoremenu PopUp.Peek\ Value                 <Cmd>lua require("dapui").eval(nil, 
 anoremenu PopUp.-1-                         <Nop>
 anoremenu PopUp.Exit                        <Nop>
 ]])
+
 local function augroup(group) return vim.api.nvim_create_augroup(group, { clear = true }) end
 
 local function create_skeleton(ext)
@@ -40,11 +41,13 @@ vim.api.nvim_create_autocmd({ "BufEnter" }, {
         vim.cmd('setlocal formatoptions-=cro')
     end
 })
+
 vim.api.nvim_create_autocmd({ "FocusGained", "TermClose", "TermLeave" }, {
     group = augroup("checktime-autoread"),
     pattern = "*",
     command = "checktime"
 })
+
 vim.api.nvim_create_autocmd("TextYankPost", {
     group = augroup("highlight-yank"),
     callback = function()
@@ -58,6 +61,25 @@ vim.api.nvim_create_autocmd({ "FileType" }, {
     callback = function()
         vim.wo[0][0].number = false
         vim.wo[0][0].relativenumber = false
+    end
+})
+
+vim.api.nvim_create_autocmd({"FileType"}, {
+    pattern = {"oil"},
+    group = augroup("oil-ft-detection-and-numbering-on-exit"),
+    callback = function ()
+        local bufnr = vim.fn.bufnr()
+        vim.api.nvim_create_autocmd({"BufHidden"}, {
+            buffer = bufnr,
+            -- NOTE: FileType is triggered AFTER BufHidden per 
+            -- https://github.com/lervag/dotvim/blob/
+            -- 3aa56d621423540bfa26b330182b3e97ed4ee5e8/personal/plugin/log-autocmds.vim
+            callback = function()
+                vim.wo[0][0].number = true
+                vim.wo[0][0].relativenumber = true
+                return true -- returning true deletes the autocmd
+            end
+        })
     end
 })
 
