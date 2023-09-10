@@ -91,10 +91,10 @@ local function get_harpoon_idx()
     local harpoon_idx = harpoon.get_current_index()
     if harpoon_idx ~= nil then
         local tb = {
-            "%#WinBarHarpoon#",
+            " %#WinBarHarpoon#",
             "🡕  ",
             harpoon_idx,
-            " "
+            ""
         }
         return table.concat(tb, "")
     else

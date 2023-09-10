@@ -71,6 +71,13 @@ local modules = {
                 },
                 footer = "",
             }
+
+            local buf_keymap = function(key, cmd)
+                vim.keymap.set('n', key, ('<Cmd>lua %s<CR>'):format(cmd),
+                    { buffer = vim.fn.bufnr(), nowait = true, silent = true })
+            end
+            buf_keymap('<S-Tab>', [[require("mini.starter").update_current_item('prev')]])
+            buf_keymap('<Tab>', [[require("mini.starter").update_current_item('next')]])
             return require("mini.starter").setup(starter_opts)
         end,
         lazy = false,
