@@ -43,7 +43,7 @@ require("lazy").setup(
             cmd = "diffview.nvim",
         },
         dev = {
-            path = vim.fn.stdpath("config") .. "/testing",
+            path = vim.fn.stdpath("config") .. "/.testing",
         },
         checker = { enabled = false }, -- automatically check for plugin updates
         performance = {
