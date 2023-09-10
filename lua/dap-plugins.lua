@@ -82,21 +82,19 @@ local modules = {
                 cppdbg = {
                     id = 'cppdbg',
                     type = 'executable',
-                    command = os.getenv("HOME") .. '/.config/nvim/bin/vscode-cpptools/OpenDebugAD7'
+                    command = vim.fn.stdpath("config") .. '/bin/vscode-cpptools/OpenDebugAD7'
                 },
                 local_lua = {
                     id = 'lldbg',
                     type = "executable",
                     command = "node",
                     args = {
-                        os.getenv("HOME") ..
-                        "/.local/share/nvim/plugged/local-lua-debugger-vscode/extension/debugAdapter.js"
+                        vim.fn.stdpath("data") .. "/lazy/local-lua-debugger-vscode/extension/debugAdapter.js"
                     },
                     enrich_config = function(config, on_config)
                         if not config["extensionPath"] then
                             local c = vim.deepcopy(config)
-                            c.extensionPath = os.getenv("HOME") ..
-                                "/.local/share/nvim/plugged/local-lua-debugger-vscode/"
+                            c.extensionPath = vim.fn.stdpath("data") .. "/lazy/local-lua-debugger-vscode/"
                             on_config(c)
                         else
                             on_config(config)
@@ -118,7 +116,7 @@ local modules = {
                     else
                         cb({
                             type = 'executable',
-                            command = '/home/benjamin/.config/nvim/bin/virtualenvs/debugpy/bin/python',
+                            command = vim.fn.stdpath("config") .. '/bin/virtualenvs/debugpy/bin/python',
                             args = { '-m', 'debugpy.adapter' },
                             options = {
                                 source_filetype = 'python',
@@ -127,7 +125,7 @@ local modules = {
                     end
                 end
             }
-            require('dap-python').setup('/home/benjamin/.config/nvim/bin/virtualenvs/debugpy/bin/python')
+            require('dap-python').setup(vim.fn.stdpath("config") .. '/bin/virtualenvs/debugpy/bin/python')
             require('dap-go').setup()
             require("nvim-dap-virtual-text").setup({
                 enabled = false,
@@ -183,6 +181,7 @@ local modules = {
             end
         end,
         event = "VeryLazy",
+        cmd = "DapVirtualTextEnable",
         keys = {
             { "<A-d><A-v>", ":DapVirtualTextEnable<CR>" },
             { "<A-d><A-r>", function() return require("dap").restart() end },
