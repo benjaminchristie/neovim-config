@@ -38,8 +38,8 @@ autocmd({ "BufEnter" }, {
     group = augroup("FormatGroup"),
     pattern = "*",
     callback = function()
-        vim.cmd('set formatoptions-=cro')
-        vim.cmd('setlocal formatoptions-=cro')
+        vim.opt.formatoptions:remove({ 'c', 'r', 'o' })
+        vim.opt_local.formatoptions:remove({ 'c', 'r', 'o' })
         if vim.o.filetype ~= "oil" and vim.o.filetype ~= "starter" and vim.o.filetype ~= "lazy" then
             vim.wo[0][0].number = true
             vim.wo[0][0].relativenumber = true
