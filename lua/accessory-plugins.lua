@@ -141,17 +141,37 @@ local modules = {
             { "<A-j>", function() return require("harpoon.ui").nav_next() end },
         }
     },
-    { 'itchyny/vim-qfedit',     lazy = false },
-    { 'kylechui/nvim-surround', lazy = false },
-    { 'tpope/vim-commentary',   event = "BufEnter" },
-    { 'tpope/vim-dispatch',     event = "BufEnter" },
-    { 'tpope/vim-eunuch',       event = "BufEnter" },
+    { 'itchyny/vim-qfedit', lazy = false },
     {
-        'vladdoster/remember.nvim', event = "BufEnter"
+        'kylechui/nvim-surround',
+        config = function()
+            require("nvim-surround").setup()
+        end,
+        event = { "BufReadPre", "BufNewFile" },
+    },
+    {
+        'tpope/vim-commentary',
+        event = { "BufReadPre", "BufNewFile" },
+    },
+    {
+        'tpope/vim-dispatch',
+        event = { "BufReadPre", "BufNewFile" },
+    },
+    {
+        'tpope/vim-eunuch',
+        event = { "BufReadPre", "BufNewFile" },
+    },
+    {
+        'vladdoster/remember.nvim',
+        lazy = false,
+        config = function()
+            require("remember").setup({
+                open_folds = true
+            })
+        end
     },
     {
         'dstein64/vim-startuptime',
-        lazy = true,
         enabled = false
     },
     {
@@ -165,12 +185,12 @@ local modules = {
     {
         'michaelb/sniprun',
         build = "sh install.sh",
-        event = "VeryLazy",
         cmd = "SnipRun"
     },
     {
         't-troebst/perfanno.nvim',
         config = function() require("perfanno-init") end,
+        enabled = false,
     },
     {
         'tzachar/local-highlight.nvim',
@@ -179,7 +199,7 @@ local modules = {
             hlgroup = 'LocalHighlight',
             cw_hlgroup = nil,
         },
-        lazy = false,
+        event = { "BufReadPre", "BufNewFile" },
         dependencies = { "folke/tokyonight.nvim" }
     },
     -- personal plugins:
@@ -189,7 +209,7 @@ local modules = {
             'nvim-treesitter/nvim-treesitter',
             'ThePrimeagen/harpoon',
         },
-        config = function ()
+        config = function()
             require("statuswinbar").setup()
         end,
         dir = "statuswinbar",
@@ -200,6 +220,14 @@ local modules = {
         name = "make-flow",
         dir = "make-flow",
         ft = "markdown",
+    },
+    {
+        name = "custom-functions",
+        config = function()
+            require("custom-functions")
+        end,
+        dir = "custom-functions",
+        event = { "BufReadPre", "BufNewFile" },
     }
 
 }

@@ -67,13 +67,6 @@ vim.keymap.set('n', '<C-_>', function()
     cursor_pos[2] = cursor_pos[2] + offset
     vim.api.nvim_win_set_cursor(0, cursor_pos)
 end, { desc = "toggle comment while preserving place on line" })
--- git stuff
-vim.keymap.set('n', 'gR', ':Git rebase --interactive -i HEAD~')
-vim.keymap.set('n', 'gC', ':Git rebase --continue<CR>')
-vim.keymap.set('n', 'gP', ':Git checkout --patch <branch> <filename>') --- TODO: make this better
-vim.keymap.set('n', 'dl', ':diffget //3<CR>')
-vim.keymap.set('n', 'dh', ':diffget //2<CR>')
-vim.keymap.set('n', 'gD', ':Gvdiffsplit!<CR>')
 
 
 -- cd to current working file

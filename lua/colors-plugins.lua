@@ -151,7 +151,8 @@ local modules = {
     },
     {
         'lukas-reineke/indent-blankline.nvim',
-        init = function()
+        event = { "BufReadPre", "BufNewFile" },
+        config = function()
             require("ibl").setup({
                 scope = {
                     enabled = true,

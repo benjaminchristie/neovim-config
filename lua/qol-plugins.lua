@@ -29,7 +29,7 @@ local modules = {
             },
             highlight_for_count = true,
         },
-        lazy = false
+        event = { "BufReadPre", "BufNewFile" },
     },
     {
         'windwp/nvim-autopairs',
@@ -130,7 +130,7 @@ local modules = {
                 Rule("\\begin{align*}", "\\end{align*", "markdown"),
             })
         end,
-        lazy = false,
+        event = { "BufReadPre", "BufNewFile" },
     },
     {
         'windwp/nvim-ts-autotag',
@@ -174,7 +174,7 @@ local modules = {
         keys = {
             { '<C-p><C-p>',
                                 function() return require("fzf-lua").files({
-                        cmd = "find -type f | rg -v '.git' | rg -v '.cache' | rg -v 'bin/' | rg -v 'logs/' " }) end },
+                        cmd = "find -type f | rg -v '.git/' | rg -v '.cache' | rg -v 'bin/' | rg -v 'logs/' " }) end },
             { '<C-p><C-f>', function() return require("fzf-lua").live_grep() end },
             { '#',          function() return require("fzf-lua").grep_cword() end },
             { '<C-p><C-d>', function() return require("fzf-lua").lsp_document_symbols() end },
@@ -242,7 +242,7 @@ local modules = {
     },
     {
         'akinsho/toggleterm.nvim',
-        init = function()
+        config = function()
             require("toggleterm").setup {
                 size = 40,
                 open_mapping = [[<A-t>]],
@@ -266,10 +266,14 @@ local modules = {
             vim.keymap.set('n', [[<A-y>]], function() pyterm:toggle() end)
             vim.keymap.set('t', [[<A-y>]], function() pyterm:toggle() end)
         end,
+        keys = {
+            {"<A-t>"},
+            {"<A-y>"},
+        }
     },
     {
         'chrisgrieser/nvim-early-retirement',
-        lazy = false,
+        event = { "BufReadPre", "BufNewFile" },
         opts = {
             retirementAgeMins = 10,
             ignoreVisibileBufs = false,
