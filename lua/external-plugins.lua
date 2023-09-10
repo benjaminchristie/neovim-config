@@ -1,4 +1,4 @@
-local modules = {
+M = {
     require("external/pyright"),
     require("external/lldb-vscode"),
     require("external/texlab"),
@@ -9,4 +9,4 @@ local modules = {
     require("external/marksman"),
     require("external/lua-ls"),
 }
-return modules
+return M

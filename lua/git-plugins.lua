@@ -1,6 +1,6 @@
-local modules = {
+M = {
     require("git/diffview"),
     require("git/fugitive"),
     require("git/gitsigns"),
 }
-return modules
+return M

@@ -1,10 +1,9 @@
-local modules = {
+M = {
     -- personal plugins:
     require("accessory/perfanno"),
     require("accessory/qfedit"),
     require("accessory/csgithub"),
     require("accessory/remember"),
-    require("accessory/localhighlight"),
     require("accessory/starter"),
     require("accessory/harpoon"),
     require("accessory/surround"),
@@ -53,4 +52,4 @@ local modules = {
 
     }
 }
-return modules
+return M

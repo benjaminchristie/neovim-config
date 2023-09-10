@@ -1,4 +1,4 @@
-local modules = {
+M = {
     require("dap/dap-persistent"),
     require("dap/dap-ui"),
     require("dap/dap-go"),
@@ -6,4 +6,4 @@ local modules = {
     require("dap/dap-python"),
     require("dap/dap-virt"),
 }
-return modules
+return M

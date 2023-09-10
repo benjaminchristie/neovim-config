@@ -3,7 +3,6 @@ M = {
     require("qol/autotag"),
     require("qol/fundo"),
     require("qol/fzf"),
-    require("qol/highlight-undo"),
     require("qol/icons"),
     require("qol/oil"),
     require("qol/promise-async"),

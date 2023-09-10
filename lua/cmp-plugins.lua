@@ -1,4 +1,4 @@
-local modules = {
+M = {
     require("cmp/friendly-snippets"),
     require("cmp/cmp-path"),
     require("cmp/cmp-git"),
@@ -9,4 +9,4 @@ local modules = {
     require("cmp/luasnip"),
     require("cmp/cmp-nvim-lsp"),
 }
-return modules
+return M
