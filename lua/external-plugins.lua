@@ -1,7 +1,7 @@
 local modules = {
     -- externally managed plugins
     {
-        'junegunn/fzf', build = "./install --all --no-fish", enabled = true, pin = true,
+        'junegunn/fzf', build = "./install --all --no-fish", enabled = true, pin = false,
     },
     {
         'LuaLS/lua-language-server',
@@ -22,7 +22,7 @@ local modules = {
         enabled = function()
             return vim.fn.executable("npm")
         end,
-        pin = true,
+        pin = false,
         build = "npm install && npm run build",
     },
     {
@@ -30,7 +30,7 @@ local modules = {
         enabled = function()
             return vim.fn.executable("pnpm") and vim.fn.executable("npm")
         end,
-        pin = true,
+        pin = false,
         build = table.concat({
                 "pnpm install",
                 "pnpm compile",

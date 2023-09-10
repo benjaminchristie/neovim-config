@@ -11,7 +11,7 @@
   "csgithub.nvim": { "branch": "master", "commit": "4ac560eee90d01e48f0a6c26fe4ac6bdce09f0b3" },
   "diffview.nvim": { "branch": "main", "commit": "7e5a85c186027cab1e825d018f07c350177077fc" },
   "fidget.nvim": { "branch": "main", "commit": "0ba1e16d07627532b6cae915cc992ecac249fb97" },
-  "fzf": { "branch": "master", "commit": "0f50dc848e58b47408713c2c31f2be73287c030a" },
+  "fzf": { "branch": "master", "commit": "dc97d4849156f555ebdcf9f1703a5d3594468120" },
   "fzf-lua": { "branch": "main", "commit": "ff6839852cef39ca0b617be341747948638142a2" },
   "gitsigns.nvim": { "branch": "main", "commit": "fef5d90953f0a730483b44745fae5938ba8227f8" },
   "godbolt.nvim": { "branch": "main", "commit": "74c32eaa520987d195a2594a6efaab61cf9072c8" },
