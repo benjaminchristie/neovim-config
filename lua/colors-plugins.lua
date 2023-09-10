@@ -147,7 +147,8 @@ local modules = {
             vim.api.nvim_set_var("line_number_interval#use_custom", 1)
             vim.g.line_number_interval_enable_at_startup = 1
         end,
-        lazy = false
+        lazy = false,
+        enabled = false,
     },
     {
         'lukas-reineke/indent-blankline.nvim',

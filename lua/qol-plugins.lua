@@ -94,13 +94,6 @@ local modules = {
             })
             -- python
             npairs.add_rules({
-                Rule("):", "return", "python")
-                    :end_wise(function(opts)
-                        return string.match(opts.line, "^%s*def %.%*$")
-                    end),
-                Rule("if __name__", " == \"__main__\":", "python")
-                    :with_cr(false)
-                    :set_end_pair_length(0),
                 Rule("from argparse ", "", "python")
                     :with_cr(false)
                     :set_end_pair_length(0)

@@ -5,7 +5,39 @@ local modules = {
     },
     {
         'L3MON4D3/LuaSnip',
-        event = "VeryLazy"
+        event = "VeryLazy",
+        dependencies = {
+            "rafamadriz/friendly-snippets",
+            config = function()
+                require("luasnip.loaders.from_vscode").lazy_load()
+            end,
+        },
+        opts = {
+            history = true,
+            delete_check_events = "TextChanged",
+        },
+        keys = {
+            {
+                "<tab>",
+                function()
+                    return require("luasnip").jumpable(1) and "<Plug>luasnip-jump-next" or "<tab>"
+                end,
+                expr = true,
+                silent = true,
+                mode = "i",
+            },
+            {
+                "<s-tab>",
+                function()
+                    return require("luasnip").jumpable(-1) and "<Plug>luasnip-jump-prev" or "<s-tab>"
+                end,
+                expr = true,
+                silent = true,
+                mode = "i",
+            },
+            { "<tab>",   function() require("luasnip").jump(1) end,  mode = { "s" } },
+            { "<s-tab>", function() require("luasnip").jump(-1) end, mode = { "s" } },
+        },
     },
     {
         'hrsh7th/cmp-buffer',
@@ -14,6 +46,10 @@ local modules = {
     {
         'hrsh7th/cmp-cmdline',
         event = "VeryLazy"
+    },
+    {
+        'saadparwaiz1/cmp_luasnip',
+        event = "VeryLazy",
     },
     {
         'petertriho/cmp-git',
@@ -30,6 +66,7 @@ local modules = {
             'L3MON4D3/LuaSnip',
             'hrsh7th/cmp-buffer',
             'hrsh7th/cmp-cmdline',
+            'saadparwaiz1/cmp_luasnip',
             'petertriho/cmp-git',
             'hrsh7th/cmp-path',
             'hrsh7th/cmp-nvim-lsp',
@@ -77,8 +114,8 @@ local modules = {
                     end, { "i", "s" }),
                 }),
                 sources = cmp.config.sources({
-                    { name = 'nvim_lsp' },
                     { name = 'luasnip' }, -- For luasnip users.
+                    { name = 'nvim_lsp' },
                     { name = 'path' },
                 }, {
                     { name = 'buffer' },

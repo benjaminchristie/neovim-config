@@ -9,6 +9,27 @@ local modules = {
         },
         config = function()
             require("nvim-treesitter.configs").setup({
+                ensure_installed = {
+                    "bash",
+                    "c",
+                    "html",
+                    "javascript",
+                    "jsdoc",
+                    "json",
+                    "lua",
+                    "luadoc",
+                    "luap",
+                    "markdown",
+                    "markdown_inline",
+                    "python",
+                    "query",
+                    "regex",
+                    "tsx",
+                    "typescript",
+                    "vim",
+                    "vimdoc",
+                    "yaml",
+                },
                 auto_install = true,
                 highlight = {
                     enable = true,
@@ -359,8 +380,8 @@ local modules = {
         'VidocqH/lsp-lens.nvim',
         opts = {
             enable = false,
-            include_declaration = false,     -- Reference include declaration
-            sections = {                     -- Enable / Disable specific request
+            include_declaration = false, -- Reference include declaration
+            sections = {                 -- Enable / Disable specific request
                 definition = true,
                 references = true,
                 implements = false,

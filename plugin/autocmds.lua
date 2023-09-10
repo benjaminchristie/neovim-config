@@ -12,26 +12,30 @@ nnoremenu PopUp.Peek\ Value                 <Cmd>lua require("dapui").eval(nil, 
 anoremenu PopUp.-1-                         <Nop>
 anoremenu PopUp.Exit                        <Nop>
 ]])
-vim.api.nvim_create_augroup("FormatGroup", { clear = true })
+local function augroup(group) return vim.api.nvim_create_augroup(group, {clear = true}) end
 vim.api.nvim_create_autocmd({ "BufEnter" }, {
-    group = "FormatGroup",
+    group = augroup("FormatGroup"),
     pattern = "*",
     callback = function()
         vim.cmd('set formatoptions-=cro')
         vim.cmd('setlocal formatoptions-=cro')
     end
 })
-vim.api.nvim_create_augroup("LaunchEnterGroup", { clear = true })
 vim.api.nvim_create_autocmd({ "BufEnter" }, {
-    group = "LaunchEnterGroup",
+    group = augroup("LaunchEnterGroup"),
     pattern = { "*.launch", ".urdf", "*.xacro", "*.xml" },
     callback = function()
         vim.opt_local.filetype = "html"
     end
 })
-vim.api.nvim_create_augroup("checktime-autoread", { clear = true })
-vim.api.nvim_create_autocmd({ "FocusGained" }, {
+vim.api.nvim_create_autocmd({ "FocusGained", "TermClose", "TermLeave" }, {
+    group = augroup("checktime-autoread"),
     pattern = "*",
-    group = "checktime-autoread",
     command = "checktime"
+})
+vim.api.nvim_create_autocmd("TextYankPost", {
+  group = augroup("highlight-yank"),
+  callback = function()
+    vim.highlight.on_yank({higroup = "HighlightUndo"})
+  end,
 })
