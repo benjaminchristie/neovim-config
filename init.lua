@@ -45,20 +45,20 @@ require("lazy").setup(
         dev = {
             path = vim.fn.stdpath("config") .. "/testing",
         },
-        -- checker = { enabled = true }, -- automatically check for plugin updates
+        checker = { enabled = false }, -- automatically check for plugin updates
         performance = {
             rtp = {
-              -- disable some rtp plugins
-              disabled_plugins = {
-                -- "gzip",
-                -- "matchit",
-                -- "matchparen",
-                "netrwPlugin",
-                -- "tarPlugin",
-                -- "tohtml",
-                "tutor",
-                -- "zipPlugin",
-              },
+                -- disable some rtp plugins
+                disabled_plugins = {
+                    -- "gzip",
+                    -- "matchit",
+                    -- "matchparen",
+                    "netrwPlugin",
+                    -- "tarPlugin",
+                    -- "tohtml",
+                    "tutor",
+                    -- "zipPlugin",
+                },
             },
         }
     }
