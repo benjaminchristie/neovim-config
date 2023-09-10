@@ -39,10 +39,30 @@ vim.api.nvim_create_autocmd("TextYankPost", {
     vim.highlight.on_yank({higroup = "HighlightUndo"})
   end,
 })
+
 vim.api.nvim_create_autocmd({ "FileType" }, {
     pattern = {"oil", "starter", "lazy" },
+    group = augroup("number-formatting"),
     callback = function()
         vim.o.number = false
         vim.o.relativenumber = false
     end
+})
+
+vim.api.nvim_create_autocmd({"BufNewFile"}, {
+    pattern = "*.c",
+    group = augroup("skeletons-c"),
+    command = "0r " .. vim.fn.stdpath("config") .. "/skeletons/skeleton.c"
+})
+
+vim.api.nvim_create_autocmd({"BufNewFile"}, {
+    pattern = "*.cpp",
+    group = augroup("skeletons-cpp"),
+    command = "0r " .. vim.fn.stdpath("config") .. "/skeletons/skeleton.cpp"
+})
+
+vim.api.nvim_create_autocmd({"BufNewFile"}, {
+    pattern = "*.py",
+    group = augroup("skeletons-py"),
+    command = "0r " .. vim.fn.stdpath("config") .. "/skeletons/skeleton.py"
 })

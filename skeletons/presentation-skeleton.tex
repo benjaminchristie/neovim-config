@@ -1,0 +1,79 @@
+\documentclass[10pt]{beamer}
+\usepackage{listings}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{mathabx}
+\usepackage{graphicx}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage[strings]{underscore}
+\usepackage{amsthm}
+\usepackage{amsfonts}
+\usepackage{xcolor}
+\usepackage{listings}
+\usepackage{graphicx}
+\usepackage{caption}
+\usepackage{xparse}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{pdfpages}
+\usepackage{bm}
+\usepackage{changepage}
+\usetheme{default}
+\usecolortheme{rose}
+\beamertemplatenavigationsymbolsempty
+\setbeamertemplate{footline}[page number]
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,      
+    urlcolor=cyan,
+    }
+
+\addtolength{\skip\footins}{2pc plus 5pt}
+
+\DeclareCaptionFormat{custom}{
+    \textbf{#1#2}\small #3
+}
+\captionsetup{format=custom, justification=centering}
+\newcommand{\code}[1]{\texttt{#1}}
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{1,1,1}
+\theoremstyle{definition}
+
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},   
+    commentstyle=\itshape\color{codegreen!60!white},
+    keywordstyle=\color{magenta!20!red},
+    numberstyle=\color{codegray},
+    stringstyle=\color{codepurple!20!blue},
+    basicstyle=\tiny,
+    breakatwhitespace=true,         
+    breaklines=true,                 
+    captionpos=t,                    
+    keepspaces=true,                 
+    numbers=none,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2, 
+    frame=single,
+}
+\lstdefinelanguage{none}{
+    identifierstyle=
+}
+
+\lstset{language=Python, style=mystyle}
+\lstMakeShortInline[columns=fixed, identifierstyle=\color{codepurple!20!blue}, basicstyle=\ttfamily]|
+\title{Presentation Skeleton}
+\begin{document}
+\begin{frame}
+    \frametitle{Week of \today}
+\end{frame}
+\end{document}

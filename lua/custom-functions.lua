@@ -125,9 +125,25 @@ function M.toggle_zen()
     end
 end
 
+function M.skeletons()
+   local skeleton_path = vim.fn.stdpath("config") .. "/skeletons/"
+   -- ensure fzf has started
+   pcall(require("fzf-lua").register_ui_select)
+   vim.ui.select(vim.fn.glob(skeleton_path .. "*", false, true), {
+       prompt = "Select skeleton file:",
+   }, function(filename)
+       vim.cmd("0r " .. filename)
+   end)
+end
+
+vim.api.nvim_create_user_command("Skeletons", M.skeletons, {
+    desc = "skeleton picker"
+})
+
 vim.api.nvim_create_user_command("ZenToggle", M.toggle_zen, {
     desc = "call toggle_zen function"
 })
+
 vim.api.nvim_create_user_command("MarkdownPreview", M.markdown_preview_function, {
     desc = "Markdown previewer with pandoc and live updating"
 })
@@ -186,3 +202,4 @@ vim.api.nvim_create_user_command("Rex", function()
     vim.api.nvim_win_set_width(0, WIDTH)
 end, { desc = "open oil to the left" })
 return M
+
