@@ -231,6 +231,7 @@ local modules = {
                 end
             }
         },
+        lazy = false,
         cmd = "Oil"
     },
     {

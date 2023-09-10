@@ -125,19 +125,6 @@ function M.toggle_zen()
     end
 end
 
-vim.api.nvim_create_autocmd({ "BufEnter" }, {
-    pattern = "*",
-    callback = function()
-        local res, ft = pcall(function() return vim.o.filetype end)
-        if res and not zen_enabled then
-            if ft ~= "oil" and ft ~= "starter" then
-                vim.o.number = true
-                vim.o.relativenumber = true
-            end
-        end
-    end
-})
-
 vim.api.nvim_create_user_command("ZenToggle", M.toggle_zen, {
     desc = "call toggle_zen function"
 })

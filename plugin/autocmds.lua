@@ -39,3 +39,10 @@ vim.api.nvim_create_autocmd("TextYankPost", {
     vim.highlight.on_yank({higroup = "HighlightUndo"})
   end,
 })
+vim.api.nvim_create_autocmd({ "FileType" }, {
+    pattern = {"oil", "starter", "lazy" },
+    callback = function()
+        vim.o.number = false
+        vim.o.relativenumber = false
+    end
+})

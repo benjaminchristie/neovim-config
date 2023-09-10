@@ -72,7 +72,7 @@ local function get_changed_hunks()
         end
         local tb = {
             "%#WinBarGit#",
-            "   ",
+            "  ",
             branch,
             "%#WinBarGitAdded#",
             " +",
