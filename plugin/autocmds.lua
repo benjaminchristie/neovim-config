@@ -13,6 +13,15 @@ anoremenu PopUp.-1-                         <Nop>
 anoremenu PopUp.Exit                        <Nop>
 ]])
 local function augroup(group) return vim.api.nvim_create_augroup(group, {clear = true}) end
+
+local function create_skeleton(ext)
+    return vim.api.nvim_create_autocmd({"BufNewFile"}, {
+        pattern = "*." .. ext,
+        group = augroup("skeletons-" .. ext),
+        command = "0r " .. vim.fn.stdpath("config") .. "/skeletons/skeleton." .. ext
+    })
+end
+
 vim.api.nvim_create_autocmd({ "BufEnter" }, {
     group = augroup("FormatGroup"),
     pattern = "*",
@@ -49,20 +58,7 @@ vim.api.nvim_create_autocmd({ "FileType" }, {
     end
 })
 
-vim.api.nvim_create_autocmd({"BufNewFile"}, {
-    pattern = "*.c",
-    group = augroup("skeletons-c"),
-    command = "0r " .. vim.fn.stdpath("config") .. "/skeletons/skeleton.c"
-})
-
-vim.api.nvim_create_autocmd({"BufNewFile"}, {
-    pattern = "*.cpp",
-    group = augroup("skeletons-cpp"),
-    command = "0r " .. vim.fn.stdpath("config") .. "/skeletons/skeleton.cpp"
-})
-
-vim.api.nvim_create_autocmd({"BufNewFile"}, {
-    pattern = "*.py",
-    group = augroup("skeletons-py"),
-    command = "0r " .. vim.fn.stdpath("config") .. "/skeletons/skeleton.py"
-})
+create_skeleton("c")
+create_skeleton("cpp")
+create_skeleton("py")
+create_skeleton("sh")
