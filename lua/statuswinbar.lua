@@ -47,7 +47,7 @@ local function get_clients()
         return ""
     else
         local tb = {
-            "%#WinBarLSP#",
+            " %#WinBarLSP#",
             clients[1]["name"],
         }
         return table.concat(tb, "")
@@ -72,7 +72,7 @@ local function get_changed_hunks()
         end
         local tb = {
             "%#WinBarGit#",
-            "  ",
+            "   ",
             branch,
             "%#WinBarGitAdded#",
             " +",
@@ -119,12 +119,12 @@ local function winbarstring()
     end
     local str = nil
     if vim.o.diff then
-        str = string.format("%s [%s] %s", path, vim.fn.bufnr(), get_changed_hunks())
+        str = string.format("%s[%s]%s", path, vim.fn.bufnr(), get_changed_hunks())
         if M.in_diffview_nvim then
             return nil -- test for diffview
         end
     else
-        str = string.format("%s %s %s %s", path, get_harpoon_idx(), get_changed_hunks(), get_clients())
+        str = string.format("%s%s%s%s", path, get_harpoon_idx(), get_changed_hunks(), get_clients())
     end
     return str
 end
@@ -203,6 +203,7 @@ function M.setup()
         vim.api.nvim_win_call(winnr, apply_winbar)
     end
     vim.api.nvim_create_augroup("StatusWinBar", { clear = true })
+    vim.api.nvim_create_augroup("StatusWinBarLine", { clear = true })
     vim.api.nvim_create_autocmd('User', {
         pattern = 'GitSignsUpdate',
         group = "StatusWinBar",
@@ -227,14 +228,14 @@ function M.setup()
         callback = apply_winbar
     })
     vim.api.nvim_create_autocmd({ "BufEnter", "CursorMoved" }, {
-        group = "StatusWinBar",
+        group = "StatusWinBarLine",
         pattern = "*",
         callback = function()
             vim.opt_local.statusline = "%!v:lua.MyFunc()"
         end
     })
     vim.api.nvim_create_autocmd({ "BufLeave" }, {
-        group = "StatusWinBar",
+        group = "StatusWinBarLine",
         pattern = "*",
         callback = function()
             vim.opt_local.statusline = string.format("[%s] - %s", vim.bo.filetype, vim.fn.bufnr())

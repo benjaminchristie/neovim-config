@@ -94,6 +94,7 @@ function M.toggle_zen()
     zen_enabled = not zen_enabled
     if zen_enabled then
         pcall(vim.api.nvim_del_augroup_by_name, "StatusWinBar")
+        pcall(vim.api.nvim_del_augroup_by_name, "StatusWinBarLine")
         for _, winnr in ipairs(vim.api.nvim_list_wins()) do
             vim.api.nvim_win_call(winnr, function()
                 vim.o.cmdheight = 0
