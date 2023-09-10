@@ -13,10 +13,11 @@ anoremenu PopUp.-1-                         <Nop>
 anoremenu PopUp.Exit                        <Nop>
 ]])
 
-local function augroup(group) return vim.api.nvim_create_augroup(group, { clear = true }) end
+local augroup = require("custom-utils").augroup
+local autocmd = vim.api.nvim_create_autocmd
 
 local function create_skeleton(ext)
-    return vim.api.nvim_create_autocmd({ "BufNewFile" }, {
+    return autocmd({ "BufNewFile" }, {
         pattern = "*." .. ext,
         group = augroup("skeletons-" .. ext),
         command = "0r " .. vim.fn.stdpath("config") .. "/skeletons/skeleton." .. ext
@@ -24,7 +25,7 @@ local function create_skeleton(ext)
 end
 
 local function filetype_detection(pattern, desired_filetype)
-    return vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
+    return autocmd({ "BufRead", "BufNewFile" }, {
         group = augroup("filetype-detection-for-" .. desired_filetype),
         pattern = pattern,
         callback = function()
@@ -33,7 +34,7 @@ local function filetype_detection(pattern, desired_filetype)
     })
 end
 
-vim.api.nvim_create_autocmd({ "BufEnter" }, {
+autocmd({ "BufEnter" }, {
     group = augroup("FormatGroup"),
     pattern = "*",
     callback = function()
@@ -46,20 +47,20 @@ vim.api.nvim_create_autocmd({ "BufEnter" }, {
     end
 })
 
-vim.api.nvim_create_autocmd({ "FocusGained", "TermClose", "TermLeave" }, {
+autocmd({ "FocusGained", "TermClose", "TermLeave" }, {
     group = augroup("checktime-autoread"),
     pattern = "*",
     command = "checktime"
 })
 
-vim.api.nvim_create_autocmd("TextYankPost", {
+autocmd("TextYankPost", {
     group = augroup("highlight-yank"),
     callback = function()
         vim.highlight.on_yank({ higroup = "HighlightUndo" })
     end,
 })
 
-vim.api.nvim_create_autocmd({ "FileType" }, {
+autocmd({ "FileType" }, {
     pattern = { "oil", "starter", "lazy" },
     group = augroup("number-formatting"),
     callback = function()
@@ -67,26 +68,6 @@ vim.api.nvim_create_autocmd({ "FileType" }, {
         vim.wo[0][0].relativenumber = false
     end
 })
-
--- vim.api.nvim_create_autocmd({"FileType"}, {
---     pattern = {"oil"},
---     group = augroup("oil-ft-detection-and-numbering-on-exit"),
---     callback = function ()
---         local bufnr = vim.fn.bufnr()
---         vim.api.nvim_create_autocmd({"BufLeave"}, {
---             buffer = bufnr,
---             -- NOTE: FileType is triggered AFTER BufHidden per
---             -- https://github.com/lervag/dotvim/blob/
---             -- 3aa56d621423540bfa26b330182b3e97ed4ee5e8/personal/plugin/log-autocmds.vim
---             callback = function()
---                 -- vim.wo[0][0].number = true
---                 -- vim.wo[0][0].relativenumber = true
---                 vim.wo[0][0].number = true
---                 vim.wo[0][0].relativenumber = true
---             end
---         })
---     end
--- })
 
 filetype_detection({ "*.launch", "*.urdf", "*.xacro", "*.xml" }, "html")
 filetype_detection({ "*.gitignore" }, "gitignore")

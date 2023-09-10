@@ -126,14 +126,93 @@ function M.toggle_zen()
 end
 
 function M.skeletons()
-   local skeleton_path = vim.fn.stdpath("config") .. "/skeletons/"
-   -- ensure fzf has started
-   pcall(require("fzf-lua").register_ui_select)
-   vim.ui.select(vim.fn.glob(skeleton_path .. "*", false, true), {
-       prompt = "Select skeleton file:",
-   }, function(filename)
-       vim.cmd("0r " .. filename)
-   end)
+    local skeleton_path = vim.fn.stdpath("config") .. "/skeletons/"
+    -- ensure fzf has started
+    pcall(require("fzf-lua").register_ui_select)
+    vim.ui.select(vim.fn.glob(skeleton_path .. "*", false, true), {
+        prompt = "Select skeleton file:",
+    }, function(filename)
+        vim.cmd("0r " .. filename)
+    end)
+end
+
+local timers = {}
+local search_timer_timeout = 20000
+local search_timer_iter = 50
+local bg_highlight = "#3E68D7"
+local bg_highlight_vals = { '#3B62C8', '#395CBA', '#3655AB', '#344F9C', '#31498E', '#2F437F', '#2C3D71', '#2A3762',
+    '#273053', '#252A45', '#222436' }
+function M.timed_color_change()
+    for _, t in ipairs(timers) do
+        vim.fn.timer_stop(t)
+    end
+    timers = {}
+    local search_timer = vim.fn.timer_start(search_timer_timeout, function()
+        for i = 1, #bg_highlight_vals, 1 do
+            local timer = vim.fn.timer_start(i * search_timer_iter, function()
+                vim.api.nvim_set_hl(0, "IncSearch", { bg = bg_highlight_vals[i] })
+                vim.api.nvim_set_hl(0, "Search", { bg = bg_highlight_vals[i] })
+            end)
+            table.insert(timers, timer)
+        end
+        local timer = vim.fn.timer_start((#bg_highlight_vals + 1) * search_timer_iter + search_timer_iter, function()
+            vim.cmd("nohl")
+        end)
+        table.insert(timers, timer)
+    end)
+    table.insert(timers, search_timer)
+end
+
+-- decrements search, adds nice highlight to words on timeout
+function M.decrement_search()
+    vim.api.nvim_set_hl(0, "IncSearch", { bg = bg_highlight })
+    vim.api.nvim_set_hl(0, "Search", { bg = bg_highlight })
+    vim.fn.feedkeys('Nzz', "n")
+    M.timed_color_change()
+end
+
+-- increments search, adds nice highlight to words on timeout
+function M.increment_search()
+    vim.api.nvim_set_hl(0, "IncSearch", { bg = bg_highlight })
+    vim.api.nvim_set_hl(0, "Search", { bg = bg_highlight })
+    vim.fn.feedkeys('nzz', "n")
+    M.timed_color_change()
+end
+
+-- change directory to currently opened file
+function M.cd_to_cfile(noprint)
+    noprint = noprint or (noprint ~= nil)
+    local cwd = vim.fn.expand("%:p:h")
+    vim.api.nvim_set_current_dir(cwd)
+    if not noprint then
+        print("Changed cwd to " .. cwd)
+    end
+end
+
+-- find and replace all words that match the <cword>, while preserving cursor
+function M.find_and_replace_all_cword()
+    local word = vim.fn.expand("<cword>")
+    local line_num = vim.api.nvim_win_get_cursor(0)[1]
+    local change_to = vim.fn.input("Change " .. word .. " to : ")
+    vim.cmd(':%s/' .. word .. "/" .. change_to .. "/g")
+    vim.cmd(":" .. line_num)
+end
+
+-- comments a line, preserves the position of the cursor
+function M.comment_line_preserve_cursor()
+    local cursor_pos = vim.api.nvim_win_get_cursor(0)
+    local col_count_pre = vim.fn.strlen(vim.api.nvim_get_current_line())
+    vim.cmd("Commentary")
+    local col_count_post = vim.fn.strlen(vim.api.nvim_get_current_line())
+    local offset = col_count_post - col_count_pre
+    cursor_pos[2] = cursor_pos[2] + offset
+    vim.api.nvim_win_set_cursor(0, cursor_pos)
+end
+
+-- on_demand_autogroup
+function M.on_demand_autogroup()
+    vim.fn.feedkeys(
+        ":lua vim.api.nvim_create_autocmd({\"BufWrite\"}, {pattern=vim.api.nvim_buf_get_name(0), callback = function() <todo> end})")
 end
 
 vim.api.nvim_create_user_command("Skeletons", M.skeletons, {
@@ -147,7 +226,12 @@ vim.api.nvim_create_user_command("ZenToggle", M.toggle_zen, {
 vim.api.nvim_create_user_command("MarkdownPreview", M.markdown_preview_function, {
     desc = "Markdown previewer with pandoc and live updating"
 })
-vim.keymap.set("n", "<A-l>", M.lazy_load)
+
+vim.api.nvim_create_user_command("Build", M.build_func, { desc = "select build tool for dispatch, then call :Dispatch" })
+
+
+vim.api.nvim_create_user_command("Where", M.whereami, { desc = "highlight cursor position" })
+
 vim.api.nvim_create_user_command("LazyLoad", M.lazy_load, { desc = "attempt to lazy load ts and lsp" })
 vim.api.nvim_create_augroup("LazyLoadLargeFiles", { clear = true })
 vim.api.nvim_create_autocmd({ "BufReadPost" }, {
@@ -166,40 +250,4 @@ vim.api.nvim_create_autocmd({ "BufReadPost" }, {
     end
 })
 
-vim.api.nvim_create_user_command("Build", M.build_func, { desc = "select build tool for dispatch, then call :Dispatch" })
-
-
-vim.api.nvim_create_user_command("W", "w", { desc = "alias to :w" })
-vim.api.nvim_create_user_command("Q", "q", { desc = "alias to :q" })
-vim.api.nvim_create_user_command("TC", "tabclose", { desc = "alias to tabclose" })
-vim.api.nvim_create_user_command("TO", "tabclose", { desc = "alias to tabonly" })
-
-vim.api.nvim_create_user_command("Where", M.whereami, { desc = "highlight cursor position" })
-
-vim.api.nvim_create_user_command("Ex", function()
-    local HEIGHT = 12
-    vim.cmd("topleft Oil")
-    vim.wo.number = false
-    vim.wo.relativenumber = false
-    vim.api.nvim_win_set_height(0, HEIGHT)
-end, { desc = "open oil above" })
-
-vim.api.nvim_create_user_command("Lex", function()
-    local WIDTH = 45
-    vim.cmd("vertical Oil")
-    vim.wo.number = false
-    vim.wo.relativenumber = false
-    vim.api.nvim_win_set_width(0, WIDTH)
-end, { desc = "open oil above" })
-
-vim.api.nvim_create_user_command("Rex", function()
-    local WIDTH = 45
-    vim.o.splitright = false
-    vim.cmd("vertical Oil")
-    vim.o.splitright = true
-    vim.wo.number = false
-    vim.wo.relativenumber = false
-    vim.api.nvim_win_set_width(0, WIDTH)
-end, { desc = "open oil to the left" })
 return M
-

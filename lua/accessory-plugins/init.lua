@@ -41,7 +41,14 @@ M = {
         end,
         dir = "custom-keymaps",
         event = { "BufReadPre", "BufNewFile" },
-
+    },
+    {
+        name = "custom-functions",
+        config = function()
+            require("custom-functions")
+        end,
+        dir = "custom-functions",
+        event = { "BufReadPre", "BufNewFile" },
     }
 }
 return M
