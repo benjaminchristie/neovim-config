@@ -35,14 +35,6 @@ M = {
         ft = "markdown",
     },
     {
-        name = "custom-functions",
-        config = function()
-            require("custom-functions")
-        end,
-        dir = "custom-functions",
-        event = { "BufReadPre", "BufNewFile" },
-    },
-    {
         name = "custom-keymaps",
         config = function()
             require("custom-keymaps")

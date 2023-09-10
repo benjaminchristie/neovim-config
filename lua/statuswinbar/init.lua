@@ -32,14 +32,7 @@ local force_inactive_buftypes = {
     'toggleterm',
 }
 
-local function hasvalue(table, value)
-    for _, val in ipairs(table) do
-        if val == value then
-            return true
-        end
-    end
-    return false
-end
+local hasvalue = require("custom-utils").exists_in_table
 
 local function get_clients()
     local clients = vim.lsp.get_clients({ bufnr = 0 })

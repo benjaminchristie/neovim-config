@@ -39,6 +39,10 @@ vim.api.nvim_create_autocmd({ "BufEnter" }, {
     callback = function()
         vim.cmd('set formatoptions-=cro')
         vim.cmd('setlocal formatoptions-=cro')
+        if vim.o.filetype ~= "oil" and vim.o.filetype ~= "starter" and vim.o.filetype ~= "lazy" then
+            vim.wo[0][0].number = true
+            vim.wo[0][0].relativenumber = true
+        end
     end
 })
 
@@ -64,27 +68,28 @@ vim.api.nvim_create_autocmd({ "FileType" }, {
     end
 })
 
-vim.api.nvim_create_autocmd({"FileType"}, {
-    pattern = {"oil"},
-    group = augroup("oil-ft-detection-and-numbering-on-exit"),
-    callback = function ()
-        local bufnr = vim.fn.bufnr()
-        vim.api.nvim_create_autocmd({"BufHidden"}, {
-            buffer = bufnr,
-            -- NOTE: FileType is triggered AFTER BufHidden per 
-            -- https://github.com/lervag/dotvim/blob/
-            -- 3aa56d621423540bfa26b330182b3e97ed4ee5e8/personal/plugin/log-autocmds.vim
-            callback = function()
-                vim.wo[0][0].number = true
-                vim.wo[0][0].relativenumber = true
-                return true -- returning true deletes the autocmd
-            end
-        })
-    end
-})
+-- vim.api.nvim_create_autocmd({"FileType"}, {
+--     pattern = {"oil"},
+--     group = augroup("oil-ft-detection-and-numbering-on-exit"),
+--     callback = function ()
+--         local bufnr = vim.fn.bufnr()
+--         vim.api.nvim_create_autocmd({"BufLeave"}, {
+--             buffer = bufnr,
+--             -- NOTE: FileType is triggered AFTER BufHidden per
+--             -- https://github.com/lervag/dotvim/blob/
+--             -- 3aa56d621423540bfa26b330182b3e97ed4ee5e8/personal/plugin/log-autocmds.vim
+--             callback = function()
+--                 -- vim.wo[0][0].number = true
+--                 -- vim.wo[0][0].relativenumber = true
+--                 vim.wo[0][0].number = true
+--                 vim.wo[0][0].relativenumber = true
+--             end
+--         })
+--     end
+-- })
 
-filetype_detection({"*.launch", "*.urdf", "*.xacro", "*.xml"}, "html")
-filetype_detection({"*.gitignore"}, "gitignore")
+filetype_detection({ "*.launch", "*.urdf", "*.xacro", "*.xml" }, "html")
+filetype_detection({ "*.gitignore" }, "gitignore")
 
 create_skeleton("c")
 create_skeleton("cpp")
