@@ -1,3 +1,4 @@
+vim.loader.enable()
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then
     vim.fn.system({
@@ -17,9 +18,6 @@ local function table_insert(t1, t2)
     end
     return t1
 end
-
-require("options")
-
 
 local spec = {}
 
@@ -46,9 +44,3 @@ require("lazy").setup(
         }
     }
 )
-
-require("statuswinbar").setup()
-require("make-flow")
-require("config_functions")
-require("config_autocmds")
-require("config_keymaps")

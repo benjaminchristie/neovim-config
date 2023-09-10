@@ -182,5 +182,25 @@ local modules = {
         lazy = false,
         dependencies = { "folke/tokyonight.nvim" }
     },
+    -- personal plugins:
+    {
+        dependencies = {
+            'lewis6991/gitsigns.nvim',
+            'nvim-treesitter/nvim-treesitter',
+            'ThePrimeagen/harpoon',
+        },
+        config = function ()
+            require("statuswinbar").setup()
+        end,
+        dir = "statuswinbar",
+        name = "statuswinbar",
+        event = { "BufReadPre", "BufNewFile" },
+    },
+    {
+        name = "make-flow",
+        dir = "make-flow",
+        ft = "markdown",
+    }
+
 }
 return modules
