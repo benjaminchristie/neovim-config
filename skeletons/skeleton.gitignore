@@ -1,0 +1,9 @@
+**/compile_commands.json
+**/log/
+**/logs/
+**/log/
+**/logs
+**/*.tmp
+**/tmp
+**/*.bak
+**/*.back
