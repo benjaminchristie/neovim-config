@@ -22,6 +22,16 @@ local function create_skeleton(ext)
     })
 end
 
+local function filetype_detection(pattern, desired_filetype)
+    return vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
+        group = augroup("filetype-detection-for-" .. desired_filetype),
+        pattern = pattern,
+        callback = function()
+            vim.opt_local.filetype = desired_filetype
+        end,
+    })
+end
+
 vim.api.nvim_create_autocmd({ "BufEnter" }, {
     group = augroup("FormatGroup"),
     pattern = "*",
@@ -30,7 +40,6 @@ vim.api.nvim_create_autocmd({ "BufEnter" }, {
         vim.cmd('setlocal formatoptions-=cro')
     end
 })
-
 vim.api.nvim_create_autocmd({ "FocusGained", "TermClose", "TermLeave" }, {
     group = augroup("checktime-autoread"),
     pattern = "*",
@@ -51,6 +60,9 @@ vim.api.nvim_create_autocmd({ "FileType" }, {
         vim.wo[0][0].relativenumber = false
     end
 })
+
+filetype_detection({"*.launch", "*.urdf", "*.xacro", "*.xml"}, "html")
+filetype_detection({"*.gitignore"}, "gitignore")
 
 create_skeleton("c")
 create_skeleton("cpp")
