@@ -63,5 +63,6 @@ return {
 
     end,
     lazy = false,
+    dev = false,
     cmd = "Oil"
 }

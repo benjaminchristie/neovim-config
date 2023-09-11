@@ -265,5 +265,9 @@ return {
             }
         })
     end,
-    event = { "BufReadPre", "BufNewFile" },
+    event = {
+        "BufReadPre",
+        "BufNewFile"
+    },
+        -- "BufReadCmd", -- for pi_zip, pi_tar, etc.
 }

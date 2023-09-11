@@ -3,3 +3,4 @@ colors/
 spell/
 bin/
 testing/
+**/log
