@@ -1,5 +1,8 @@
 return {
     'ibhagwan/fzf-lua',
+    dependencies = {
+        'AckslD/swenv.nvim',
+    },
     config = function()
         local opts = {
             "telescope",
@@ -59,13 +62,14 @@ return {
                 }
             )
         end },
-        { '<C-p><C-q>',      function() return require("fzf-lua").blines() end },
+        { '<C-p><C-q>',      function() return require("fzf-lua").blines({ start = "cursor" }) end },
         { '<C-p><C-i>',      function() return require("fzf-lua").lsp_workspace_symbols() end },
         { '<C-p><C-l>',      function() return require("fzf-lua").commands() end },
         { '<C-p><C-k>',      function() return require("fzf-lua").keymaps() end },
         { '<C-p><C-g><C-f>', function() return require("fzf-lua").git_files() end },
         { '<C-p><C-g><C-b>', function() return require("fzf-lua").git_branches() end },
         { '<C-p><C-g><C-l>', function() return require("fzf-lua").git_commits() end },
+        { '<C-p><C-o>',      function() return require("fzf-lua").oldfiles() end },
         { '<C-p><C-y>',      function() return vim.cmd("PyenvActivate") end },
 
     }

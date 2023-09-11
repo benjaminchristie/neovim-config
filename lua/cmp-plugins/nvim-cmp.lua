@@ -1,6 +1,6 @@
 return {
     'hrsh7th/nvim-cmp',
-    commit = '969c5a',     -- for some reason, ghost test does not work for me after this commit
+    commit = '969c5a', -- for some reason, ghost test does not work for me after this commit
     dependencies = {
         'L3MON4D3/LuaSnip',
         'hrsh7th/cmp-buffer',
@@ -19,7 +19,7 @@ return {
             snippet = {
                 -- REQUIRED - you must specify a snippet engine
                 expand = function(args)
-                    require("luasnip").lsp_expand(args.body)     -- For `luasnip` users.
+                    require("luasnip").lsp_expand(args.body) -- For `luasnip` users.
                 end,
             },
             window = {
@@ -31,7 +31,9 @@ return {
                 },
             },
             mapping = cmp.mapping.preset.insert({
-                ['<CR>'] = cmp.mapping.confirm({ select = true }),     -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
+                -- Accept currently selected item. 
+                -- Set `select` to `false` to only confirm explicitly selected items.
+                ['<CR>'] = cmp.mapping.confirm({ select = true }),
                 ["<Tab>"] = cmp.mapping(function(fallback)
                     if cmp.visible() then
                         cmp.select_next_item()
@@ -52,7 +54,7 @@ return {
                 end, { "i", "s" }),
             }),
             sources = cmp.config.sources({
-                { name = 'luasnip' },     -- For luasnip users.
+                { name = 'luasnip' }, -- For luasnip users.
                 { name = 'nvim_lsp' },
                 { name = 'path' },
                 { name = 'buffer' },
@@ -99,7 +101,6 @@ return {
             })
         })
     end,
-    -- event = { "BufReadPre", "BufNewFile", "InsertEnter", "CmdLineEnter" }, -- this is what it should be
-    -- event = { "User MiniStarterOpened", "BufReadPre", "BufNewFile", "CmdLineEnter" }, -- this is what I am currently PRing
-    event = { "CursorMoved", "BufReadPre", "BufNewFile", "CmdLineEnter" },     -- this is a temporary work around
+    -- this is a temporary work around
+    event = { "CursorMoved", "BufReadPre", "BufNewFile", "CmdLineEnter" },
 }

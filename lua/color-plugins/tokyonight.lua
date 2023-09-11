@@ -18,6 +18,7 @@ return {
         local cursor_line_nr_colors = { '#7ac2ca', '#7cb4c6', '#7da8c3', '#7f9bdf', '#8093bc' }
         local conceal_colors = { colors.red, '#d2cb8a', '#e1af86', '#f09283', colors.green }
         vim.api.nvim_set_hl(0, 'SpellBad', { bg = "#ff2929" })
+        vim.api.nvim_set_hl(0, 'ColorColumn',{ link = "DiffText" })
         vim.api.nvim_set_hl(0, "CursorLine", { bg = colors.bg_float })
         vim.api.nvim_set_hl(0, "CursorLineNr", { fg = colors.orange })
         vim.api.nvim_set_hl(0, "LineNr", { fg = colors.fg_dark })
