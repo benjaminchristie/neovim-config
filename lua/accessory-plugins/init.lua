@@ -31,6 +31,7 @@ M = {
     },
     {
         name = "custom-keymaps",
+        dependencies = {"custom-functions"},
         config = function()
             require("custom-keymaps")
         end,

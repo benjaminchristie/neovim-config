@@ -164,19 +164,23 @@ function M.timed_color_change()
 end
 
 -- decrements search, adds nice highlight to words on timeout
-function M.decrement_search()
+function M.decrement_search(cb)
     vim.api.nvim_set_hl(0, "IncSearch", { bg = bg_highlight })
     vim.api.nvim_set_hl(0, "Search", { bg = bg_highlight })
     vim.fn.feedkeys('Nzz', "n")
-    M.timed_color_change()
+    if cb ~= nil then
+        cb()
+    end
 end
 
 -- increments search, adds nice highlight to words on timeout
-function M.increment_search()
+function M.increment_search(cb)
     vim.api.nvim_set_hl(0, "IncSearch", { bg = bg_highlight })
     vim.api.nvim_set_hl(0, "Search", { bg = bg_highlight })
     vim.fn.feedkeys('nzz', "n")
-    M.timed_color_change()
+    if cb ~= nil then
+        cb()
+    end
 end
 
 -- change directory to currently opened file
