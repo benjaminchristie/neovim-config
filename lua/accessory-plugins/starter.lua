@@ -1,7 +1,5 @@
 return {
     'benjaminchristie/mini.starter',
-    enabled = true,
-    dev = false,
     config = function()
         local function statustool()
             if not pcall(function() vim.cmd('tab G') end) then
@@ -77,6 +75,8 @@ return {
         return require("mini.starter").setup(starter_opts)
     end,
     lazy = false,
+    enabled = true,
+    dev = false,
     keys = {
         { '<A-s>', function() return require("mini.starter").open() end },
     }

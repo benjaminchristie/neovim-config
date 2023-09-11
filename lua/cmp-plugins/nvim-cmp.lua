@@ -102,5 +102,6 @@ return {
         })
     end,
     -- this is a temporary work around
+    -- event = { "BufReadPre", "BufNewFile", "CmdLineEnter" },
     event = { "CursorMoved", "BufReadPre", "BufNewFile", "CmdLineEnter" },
 }

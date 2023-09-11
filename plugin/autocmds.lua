@@ -60,6 +60,22 @@ autocmd("TextYankPost", {
     end,
 })
 
+autocmd("User", {
+    pattern = { "MiniStarterOpened" },
+    callback = function()
+        vim.api.nvim_buf_set_keymap(vim.fn.bufnr(), "n", "<tab>",
+            ('<Cmd>lua %s<CR>'):format([[require("mini.starter").update_current_item('next')]]),
+            {}
+        )
+        vim.api.nvim_buf_set_keymap(vim.fn.bufnr(), "n", '<s-tab>',
+            ('<Cmd>lua %s<CR>'):format([[require("mini.starter").update_current_item('prev')]]),
+            {}
+        )
+    end
+}
+)
+
+
 autocmd({ "FileType" }, {
     pattern = { "oil", "starter", "lazy" },
     group = augroup("number-formatting"),
