@@ -1,12 +1,13 @@
+M = {}
 ------- Define parameters -----------
-local function createWin()
+function M.createWin()
     local buf = vim.fn.bufadd("make-flow buffer")
     vim.fn.bufload(buf)
     vim.api.nvim_buf_set_option(buf, 'buftype', 'nofile')
     return buf
 end
 
-local function compile(path, command, bufnr, timeout)
+function M.compile(path, command, bufnr, timeout)
     if not vim.fn.bufexists(bufnr) then
         bufnr = CreateWin()
     end
@@ -58,18 +59,18 @@ local function compile(path, command, bufnr, timeout)
         })
 end
 
-local function killBuffer(bufnr)
+function M.killBuffer(bufnr)
     if vim.api.nvim_buf_is_loaded(bufnr) then
         vim.api.nvim_buf_delete(bufnr, { force = true, unload = false })
     end
 end
 
 --- default parameters ---
-local mk_timeout = 1000
-local function compileCallback(filename, command, timeout)
-    timeout = timeout or mk_timeout
-    local bufnr = createWin()
-    compile(filename,
+M.mk_timeout = 1000
+function M.compileCallback(filename, command, timeout)
+    timeout = timeout or M.mk_timeout
+    local bufnr = M.createWin()
+    M.compile(filename,
         command,
         bufnr,
         timeout
@@ -87,41 +88,42 @@ local function compileCallback(filename, command, timeout)
             border = "rounded"
         })
 end
-local function pandocCompile()
+function M.pandocCompile()
     local filename = vim.api.nvim_buf_get_name(0)
-    compileCallback(filename,
+    M.compileCallback(filename,
         { "pandoc", "-V", "geometry:margin=1in", filename, "-o", filename .. ".pdf" })
 end
-local function cppCompile()
+function M.cppCompile()
     local filename = vim.api.nvim_buf_get_name(0)
     local CXXFLAGS = { "-O3", "-g" }
-    compileCallback(filename, { "g++", filename
+    M.compileCallback(filename, { "g++", filename
     , table.concat(CXXFLAGS, " "), "-o", filename .. ".out" })
 end
-local function makeUpfile()
+function M.makeUpfile()
     local filename = vim.api.nvim_buf_get_name(0)
     local idx = #filename - string.find(string.reverse(filename), "/") + 1
     local lfn = string.sub(filename, 0, idx)
     -- compileCallback(filename, {"make", "auto", "--silent", "-C", lfn })
-    compileCallback(filename, { "make", "auto", "--silent", "-C", lfn })
+    M.compileCallback(filename, { "make", "auto", "--silent", "-C", lfn })
 end
 
-local function kill()
-    killBuffer(createWin())
+function M.kill()
+    M.killBuffer(M.createWin())
 end
-local function pythonReindent()
+function M.pythonReindent()
     local filename = vim.api.nvim_buf_get_name(0)
-    compileCallback(filename, { "reindent", filename })
+    M.compileCallback(filename, { "reindent", filename })
 end
 
 
 ------Begin parameters Section---------------------
-mk_timeout = 1000
+M.mk_timeout = 1000
 ------Begin Keymappings Section--------------------
 
-vim.keymap.set({ "n" }, "<C-l><C-p>", pandocCompile)
-vim.keymap.set({ "n" }, "<C-l><C-c>", cppCompile)
-vim.keymap.set({ "n" }, "<C-l><C-l>", makeUpfile)
-vim.keymap.set({ "n" }, "<C-l><C-r>", pythonReindent)
-vim.keymap.set({ "n" }, "<C-l><C-q>", kill)
+vim.keymap.set({ "n" }, "<C-l><C-p>", M.pandocCompile)
+vim.keymap.set({ "n" }, "<C-l><C-c>", M.cppCompile)
+vim.keymap.set({ "n" }, "<C-l><C-l>", M.makeUpfile)
+vim.keymap.set({ "n" }, "<C-l><C-r>", M.pythonReindent)
+vim.keymap.set({ "n" }, "<C-l><C-q>", M.kill)
 -- vim.keymap.set({"n"}, "<C-k><C-q>", killBuffer)
+return M

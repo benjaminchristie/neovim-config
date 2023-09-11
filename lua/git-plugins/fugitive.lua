@@ -1,6 +1,6 @@
 return {
     'tpope/vim-fugitive',
-    cmd = { "G", "Git", "Gvdiffsplit" },
+    cmd = { "G", "Git", "Gvdiffsplit", "Gread" },
     keys = {
         { 'gR', ':Git rebase --interactive -i HEAD~' },
         { 'gC', ':Git rebase --continue<CR>' },

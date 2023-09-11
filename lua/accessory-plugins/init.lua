@@ -30,11 +30,6 @@ M = {
         event = { "BufReadPre", "BufNewFile" },
     },
     {
-        name = "make-flow",
-        dir = "make-flow",
-        ft = "markdown",
-    },
-    {
         name = "custom-keymaps",
         config = function()
             require("custom-keymaps")

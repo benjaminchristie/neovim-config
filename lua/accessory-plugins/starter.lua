@@ -74,11 +74,6 @@ return {
             footer = "",
         }
 
-        local buf_keymap = require("custom-utils").buf_keymap
-
-        buf_keymap('<S-Tab>', [[require("mini.starter").update_current_item('prev')]])
-        buf_keymap('<Tab>', [[require("mini.starter").update_current_item('next')]])
-
         return require("mini.starter").setup(starter_opts)
     end,
     lazy = false,
