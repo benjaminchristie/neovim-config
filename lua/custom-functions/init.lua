@@ -90,6 +90,11 @@ function M.markdown_preview_function()
 end
 
 local zen_enabled = false
+
+function M.zen_enabled()
+    return zen_enabled
+end
+
 function M.toggle_zen()
     zen_enabled = not zen_enabled
     if zen_enabled then

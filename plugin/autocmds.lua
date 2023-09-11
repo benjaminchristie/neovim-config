@@ -41,8 +41,10 @@ autocmd({ "BufEnter" }, {
         vim.opt.formatoptions:remove({ 'c', 'r', 'o' })
         vim.opt_local.formatoptions:remove({ 'c', 'r', 'o' })
         if vim.o.filetype ~= "oil" and vim.o.filetype ~= "starter" and vim.o.filetype ~= "lazy" then
-            vim.wo[0][0].number = true
-            vim.wo[0][0].relativenumber = true
+            if not require("custom-functions").zen_enabled() then
+                vim.wo[0][0].number = true
+                vim.wo[0][0].relativenumber = true
+            end
         end
     end
 })
@@ -87,6 +89,7 @@ autocmd({ "FileType" }, {
 
 filetype_detection({ "*.launch", "*.urdf", "*.xacro", "*.xml" }, "html")
 filetype_detection({ "*.gitignore" }, "gitignore")
+filetype_detection({ "*.tex" }, "tex")
 
 create_skeleton("c")
 create_skeleton("cpp")
