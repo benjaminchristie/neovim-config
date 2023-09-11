@@ -4,7 +4,11 @@ local gitsigns = require("gitsigns")
 local parsers = require("nvim-treesitter.parsers")
 local ts_utils = require("nvim-treesitter.ts_utils")
 local harpoon = require("harpoon.mark")
-local force_inactive_filetypes = {
+local utils = require("custom-utils")
+local hasvalue = utils.exists_in_table
+local augroup = utils.augroup
+
+M.force_inactive_filetypes = {
     'NvimTree',
     'dap-repl',
     'dbui',
@@ -22,7 +26,7 @@ local force_inactive_filetypes = {
     'toggleterm',
 }
 
-local force_inactive_buftypes = {
+M.force_inactive_buftypes = {
     'harpoon',
     'harpoon-menu',
     'nofile',
@@ -31,8 +35,6 @@ local force_inactive_buftypes = {
     'terminal',
     'toggleterm',
 }
-
-local hasvalue = require("custom-utils").exists_in_table
 
 local function get_clients()
     local clients = vim.lsp.get_clients({ bufnr = 0 })
@@ -104,7 +106,7 @@ function M.out_diffview_hook()
     M.setup()
 end
 
-local function winbarstring()
+function M.winbarstring()
     local path = vim.fn.expand("%:f")
     local win_width = vim.api.nvim_win_get_width(0)
     if string.len(path) > win_width then
@@ -169,7 +171,7 @@ end
 function MyFunc()
     local x = string.format("[%s]", vim.bo.filetype)
     x = "%r" .. x .. " [%l/%L] "
-    if not (hasvalue(force_inactive_buftypes, vim.bo.buftype) or hasvalue(force_inactive_filetypes, vim.bo.filetype)) then
+    if not (hasvalue(M.force_inactive_buftypes, vim.bo.buftype) or hasvalue(M.force_inactive_filetypes, vim.bo.filetype)) then
         local status = trimmed_ts_statusline()
         if status ~= "" and status ~= nil then
             return x .. "%#StatusLineNC# : ̗̀➛ " .. status
@@ -179,24 +181,32 @@ function MyFunc()
 end
 
 local function apply_winbar()
-    if hasvalue(force_inactive_buftypes, vim.bo.buftype) or hasvalue(force_inactive_filetypes, vim.bo.filetype) then
+    if hasvalue(M.force_inactive_buftypes, vim.bo.buftype) or hasvalue(M.force_inactive_filetypes, vim.bo.filetype) then
         vim.opt_local.winbar = nil
     else
-        local str = winbarstring()
+        local str = M.winbarstring()
         if str ~= nil then
             vim.opt_local.winbar = str
         end
     end
 end
 
-function M.setup()
+function M.setup(opts)
+    if opts ~= nil then
+        if opts.force_inactive_buftypes ~= nil then
+            M.force_inactive_buftypes = opts.force_inactive_buftypes
+        end
+        if opts.force_inactive_filetypes ~= nil then
+            M.force_inactive_filetypes = opts.force_inactive_filetypes
+        end
+    end
     vim.o.showtabline = 1
     vim.o.laststatus = 3
     for _, winnr in ipairs(vim.api.nvim_list_wins()) do
         vim.api.nvim_win_call(winnr, apply_winbar)
     end
-    vim.api.nvim_create_augroup("StatusWinBar", { clear = true })
-    vim.api.nvim_create_augroup("StatusWinBarLine", { clear = true })
+    augroup("StatusWinBar")
+    augroup("StatusWinBarLine")
     vim.api.nvim_create_autocmd('User', {
         pattern = 'GitSignsUpdate',
         group = "StatusWinBar",
