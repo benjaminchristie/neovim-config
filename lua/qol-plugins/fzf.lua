@@ -66,6 +66,7 @@ return {
         { '<C-p><C-g><C-f>', function() return require("fzf-lua").git_files() end },
         { '<C-p><C-g><C-b>', function() return require("fzf-lua").git_branches() end },
         { '<C-p><C-g><C-l>', function() return require("fzf-lua").git_commits() end },
+        { '<C-p><C-y>',      function() return vim.cmd("PyenvActivate") end },
 
     }
 }

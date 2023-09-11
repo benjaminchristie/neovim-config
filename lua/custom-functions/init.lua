@@ -215,8 +215,17 @@ function M.on_demand_autogroup()
         ":lua vim.api.nvim_create_autocmd({\"BufWrite\"}, {pattern=vim.api.nvim_buf_get_name(0), callback = function() <todo> end})")
 end
 
+-- pick the pyenv using ui.select
+function M.pick_pyenv()
+    return require("swenv.api").pick_venv()
+end
+
 vim.api.nvim_create_user_command("Skeletons", M.skeletons, {
     desc = "skeleton picker"
+})
+
+vim.api.nvim_create_user_command("PyenvActivate", M.pick_pyenv, {
+    desc = "pyenv picker"
 })
 
 vim.api.nvim_create_user_command("ZenToggle", M.toggle_zen, {
