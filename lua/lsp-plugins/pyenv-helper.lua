@@ -1,10 +1,9 @@
 return {
-	'AckslD/swenv.nvim',
-	dependencies = {
-		-- 'ibhagwan/fzf-lua', -- for ui.select
-		'neovim/nvim-lspconfig',
-	},
-    config = function ()
+    'AckslD/swenv.nvim',
+    dependencies = {
+        'neovim/nvim-lspconfig',
+    },
+    config = function()
         local opts = {
             venvs_path = vim.fn.expand('~/.pyenv/versions'),
             post_set_venv = function()
@@ -12,12 +11,12 @@ return {
             end
         }
         require("swenv").setup(opts)
-        vim.api.nvim_create_user_command("PyenvActivate", 
-            require("custom-functions").pick_pyenv, 
+        vim.api.nvim_create_user_command("PyenvActivate",
+            require("custom-functions").pick_pyenv,
             {
                 desc = "pyenv picker"
             }
         )
     end,
-	ft = "python",
+    ft = "python",
 }

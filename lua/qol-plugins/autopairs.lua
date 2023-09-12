@@ -59,25 +59,25 @@ return {
             -- bracket("\\frac{", "}{}", { "tex", "latex", "markdown" }),
             quote("$", "$", { "tex", "latex", "markdown" })
         })
-        -- python
-        npairs.add_rules({
-            Rule("from argparse ", "", "python")
-                :with_cr(false)
-                :set_end_pair_length(0)
-                :replace_endpair(function(_) return "import ArgumentParser<Esc>o" end),
-            Rule("import numpy ", "", "python")
-                :with_cr(false)
-                :set_end_pair_length(0)
-                :replace_endpair(function(_) return "as np<Esc>o" end),
-            Rule("import matplotlib.pyplot ", "", "python")
-                :with_cr(false)
-                :set_end_pair_length(0)
-                :replace_endpair(function(_) return "as plt<Esc>o" end),
-            Rule("import torch.nn ", "", "python")
-                :with_cr(false)
-                :set_end_pair_length(0)
-                :replace_endpair(function(_) return "as nn<Esc>o" end),
-        })
+        -- -- python
+        -- npairs.add_rules({
+        --     Rule("from argparse ", "", "python")
+        --         :with_cr(false)
+        --         :set_end_pair_length(0)
+        --         :replace_endpair(function(_) return "import ArgumentParser<Esc>o" end),
+        --     Rule("import numpy ", "", "python")
+        --         :with_cr(false)
+        --         :set_end_pair_length(0)
+        --         :replace_endpair(function(_) return "as np<Esc>o" end),
+        --     Rule("import matplotlib.pyplot ", "", "python")
+        --         :with_cr(false)
+        --         :set_end_pair_length(0)
+        --         :replace_endpair(function(_) return "as plt<Esc>o" end),
+        --     Rule("import torch.nn ", "", "python")
+        --         :with_cr(false)
+        --         :set_end_pair_length(0)
+        --         :replace_endpair(function(_) return "as nn<Esc>o" end),
+        -- })
         -- markdown, add latex rules to this as well
         npairs.add_rules({
             Rule("```", "```", "markdown"),

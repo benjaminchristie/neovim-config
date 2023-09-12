@@ -39,6 +39,9 @@ autocmd({ "BufEnter" }, {
     group = augroup("FormatGroup"),
     pattern = "*",
     callback = function()
+        if string.find(vim.bo.filetype, "dap-") then
+            return
+        end
         vim.opt.formatoptions:remove({ 'c', 'r', 'o' })
         vim.opt_local.formatoptions:remove({ 'c', 'r', 'o' })
         if vim.o.filetype ~= "oil" and vim.o.filetype ~= "starter" and vim.o.filetype ~= "lazy" then
