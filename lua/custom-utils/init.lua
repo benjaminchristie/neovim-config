@@ -54,11 +54,11 @@ end
 -- key         string          Key to use for keymap
 -- cmd     string | function   callback
 -- opts?    table | nil        optional, override default options
-utils.buf_keymap = function (key, cmd, opts)
+utils.buf_keymap = function (mode, key, cmd, opts)
     if opts == nil then
         opts = {buffer = vim.fn.bufnr(), nowait = true, silent = true}
     end
-    return utils.keymap("n", key, cmd, opts)
+    return utils.keymap(mode, key, cmd, opts)
 end
 
 

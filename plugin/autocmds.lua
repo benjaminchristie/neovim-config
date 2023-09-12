@@ -14,6 +14,7 @@ anoremenu PopUp.Exit                        <Nop>
 ]])
 
 local augroup = require("custom-utils").augroup
+local buf_keymap = require("custom-utils").buf_keymap
 local autocmd = vim.api.nvim_create_autocmd
 
 local function create_skeleton(ext)
@@ -65,13 +66,11 @@ autocmd("TextYankPost", {
 autocmd("User", {
     pattern = { "MiniStarterOpened" },
     callback = function()
-        vim.api.nvim_buf_set_keymap(vim.fn.bufnr(), "n", "<tab>",
-            ('<Cmd>lua %s<CR>'):format([[require("mini.starter").update_current_item('next')]]),
-            {}
+        buf_keymap("n", "<tab>",
+            ('<Cmd>lua %s<CR>'):format([[require("mini.starter").update_current_item('next')]])
         )
-        vim.api.nvim_buf_set_keymap(vim.fn.bufnr(), "n", '<s-tab>',
-            ('<Cmd>lua %s<CR>'):format([[require("mini.starter").update_current_item('prev')]]),
-            {}
+        buf_keymap("n", '<s-tab>',
+            ('<Cmd>lua %s<CR>'):format([[require("mini.starter").update_current_item('prev')]])
         )
     end
 }
@@ -84,6 +83,25 @@ autocmd({ "FileType" }, {
     callback = function()
         vim.wo[0][0].number = false
         vim.wo[0][0].relativenumber = false
+    end
+})
+
+autocmd({"TermClose"}, {
+    pattern = "term://*",
+    group = augroup("AutoTermClose"),
+    callback = function ()
+        if vim.v.event_status == 0 then
+            vim.api.nvim_buf_delete(0, {unload = true})
+        end
+    end
+})
+autocmd({ "TermOpen" }, {
+    pattern = "term://*",
+    group = augroup("AutoTermMappings"),
+    callback = function()
+        buf_keymap('t', '<esc>', [[<C-\><C-n>]], { noremap = true })
+        vim.opt_local.number = false
+        vim.opt_local.relativenumber = false
     end
 })
 
