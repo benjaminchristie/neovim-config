@@ -8,7 +8,7 @@ This configuration of `neovim` can be used on arch or ubuntu. See `bin/setup.sh`
 
 - `nlua.lua`: needed for debugging lua code via DAP
 - `pip-script.sh`: used for installing some dependencies, see [Plugins](##Plugins)
-- `setup.sh`: setup neovim on a new machine (works on arch via paru or on ubuntu via apt). Use at your own risk, read the entire script before running.
+- `setup.sh`: ~~setup neovim on a new machine (works on arch via paru or on ubuntu via apt). Use at your own risk, read the entire script before running.~~ Only works on branch `vim-plug`.
 
 Additionally, some plugins managed by vim-plug install programs in `bin/`. Typically, the folder can be left untouched. 
 
@@ -16,7 +16,11 @@ The `setup.sh` script assumes that the user has a `~/.local/bin` folder that is 
 
 ## Plugins
 
-Vim-plug is used to install and manage plugins. See the table below for details: (last updated 09 September 2023), ranked in order of importance (approximately).
+On branch `lazy`, `lazy.nvim` is used to install and manage plugins.
+
+~~Vim-plug is used to install and manage plugins.~~
+
+See the table below for details: (last updated 09 September 2023), ranked in order of importance (approximately).
 
 | Plugin | Usage |
 | ------ | ----- |

@@ -111,6 +111,7 @@ filetype_detection({ "*.tex" }, "tex")
 
 create_skeleton("c")
 create_skeleton("cpp")
+create_skeleton("h")
 create_skeleton("py")
 create_skeleton("sh")
 create_skeleton("gitignore")

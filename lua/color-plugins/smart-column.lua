@@ -1,5 +1,5 @@
 return {
-    "m4xshen/smartcolumn.nvim",
+    "benjaminchristie/smartcolumn.nvim",
     opts = {
         colorcolumn = "120",
         scope = "line",
@@ -11,4 +11,5 @@ return {
         }
     },
     event = {"BufReadPre", "BufNewFile"},
+    dev = true
 }
