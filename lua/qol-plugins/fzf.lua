@@ -71,6 +71,7 @@ return {
         { '<C-p><C-g><C-l>', function() return require("fzf-lua").git_commits() end },
         { '<C-p><C-o>',      function() return require("fzf-lua").oldfiles() end },
         { '<C-p><C-y>',      function() return vim.cmd("PyenvActivate") end },
+        { '<C-p><C-s>',      function() return require("custom-functions").skeletons() end },
 
     }
 }

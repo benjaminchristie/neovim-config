@@ -12,7 +12,10 @@ return {
             updatetime = 10
         },
         ignore = {
-            ft = { "lua" }
+            ft = { 
+                "lua",
+                "markdown",
+            }
         }
     }
 }
