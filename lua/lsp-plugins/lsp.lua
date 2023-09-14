@@ -150,6 +150,7 @@ return {
                         globals = { 'vim' },
                         undefined_global = false,
                         missing_parameters = false,
+                        inject_fields = false,
                     },
                     workspace = {
                         library = vim.api.nvim_get_runtime_file("", true),
