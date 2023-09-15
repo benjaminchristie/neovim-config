@@ -49,7 +49,7 @@ require("lazy").setup(
             lazy = true
         },
         install = {
-            colorscheme = { "tokyonight-moon", "tokyonight", "default" }
+            colorscheme = { "tokyonight-moon", "tokyonight", "tokyobones", "zenbones", "default" }
         },
         diff = {
             cmd = "diffview.nvim",

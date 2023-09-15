@@ -20,7 +20,7 @@ M = {
         dependencies = {
             'lewis6991/gitsigns.nvim',
             'nvim-treesitter/nvim-treesitter',
-            'ThePrimeagen/harpoon',
+            -- 'ThePrimeagen/harpoon',
         },
         config = function()
             require("statuswinbar").setup()

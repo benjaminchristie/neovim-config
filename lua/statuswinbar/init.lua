@@ -3,7 +3,7 @@ local M = {}
 local gitsigns = require("gitsigns")
 local parsers = require("nvim-treesitter.parsers")
 local ts_utils = require("nvim-treesitter.ts_utils")
-local harpoon = require("harpoon.mark")
+-- local harpoon = require("harpoon.mark")
 local utils = require("custom-utils")
 local hasvalue = utils.exists_in_table
 local augroup = utils.augroup
@@ -87,7 +87,7 @@ local function get_harpoon_idx()
     if harpoon_idx ~= nil then
         local tb = {
             " %#WinBarHarpoon#",
-            "🡕  ",
+            "🡕 ",
             harpoon_idx,
             ""
         }
@@ -119,7 +119,8 @@ function M.winbarstring()
             return nil -- test for diffview
         end
     else
-        str = string.format("%s%s%s%s", path, get_harpoon_idx(), get_changed_hunks(), get_clients())
+        -- str = string.format("%s%s%s%s", path, get_harpoon_idx(), get_changed_hunks(), get_clients())
+        str = string.format("%s%s%s", path, get_changed_hunks(), get_clients())
     end
     return str
 end

@@ -16,5 +16,6 @@ return {
         { "<A-m>", function() return require("harpoon.mark").add_file() end },
         { "<A-k>", function() return require("harpoon.ui").nav_prev() end },
         { "<A-j>", function() return require("harpoon.ui").nav_next() end },
-    }
+    },
+	enabled = false
 }
