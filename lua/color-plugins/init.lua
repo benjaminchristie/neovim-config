@@ -51,5 +51,23 @@ M = {
 			})
 		end
 	},
+	{
+		't184256/vim-boring',
+		config = function()
+			vim.cmd([[colorscheme boring]])
+			vim.api.nvim_set_hl(0, "StatusLine", {
+				link = "FloatFooter"
+			})
+			vim.api.nvim_set_hl(0, "StatusLineNC", {
+				link = "Normal"
+			})
+			vim.api.nvim_set_hl(0, "CursorLine", {
+				link = "CursorIM"
+			})
+			vim.api.nvim_set_hl(0, "IndentBlanklineContextChar", { link = "Comment"})
+		end,
+		enabled = true,
+		lazy = true,
+	}
 }
 return M
