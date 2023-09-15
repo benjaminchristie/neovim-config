@@ -1,6 +1,5 @@
 return {
     'tzachar/highlight-undo.nvim',
-    dependencies = { "folke/tokyonight.nvim" },
     opts = {
         duration = 300,
         undo = {

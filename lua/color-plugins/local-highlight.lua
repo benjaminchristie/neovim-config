@@ -6,5 +6,4 @@ return {
         cw_hlgroup = nil,
     },
     event = { "BufReadPre", "BufNewFile" },
-    dependencies = { "folke/tokyonight.nvim" }
 }

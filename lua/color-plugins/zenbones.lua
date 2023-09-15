@@ -4,12 +4,13 @@ return {
 		{"rktjmp/lush.nvim"}
 	},
 	enabled = true,
-	lazy = false,
-	priority = 1000,
+	lazy = true,
+	-- priority = 1000,
 	config = function ()
 		vim.o.termguicolors = true
 		vim.o.background = "dark"
 		vim.cmd([[colorscheme tokyobones]])
+		-- vim.cmd([[colorscheme nordbones]])
         vim.api.nvim_set_hl(0, "IndentBlanklineContextChar", { link = "Footer"})
         vim.api.nvim_set_hl(0, 'LocalHighlight', { link = "NormalFloat"})
         vim.api.nvim_set_hl(0, 'MiniStarterItemPrefix', { link = "WarningMsg"})
