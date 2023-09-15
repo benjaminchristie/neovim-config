@@ -62,9 +62,13 @@ function M.lazy_load()
     vim.treesitter.stop()
     vim.diagnostic.hide(nil, 0)
     vim.fn.timer_start(5000, function()
-        if vim.treesitter.language.get_lang(vim.o.filetype) ~= nil then
-            vim.treesitter.start()
-        end
+		local success, res = pcall(vim.treesitter.language.get_lang, vim.bo.filetype)
+		if success then
+			if res ~= nil then
+				vim.bo.syntax = "on"
+				pcall(vim.treesitter.start)
+			end
+		end
         vim.diagnostic.show(nil, 0)
     end)
 end
@@ -262,12 +266,17 @@ vim.api.nvim_create_autocmd({ "BufReadPost" }, {
     callback = function()
         if vim.fn.getfsize(vim.api.nvim_buf_get_name(0)) > 65536 then
             vim.notify("Lazy loading file...")
-            M.lazy_load()
+            vim.schedule(M.lazy_load)
         else
-            vim.o.syntax = "on"
-            if vim.treesitter.language.get_lang(vim.o.filetype) ~= nil then
-                pcall(vim.treesitter.start)
-            end
+			vim.schedule(function()
+				local success, res = pcall(vim.treesitter.language.get_lang, vim.bo.filetype)
+				if success then
+					if res ~= nil then
+						vim.bo.syntax = "on"
+						pcall(vim.treesitter.start)
+					end
+				end
+			end)
         end
     end
 })
