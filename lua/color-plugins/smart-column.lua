@@ -11,5 +11,5 @@ return {
         }
     },
     event = {"BufReadPre", "BufNewFile"},
-    dev = true
+    dev = false
 }

@@ -1,8 +1,5 @@
 return {
     'IMOKURI/line-number-interval.nvim',
-    dependencies = {
-        'folke/tokyonight.nvim',
-    },
     init = function()
         vim.api.nvim_set_var("line_number_interval#custom_interval", { 1, 2, 3, 4, 5 })
         vim.api.nvim_set_var("line_number_interval#use_custom", 1)
