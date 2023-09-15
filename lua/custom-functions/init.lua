@@ -220,8 +220,12 @@ end
 
 -- on_demand_autogroup
 function M.on_demand_autogroup()
-    vim.fn.feedkeys(
-        ":lua vim.api.nvim_create_autocmd({\"BufWrite\"}, {pattern=vim.api.nvim_buf_get_name(0), callback = function() <todo> end})")
+	local f = vim.fn.input("Event(s) to use: ", "BufWrite")
+	local c = vim.fn.input("Command to run: ", "Make")
+	vim.api.nvim_create_autocmd(f, {
+		pattern = vim.api.nvim_buf_get_name(0),
+		command = c
+	})
 end
 
 -- pick the pyenv using ui.select

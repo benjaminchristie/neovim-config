@@ -38,16 +38,16 @@ end
 autocmd({ "BufEnter" }, {
 	group = augroup("FormatGroup"),
 	pattern = "*",
-	callback = function(event)
-		if string.find(vim.bo[event.buf].filetype, "dap-") then
+	callback = function()
+		if string.find(vim.bo.filetype, "dap-") then
 			return
 		end
 		vim.schedule(function()
 			vim.opt.formatoptions:remove({ 'c', 'r', 'o' })
 			vim.opt_local.formatoptions:remove({ 'c', 'r', 'o' })
-			if vim.bo[event.buf].filetype ~= "oil" and
-				vim.bo[event.buf].filetype ~= "starter" and
-				vim.bo[event.buf].filetype ~= "lazy" then
+			if vim.bo.filetype ~= "oil" and
+				vim.bo.filetype ~= "starter" and
+				vim.bo.filetype ~= "lazy" then
 				if not require("custom-functions").zen_enabled() then
 					vim.wo[0][0].number = true
 					vim.wo[0][0].relativenumber = true
