@@ -1,5 +1,6 @@
 M = {
-    require("color-plugins/tokyonight"),
+    -- require("color-plugins/tokyonight"),
+    require("color-plugins/zenbones"),
     require("color-plugins/indent-blankline"),
     require("color-plugins/linenumberinterval"),
     require("color-plugins/highlight-undo"),

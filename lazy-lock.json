@@ -25,6 +25,7 @@
   "local-lua-debugger-vscode": { "branch": "master", "commit": "d51ee2907b02d630be0fd62d243de184e26ad431" },
   "lsp-lens.nvim": { "branch": "main", "commit": "13d25ad8bd55aa34cc0aa3082e78a4157c401346" },
   "lua-language-server": { "branch": "master", "commit": "d912dfc05636ca113eb074d637905f4b2514229d" },
+  "lush.nvim": { "branch": "main", "commit": "a8f0f7b9f837887f13a61d67b40ae26188fe4d62" },
   "marksman": { "branch": "main", "commit": "a85401a8cbe3b1522dc3983a1a7afa2c53d04e02" },
   "mini.starter": { "branch": "main", "commit": "3a82e4b17837cbf5a8b5a0eacd77c3a213124a0d" },
   "neodev.nvim": { "branch": "main", "commit": "3ed1daafa0a6b64bf28ae083f1dedfd2f6fc0dcc" },
@@ -66,5 +67,6 @@
   "vim-eunuch": { "branch": "master", "commit": "67f3dd32b4dcd1c427085f42ff5f29c7adc645c6" },
   "vim-fugitive": { "branch": "master", "commit": "6fcb0ad03982de646e3fecb6915e585651b9a9fb" },
   "vim-qfedit": { "branch": "master", "commit": "6ba4cc57597fa96a36b44b1a2274244fcb44e28f" },
-  "vim-repeat": { "branch": "master", "commit": "24afe922e6a05891756ecf331f39a1f6743d3d5a" }
+  "vim-repeat": { "branch": "master", "commit": "24afe922e6a05891756ecf331f39a1f6743d3d5a" },
+  "zenbones.nvim": { "branch": "main", "commit": "491b8a79e0547e181c7c6fb054d778fd595f068c" }
 }
