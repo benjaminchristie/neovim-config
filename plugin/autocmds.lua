@@ -48,6 +48,7 @@ autocmd({ "BufEnter" }, {
 			if vim.bo.filetype ~= "oil" and
 				vim.bo.filetype ~= "starter" and
 				vim.bo.filetype ~= "" and
+				vim.bo.filetype ~= "toggleterm" and
 				vim.bo.filetype ~= "lazy" then
 				if not require("custom-functions").zen_enabled() then
 					vim.wo[0][0].number = true

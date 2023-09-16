@@ -10,6 +10,7 @@ M = {
 		'projekt0n/github-nvim-theme',
 		config = function()
 			vim.cmd('colorscheme github_dark_high_contrast')
+			vim.api.nvim_set_hl(0, "Normal", { bg = "black"})
 			vim.api.nvim_set_hl(0, "IndentBlanklineContextChar", { link = "Comment"})
 			vim.api.nvim_set_hl(0, 'LocalHighlight', { link = "NormalFloat"})
 			vim.api.nvim_set_hl(0, 'MiniStarterItemPrefix', { link = "WarningMsg"})
