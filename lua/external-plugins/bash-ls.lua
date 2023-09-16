@@ -1,7 +1,7 @@
 return {
     "bash-lsp/bash-language-server",
     enabled = function()
-        return vim.fn.executable("pnpm") and vim.fn.executable("npm")
+        return vim.fn.executable("pnpm") == 1 and vim.fn.executable("npm") == 1
     end,
     pin = false,
     build = table.concat({
