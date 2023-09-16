@@ -5,6 +5,8 @@ local keymap = utils.keymap
 -- basically a keymap
 vim.api.nvim_create_user_command("W", "w", { desc = "alias to :w" })
 vim.api.nvim_create_user_command("Q", "q", { desc = "alias to :q" })
+vim.api.nvim_create_user_command("Wq", "wq", { desc = "alias to :wq" })
+vim.api.nvim_create_user_command("WQ", "wq", { desc = "alias to :wq" })
 
 keymap('n', '<Left>', 'gT')
 keymap('n', '<Right>', 'gt')
