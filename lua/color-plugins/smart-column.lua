@@ -8,6 +8,7 @@ return {
             "terminal",
             "help",
             "starter",
+            "DiffviewFileHistory",
         }
     },
     event = {"BufReadPre", "BufNewFile"},
