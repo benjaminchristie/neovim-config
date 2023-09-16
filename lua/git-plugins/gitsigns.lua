@@ -21,17 +21,17 @@ return {
         local next_hunk_repeat, prev_hunk_repeat = ts_repeat_move.make_repeatable_move_pair(gs.next_hunk,
             gs.prev_hunk)
 
-        vim.keymap.set({ "n", "x", "o" }, "]g", next_hunk_repeat)
-        vim.keymap.set({ "n", "x", "o" }, "[g", prev_hunk_repeat)
+        require("custom-utils").keymap({ "n", "x", "o" }, "]g", next_hunk_repeat)
+        require("custom-utils").keymap({ "n", "x", "o" }, "[g", prev_hunk_repeat)
 
         local is_gitsigns_toggled = false
-        vim.keymap.set('n', 'gst', function()
+        require("custom-utils").keymap('n', 'gst', function()
             is_gitsigns_toggled = not is_gitsigns_toggled
             require("gitsigns").toggle_current_line_blame(is_gitsigns_toggled)
             require("gitsigns").toggle_linehl(is_gitsigns_toggled)
             require("gitsigns").toggle_deleted(is_gitsigns_toggled)
             require("gitsigns").toggle_numhl(is_gitsigns_toggled)
-        end, { desc = "toggle gitsigns blame and buffer changes" })
+        end)
     end,
     keys = {
         { 'gss', function() return require("gitsigns").stage_hunk() end,   { desc = "gitsigns stage hunk" } },
