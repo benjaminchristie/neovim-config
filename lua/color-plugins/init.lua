@@ -16,13 +16,15 @@ M = {
 			vim.api.nvim_set_hl(0, "GhostText", {
 				link = "Comment"
 			})
+			vim.api.nvim_set_hl(0, "ColorColumn", {
+				bg = "orange",
+				blend = 5
+			})
 			vim.api.nvim_set_hl(0, "WinBar", {
-				fg = "LightMagenta"
+				link = "FloatFooter"
 			})
 			vim.api.nvim_set_hl(0, "WinBarLSP", {
-				fg = "LightCyan",
-				bg = "NONE",
-				italic = false
+				link = "FloatFooter"
 			})
 			vim.api.nvim_set_hl(0, "WinBarGit", {
 				link = "Normal"
