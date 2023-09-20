@@ -1,4 +1,6 @@
 M = {}
+local augroup = require("custom-utils").augroup
+local autocmd = vim.api.nvim_create_autocmd
 
 function M.whereami()
     local uptime = 7
@@ -81,9 +83,8 @@ function M.markdown_preview_function()
         {},
         function(_) vim.system({ "zathura", cached_pdf_fn }) end
     )
-    vim.api.nvim_create_augroup("MarkdownPreview" .. fn, { clear = true })
-    vim.api.nvim_create_autocmd({ "BufWrite" }, {
-        group = "MarkdownPreview" .. fn,
+    autocmd({ "BufWrite" }, {
+		group = augroup("MarkdownPreview" .. fn),
         pattern = fn,
         callback = function()
             vim.system(
@@ -226,7 +227,7 @@ end
 function M.on_demand_autogroup()
 	local f = vim.fn.input("Event(s) to use: ", "BufWrite")
 	local c = vim.fn.input("Command to run: ", "Make")
-	vim.api.nvim_create_autocmd(f, {
+	autocmd(f, {
 		pattern = vim.api.nvim_buf_get_name(0),
 		command = c
 	})
@@ -259,9 +260,8 @@ vim.api.nvim_create_user_command("Build", M.build_func, { desc = "select build t
 vim.api.nvim_create_user_command("Where", M.whereami, { desc = "highlight cursor position" })
 
 vim.api.nvim_create_user_command("LazyLoad", M.lazy_load, { desc = "attempt to lazy load ts and lsp" })
-vim.api.nvim_create_augroup("LazyLoadLargeFiles", { clear = true })
-vim.api.nvim_create_autocmd({ "BufReadPost" }, {
-    group = "LazyLoadLargeFiles",
+autocmd({ "BufReadPost" }, {
+    group = augroup("LazyLoadLargeFiles"),
     pattern = "*",
     callback = function()
         if vim.fn.getfsize(vim.api.nvim_buf_get_name(0)) > 65536 then
