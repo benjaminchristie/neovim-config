@@ -8,6 +8,7 @@ return {
             "terminal",
             "help",
             "starter",
+            "tex",
             "DiffviewFileHistory",
         }
     },

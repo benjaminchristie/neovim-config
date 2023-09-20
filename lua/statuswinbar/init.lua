@@ -175,7 +175,7 @@ function MyFunc()
     if not (hasvalue(M.force_inactive_buftypes, vim.bo.buftype) or hasvalue(M.force_inactive_filetypes, vim.bo.filetype)) then
         local status = trimmed_ts_statusline()
         if status ~= "" and status ~= nil then
-            return x .. "%#StatusLineNC# : ̗̀➛ " .. status
+            return x .. "%#StatusLineNC# " .. status
         end
     end
     return x
