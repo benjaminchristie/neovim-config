@@ -1,13 +1,8 @@
-MAIN := main
-SHELL := /bin/bash
+CC = latexmk
+CFLAGS = -pdf -silent
 
-all:
-	latexmk -pdf $(MAIN) -silent
+main.pdf: main.tex
+	$(CC) $(CFLAGS) $<
 
-clean: clean_tmp
-	rm -f $(MAIN).{pdf,aux,bbl,blg,log,dvi,fdb_latexmk,fls}
-
-clean_tmp:
-	find . -type f \( -name '*.swp' -o -name '*~' -o -name '*.bak' -o -name '.netrwhist' \) -delete
-
-auto: all
+clean:
+	rm -f main.[!tex]*
