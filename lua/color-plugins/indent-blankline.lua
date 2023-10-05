@@ -17,5 +17,4 @@ return {
             }
         })
     end,
-    branch = "v3",
 }
