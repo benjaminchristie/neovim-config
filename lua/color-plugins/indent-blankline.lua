@@ -13,7 +13,8 @@ return {
                 remove_blankline_trail = true
             },
             indent = {
-                char = '│'
+                char = '│',
+				smart_indent_cap = true,
             }
         })
     end,

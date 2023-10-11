@@ -1,0 +1,100 @@
+% math
+\usepackage{amsthm}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{bm}
+\usepackage{mhchem}
+% color
+\usepackage{xcolor}
+% code listings
+\usepackage{listings}
+% images
+\usepackage{graphicx}
+\usepackage{caption}
+% ease of use
+\usepackage{strings}[underscore]
+\usepackage{enumitem}
+\usepackage{hyperref}
+ \hypersetup{
+     colorlinks=true,
+     linkcolor=orange,
+     filecolor=orange,
+     citecolor=orange,      
+     urlcolor=orange,
+     }
+\usepackage{geometry}
+\geometry{
+	a4paper,
+	left=1in,
+	top=1in,
+}
+
+% image formatting
+\DeclareCaptionFormat{custom}{
+    \textbf{#1#2}\small #3
+}
+\captionsetup{format=custom, justification=centering}
+
+% footnote formatting
+\addtolength{\skip\footins}{2pc plus 5pt}
+
+% math formatting
+\renewcommand\qedsymbol{$\blacksquare$}
+\theoremstyle{definition}
+
+% listing formatting
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{1,1,1}
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},   
+    commentstyle=\itshape\color{codegreen!60!white},
+    keywordstyle=\color{magenta!20!red},
+    numberstyle=\color{codegray},
+    stringstyle=\color{codepurple!20!blue},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=true,         
+    breaklines=true,                 
+    captionpos=t,                    
+    keepspaces=true,                 
+    numbers=none,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2, 
+    frame=single,
+}
+\lstdefinelanguage{none}{
+    identifierstyle=
+}
+
+\lstset{language=Python, style=mystyle}
+\lstMakeShortInline[columns=fixed, identifierstyle=\color{codepurple!20!blue}, basicstyle=\ttfamily]|
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% commands
+\AddToHook{cmd/appendix/before}{%
+  \setcounter{figure}{0}%
+  \renewcommand{\thefigure}{\thesection.\arabic{figure}}%
+  \setcounter{equation}{0}%
+  \renewcommand{\theequation}{\thesection.\arabic{equation}}%
+  \setcounter{table}{0}%
+  \renewcommand{\thetable}{\thesection.\arabic{table}}%
+}
+
+\newcommand{\figuretag}[1]{%
+  \addtocounter{figure}{-1}%
+  \renewcommand{\thefigure}{#1}%
+}
+\newcommand\Item[1][]{%
+  \ifx\relax#1\relax  \item \else \item[#1] \fi
+  \abovedisplayskip=0pt\abovedisplayshortskip=0pt~\vspace*{-\baselineskip}}
+
+\DeclareMathOperator*{\argmax}{arg\,max}
+
+% \setlength{\abovedisplayskip}{0pt}
+% \setlength{\abovedisplayshortskip}{0pt}
+% \setlength{\belowdisplayskip}{0pt}
+% \setlength{\belowdisplayshortskip}{0pt}
