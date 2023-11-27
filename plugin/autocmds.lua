@@ -39,7 +39,7 @@ autocmd({ "BufEnter" }, {
 	group = augroup("FormatGroup"),
 	pattern = "*",
 	callback = function()
-		if string.find(vim.bo.filetype, "dap-") then
+		if string.find(vim.bo.filetype, "dap-") or string.find(vim.bo.filetype, "lsp") then
 			return
 		end
 		vim.schedule(function()
@@ -119,7 +119,7 @@ autocmd("User", {
 
 
 autocmd({ "FileType" }, {
-	pattern = { "oil", "starter", "lazy" },
+	pattern = { "oil", "starter", "lspinfo" },
 	group = augroup("number-formatting"),
 	callback = function()
 		vim.wo[0][0].number = false

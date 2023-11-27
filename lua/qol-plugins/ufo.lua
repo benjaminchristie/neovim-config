@@ -44,5 +44,6 @@ return {
         { "zr", function() return require("ufo").openFoldsExceptKinds() end, desc = "open all folds" },
         { "zm", function() return require("ufo").closeFoldsWith() end,       desc = "open all folds" },
     },
-    event = "VeryLazy"
+    event = "VeryLazy",
+	enabled = false,
 }

@@ -1,6 +1,6 @@
 return {
     'sindrets/diffview.nvim',
-    dependencies = { "kevinhwang91/nvim-ufo" },
+    -- dependencies = { "kevinhwang91/nvim-ufo" },
     config = function()
         local actions = require('diffview.actions')
         local statuswinbar = require("statuswinbar")

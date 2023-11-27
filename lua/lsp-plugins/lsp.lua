@@ -68,7 +68,7 @@ return {
         end
         Lsp_inlay_hints_enabled = false
         local on_attach_with_inlay_hints = function(client, bufnr)
-            vim.lsp.inlay_hint(bufnr, Lsp_inlay_hints_enabled)
+            vim.lsp.inlay_hint.enable(bufnr, Lsp_inlay_hints_enabled)
             return on_attach(client, bufnr)
         end
 
@@ -76,7 +76,7 @@ return {
             Lsp_inlay_hints_enabled = not Lsp_inlay_hints_enabled
             print("Setting inlay hints to " .. tostring(Lsp_inlay_hints_enabled) .. "...")
             for _, bufnr in ipairs(vim.api.nvim_list_bufs()) do
-                pcall(vim.lsp.inlay_hint, bufnr, Lsp_inlay_hints_enabled)
+                pcall(vim.lsp.inlay_hint.enable, bufnr, Lsp_inlay_hints_enabled)
             end
         end)
 
