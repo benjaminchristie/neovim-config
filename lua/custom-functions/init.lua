@@ -281,4 +281,6 @@ autocmd({ "BufReadPost" }, {
     end
 })
 
+vim.api.nvim_create_user_command("Aex", "AerialOpen!", { desc = "Open Aerial.nvim"})
+
 return M

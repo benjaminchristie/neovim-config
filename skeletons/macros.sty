@@ -1,6 +1,9 @@
+\ProvidesPackage{macros}
 % math
 \usepackage{amsthm}
 \usepackage{amsmath}
+\usepackage{xfp}
+\usepackage{siunitx}
 \usepackage{amssymb}
 \usepackage{bm}
 \usepackage{mhchem}
@@ -12,7 +15,7 @@
 \usepackage{graphicx}
 \usepackage{caption}
 % ease of use
-\usepackage{strings}[underscore]
+% \usepackage{strings}[underscore]
 \usepackage{enumitem}
 \usepackage{hyperref}
  \hypersetup{
@@ -83,6 +86,34 @@
   \setcounter{table}{0}%
   \renewcommand{\thetable}{\thesection.\arabic{table}}%
 }
+
+\newcommand{\roundeval}[2]{
+	\begingroup
+	\def\frac##1##2{(##1)/(##2)}%
+	\def\sqrt{sqrt}%
+	\def\exp{exp}%
+	\def\pi{pi}%
+	\def\times{*}%
+	\def\ln{ln}%
+	\def\sin{sin}%
+	\def\cos{cos}%
+	\def\left{ }%
+	\def\right{ }%
+	\fpeval{round(#2, #1)}
+	\endgroup
+}
+
+\newcommand{\eval}[1]{
+	\roundeval{99}{#1}
+}
+
+\newcommand{\printeval}[1]{
+	#1 = \eval{#1}
+}
+\newcommand{\roundprinteval}[2]{
+	#2 = \roundeval{#1}{#2}
+}
+
 
 \newcommand{\figuretag}[1]{%
   \addtocounter{figure}{-1}%

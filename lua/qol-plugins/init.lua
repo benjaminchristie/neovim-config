@@ -1,4 +1,5 @@
 M = {
+    require("qol-plugins/aerial"),
     require("qol-plugins/autopairs"),
     require("qol-plugins/autotag"),
     require("qol-plugins/fundo"),
