@@ -1,5 +1,6 @@
 \documentclass[10pt]{beamer}
 \usepackage{listings}
+\usepackage{tgpagella}
 \usepackage{amsmath}
 \usepackage{amssymb}
 \usepackage{amsthm}
@@ -20,7 +21,7 @@
 \usepackage{pdfpages}
 \usepackage{bm}
 \usepackage{changepage}
-\usetheme{default}
+\usetheme{Singapore}
 \usecolortheme{rose}
 \beamertemplatenavigationsymbolsempty
 \setbeamertemplate{footline}[page number]
@@ -71,9 +72,20 @@
 
 \lstset{language=Python, style=mystyle}
 \lstMakeShortInline[columns=fixed, identifierstyle=\color{codepurple!20!blue}, basicstyle=\ttfamily]|
+\setlength\abovecaptionskip{-3pt}
 \title{Presentation Skeleton}
+\author{Benjamin Christie}
+\date{\today}
 \begin{document}
 \begin{frame}
-    \frametitle{Week of \today}
+	\titlepage
+\end{frame}
+\begin{frame}
+	\frametitle{Outline}
+	\tableofcontents
+\end{frame}
+\section{}
+\begin{frame}
+	\frametitle{}
 \end{frame}
 \end{document}
