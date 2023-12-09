@@ -2,6 +2,7 @@
 % math
 \usepackage{amsthm}
 \usepackage{amsmath}
+\usepackage[makeroom]{cancel}
 \usepackage{xfp}
 \usepackage{siunitx}
 \usepackage{amssymb}
@@ -17,6 +18,7 @@
 % ease of use
 % \usepackage{strings}[underscore]
 \usepackage{enumitem}
+\usepackage{changepage}
 \usepackage{hyperref}
  \hypersetup{
      colorlinks=true,
@@ -28,7 +30,7 @@
 \usepackage{geometry}
 \geometry{
 	a4paper,
-	left=1in,
+	left=0.5in,
 	top=1in,
 }
 
@@ -44,6 +46,8 @@
 % math formatting
 \renewcommand\qedsymbol{$\blacksquare$}
 \theoremstyle{definition}
+\numberwithin{equation}{enumi}
+\numberwithin{figure}{enumi}
 
 % listing formatting
 \definecolor{codegreen}{rgb}{0,0.6,0}
@@ -105,6 +109,26 @@
 
 \newcommand{\eval}[1]{
 	\roundeval{99}{#1}
+}
+
+\newcommand{\roundevalsci}[2]{
+	\begingroup
+	\def\frac##1##2{(##1)/(##2)}%
+	\def\sqrt##1{sqrt(##1)}%
+	\def\exp{exp}%
+	\def\pi{pi}%
+	\def\times{*}%
+	\def\ln{ln}%
+	\def\sin{sin}%
+	\def\cos{cos}%
+	\def\left{ }%
+	\def\right{ }%
+	\num[scientific-notation=true,round-mode=figures,round-precision=#1]{\fpeval{#2}}
+	\endgroup
+}
+
+\newcommand{\evalsci}[1]{
+	\roundevalsci{99}{#1}
 }
 
 \newcommand{\printeval}[1]{
