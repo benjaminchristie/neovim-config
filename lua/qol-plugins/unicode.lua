@@ -21,14 +21,14 @@ return {
 			"<C-p><C-u>",
 			function()
 				local unicode_filename = vim.fn.stdpath("data") .. "/site/unicode/UnicodeData.txt"
-				require("fzf-lua").fzf_exec("cat " .. unicode_filename, {
+				local script = [[sed -e 's/\([0-9A-Fa-f]\{4,5\}\);/\\u\0 \1/' <]] .. unicode_filename .. [[| while read -r line;do echo -e "$line";done]]
+				require("fzf-lua").fzf_exec(script, {
 					actions = {
 						['default'] = function(selected)
 							local str = selected[#selected]
-							local idx = string.find(str, ";")
-							local hex = string.sub(str, 1, idx - 1)
+							local char = string.sub(str, 1, 2)
 							vim.api.nvim_feedkeys(
-								vim.api.nvim_replace_termcodes("<esc>i<c-v>u" .. hex, true, false, true), 'm', true
+								vim.api.nvim_replace_termcodes("<esc>i" .. char, true, false, true), 'm', true
 							)
 						end
 					},
