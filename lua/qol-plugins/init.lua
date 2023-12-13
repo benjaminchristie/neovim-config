@@ -11,6 +11,7 @@ M = {
     require("qol-plugins/term"),
     require("qol-plugins/toggler"),
     require("qol-plugins/ufo"),
+    require("qol-plugins/unicode"),
     require("qol-plugins/utree"),
 }
 return M
