@@ -185,12 +185,12 @@ return {
             capabilities = capabilities,
             autostart = true,
         }
-        lspconfig.marksman.setup {
-            on_attach = on_attach,
-            flags = lsp_flags,
-            capabilities = capabilities,
-            autostart = true,
-        }
+        -- lspconfig.marksman.setup {
+        --     on_attach = on_attach,
+        --     flags = lsp_flags,
+        --     capabilities = capabilities,
+        --     autostart = true,
+        -- }
         local function get_probe_dir(root_dir)
             local project_root = require('lspconfig/util').find_node_modules_ancestor(root_dir)
 
