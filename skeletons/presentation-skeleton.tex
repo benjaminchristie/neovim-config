@@ -22,9 +22,26 @@
 \usepackage{bm}
 \usepackage{changepage}
 \usetheme{Singapore}
-\makeatletter
-\beamer@theme@subsectiontrue
-\makeatother
+%%% theming
+\defbeamertemplate{headline}{modified miniframes theme}
+{%
+  \begin{beamercolorbox}[colsep=1.5pt]{upper separation line head}
+  \end{beamercolorbox}
+  \begin{beamercolorbox}{section in head/foot}
+    \vskip2pt\insertnavigation{\paperwidth}\vskip2pt
+  \end{beamercolorbox}%
+  % \ifbeamer@theme@subsection%
+    \begin{beamercolorbox}[colsep=1.5pt]{middle separation line head}
+    \end{beamercolorbox}
+    \begin{beamercolorbox}[ht=2.5ex,dp=1.125ex,%
+      leftskip=.3cm,rightskip=.3cm plus1fil]{subsection in head/foot}
+      \usebeamerfont{subsection in head/foot}\centering\insertsubsectionhead
+    \end{beamercolorbox}%
+  % \fi%
+  \begin{beamercolorbox}[colsep=1.5pt]{lower separation line head}
+  \end{beamercolorbox}
+}
+%%% end theming
 \usecolortheme{rose}
 \beamertemplatenavigationsymbolsempty
 \setbeamertemplate{footline}[page number]
@@ -80,6 +97,7 @@
 \author{Benjamin Christie}
 \date{\today}
 \begin{document}
+\setbeamertemplate{headline}[modified miniframes theme]
 \begin{frame}
 	\titlepage
 \end{frame}
