@@ -41,6 +41,7 @@ spec = merge_tables(spec, require("external-plugins"))
 spec = merge_tables(spec, require("git-plugins"))
 spec = merge_tables(spec, require("lsp-plugins"))
 spec = merge_tables(spec, require("qol-plugins"))
+spec = merge_tables(spec, require("x11-plugins"))
 
 require("lazy").setup(
 	spec,
