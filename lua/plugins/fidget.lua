@@ -3,7 +3,8 @@ return {
     opts = {
         window = {
             blend = 0,
-            relative = "editor"
+            relative = "editor",
+            border = "none",
         }
     },
     tag = "legacy"

@@ -114,8 +114,10 @@ function M.toggle_zen()
                 end
                 vim.o.number = false
                 vim.o.relativenumber = false
-                vim.o.signcolumn = "no"
+                vim.o.signcolumn = "yes:3"
                 vim.o.showtabline = 0
+				vim.wo[winnr][0].wrap = true
+				vim.wo[winnr][0].linebreak = true
             end)
         end
         require("ibl").update({ enabled = false })
@@ -128,6 +130,8 @@ function M.toggle_zen()
                 vim.o.relativenumber = true
                 vim.o.signcolumn = "yes:1"
                 vim.o.showtabline = 1
+				vim.wo[winnr][0].wrap = false
+				vim.wo[winnr][0].linebreak = false
             end)
         end
         require("statuswinbar").setup()
