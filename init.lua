@@ -44,7 +44,13 @@ require("lazy").setup(
 		dev = {
 			path = vim.fn.stdpath("config") .. "/testing",
 		},
-		checker = { enabled = false }, -- automatically check for plugin updates
+		checker = {
+			enabled = false, -- automatically check for plugin updates
+		},
+		change_detection = {
+			enabled = false,
+			notify = false,
+		},
 		performance = {
 			rtp = {
 				-- disable some rtp plugins

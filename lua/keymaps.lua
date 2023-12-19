@@ -1,6 +1,5 @@
-local utils = require('utils')
 local funcs = require("functions")
-local keymap = utils.keymap
+local keymap = require("utils").keymap
 
 -- basically a keymap
 vim.api.nvim_create_user_command("W", "w", { desc = "alias to :w" })
@@ -18,6 +17,7 @@ keymap('n', '`2', ':3winc+<CR>')
 keymap('n', '`3', ':3winc-<CR>')
 keymap('v', "J", ":m '>+1<CR>gv=gv")
 keymap('v', "K", ":m '<-2<CR>gv=gv")
+keymap({'n', 'v'}, "zs", "z=1<CR><CR>")
 keymap('n', '<C-d>', '<C-d>zz')
 keymap('n', '<C-u>', '<C-u>zz')
 keymap('n', 'dl', ':diffget //3<CR>')
@@ -28,7 +28,7 @@ keymap('n', "<A-n>", ":cnext<CR>")
 -- keymap('n', 'n', function() funcs.increment_search(funcs.timed_color_change) end, { noremap = true, silent = true, nowait = true })
 -- keymap('n', 'N', function() funcs.decrement_search(funcs.timed_color_change) end, { noremap = true, silent = true, nowait = true })
 
-keymap('n', '<C-_>', funcs.comment_line_preserve_cursor) -- this maps to <C-/>
+keymap('n', '<C-c>', funcs.comment_line_preserve_cursor)
 
 keymap('n', '<A-c>', funcs.cd_to_cfile)
 
