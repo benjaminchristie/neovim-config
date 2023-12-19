@@ -45,26 +45,26 @@ return {
         -- after the language server attaches to the current buffer
 
         -- TODO: make this better. since some filetypes define their own A-f formatting call, this needs to be improved
-        require("custom-utils").keymap('n', '<A-f>', function()
+        require("utils").keymap('n', '<A-f>', function()
             print("Calling LSP buf format...")
             vim.lsp.buf.format()
         end, { desc = "calls lsp buf format" })
         ---@diagnostic disable-next-line: unused-local
         local on_attach = function(client, bufnr)
             vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
-            require("custom-utils").buf_keymap('n', '<C-h><C-q>', vim.diagnostic.open_float)
-            require("custom-utils").buf_keymap('n', '<C-k>', vim.diagnostic.goto_prev)
-            require("custom-utils").buf_keymap('n', '<C-j>', vim.diagnostic.goto_next)
-            require("custom-utils").buf_keymap('n', 'gh', vim.diagnostic.setloclist)
-            require("custom-utils").buf_keymap('n', 'gH', vim.diagnostic.setqflist)
-            require("custom-utils").buf_keymap('n', 'gd', vim.lsp.buf.definition)
-            require("custom-utils").buf_keymap('n', '<space>', vim.lsp.buf.hover)
-            require("custom-utils").buf_keymap('n', 'gi', vim.lsp.buf.implementation)
-            require("custom-utils").buf_keymap('n', '<C-h><C-g>', vim.lsp.buf.signature_help)
-            require("custom-utils").buf_keymap('n', '<C-h><C-d>', vim.lsp.buf.type_definition)
-            require("custom-utils").buf_keymap('n', '<C-h><C-r><C-m>', vim.lsp.buf.rename)
-            require("custom-utils").buf_keymap('n', '<C-h><C-e>', vim.lsp.buf.code_action)
-            require("custom-utils").buf_keymap('n', 'gr', vim.lsp.buf.references)
+            require("utils").buf_keymap('n', '<C-h><C-q>', vim.diagnostic.open_float)
+            require("utils").buf_keymap('n', '<C-k>', vim.diagnostic.goto_prev)
+            require("utils").buf_keymap('n', '<C-j>', vim.diagnostic.goto_next)
+            require("utils").buf_keymap('n', 'gh', vim.diagnostic.setloclist)
+            require("utils").buf_keymap('n', 'gH', vim.diagnostic.setqflist)
+            require("utils").buf_keymap('n', 'gd', vim.lsp.buf.definition)
+            require("utils").buf_keymap('n', '<space>', vim.lsp.buf.hover)
+            require("utils").buf_keymap('n', 'gi', vim.lsp.buf.implementation)
+            require("utils").buf_keymap('n', '<C-h><C-g>', vim.lsp.buf.signature_help)
+            require("utils").buf_keymap('n', '<C-h><C-d>', vim.lsp.buf.type_definition)
+            require("utils").buf_keymap('n', '<C-h><C-r><C-m>', vim.lsp.buf.rename)
+            require("utils").buf_keymap('n', '<C-h><C-e>', vim.lsp.buf.code_action)
+            require("utils").buf_keymap('n', 'gr', vim.lsp.buf.references)
         end
         Lsp_inlay_hints_enabled = false
         local on_attach_with_inlay_hints = function(client, bufnr)
@@ -72,7 +72,7 @@ return {
             return on_attach(client, bufnr)
         end
 
-        require("custom-utils").keymap('n', '<A-i>', function()
+        require("utils").keymap('n', '<A-i>', function()
             Lsp_inlay_hints_enabled = not Lsp_inlay_hints_enabled
             print("Setting inlay hints to " .. tostring(Lsp_inlay_hints_enabled) .. "...")
             for _, bufnr in ipairs(vim.api.nvim_list_bufs()) do

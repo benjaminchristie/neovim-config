@@ -1,5 +1,5 @@
 M = {}
-local augroup = require("custom-utils").augroup
+local augroup = require("utils").augroup
 local autocmd = vim.api.nvim_create_autocmd
 
 function M.whereami()

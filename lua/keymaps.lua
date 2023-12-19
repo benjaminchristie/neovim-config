@@ -1,5 +1,5 @@
-local utils = require('custom-utils')
-local funcs = require("custom-functions")
+local utils = require('utils')
+local funcs = require("functions")
 local keymap = utils.keymap
 
 -- basically a keymap

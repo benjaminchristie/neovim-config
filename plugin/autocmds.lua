@@ -13,8 +13,8 @@ anoremenu PopUp.-1-                         <Nop>
 anoremenu PopUp.Exit                        <Nop>
 ]])
 
-local augroup = require("custom-utils").augroup
-local buf_keymap = require("custom-utils").buf_keymap
+local augroup = require("utils").augroup
+local buf_keymap = require("utils").buf_keymap
 local autocmd = vim.api.nvim_create_autocmd
 
 local function create_skeleton(ext)
@@ -51,7 +51,7 @@ autocmd({ "BufEnter" }, {
 				vim.bo.filetype ~= "toggleterm" and
 				vim.bo.filetype ~= "aerial" and
 				vim.bo.filetype ~= "lazy" then
-				if not require("custom-functions").zen_enabled() then
+				if not require("functions").zen_enabled() then
 					vim.wo[0][0].number = true
 					vim.wo[0][0].relativenumber = true
 				end

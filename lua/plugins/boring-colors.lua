@@ -1,25 +1,18 @@
-M = {
-	require("color-plugins/tokyonight"),
-	require("color-plugins/zenbones"),
-	require("color-plugins/indent-blankline"),
-	require("color-plugins/linenumberinterval"),
-	require("color-plugins/highlight-undo"),
-	require("color-plugins/local-highlight"),
-	require("color-plugins/smart-column"),
+return {
 	{
 		'projekt0n/github-nvim-theme',
 		config = function()
 			vim.cmd('colorscheme github_dark_high_contrast')
 			require('github-theme').setup({
-			  options = {
-				dim_inactive = false,
-			  }
+				options = {
+					dim_inactive = false,
+				}
 			})
-			vim.api.nvim_set_hl(0, "Normal", { bg = "black"})
-			vim.api.nvim_set_hl(0, "NormalNC", { bg = "black"})
-			vim.api.nvim_set_hl(0, "IndentBlanklineContextChar", { link = "Comment"})
-			vim.api.nvim_set_hl(0, 'LocalHighlight', { link = "NormalFloat"})
-			vim.api.nvim_set_hl(0, 'MiniStarterItemPrefix', { link = "WarningMsg"})
+			vim.api.nvim_set_hl(0, "Normal", { bg = "black" })
+			vim.api.nvim_set_hl(0, "NormalNC", { bg = "black" })
+			vim.api.nvim_set_hl(0, "IndentBlanklineContextChar", { link = "Comment" })
+			vim.api.nvim_set_hl(0, 'LocalHighlight', { link = "NormalFloat" })
+			vim.api.nvim_set_hl(0, 'MiniStarterItemPrefix', { link = "WarningMsg" })
 			vim.api.nvim_set_hl(0, "GhostText", {
 				link = "Comment"
 			})
@@ -66,7 +59,7 @@ M = {
 				style = "darker"
 			})
 			require("onedark").load()
-			vim.api.nvim_set_hl(0, 'WinSeparator', { link = "Comment", italic = false})
+			vim.api.nvim_set_hl(0, 'WinSeparator', { link = "Comment", italic = false })
 			vim.api.nvim_set_hl(0, "StatusLine", {
 				link = "FloatFooter"
 			})
@@ -161,4 +154,3 @@ M = {
 		lazy = true,
 	}
 }
-return M

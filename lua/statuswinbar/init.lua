@@ -4,7 +4,7 @@ local gitsigns = require("gitsigns")
 local parsers = require("nvim-treesitter.parsers")
 local ts_utils = require("nvim-treesitter.ts_utils")
 -- local harpoon = require("harpoon.mark")
-local utils = require("custom-utils")
+local utils = require("utils")
 local hasvalue = utils.exists_in_table
 local augroup = utils.augroup
 

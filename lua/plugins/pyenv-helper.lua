@@ -12,7 +12,7 @@ return {
         }
         require("swenv").setup(opts)
         vim.api.nvim_create_user_command("PyenvActivate",
-            require("custom-functions").pick_pyenv,
+            require("functions").pick_pyenv,
             {
                 desc = "pyenv picker"
             }
