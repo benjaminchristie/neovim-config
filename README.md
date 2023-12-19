@@ -41,7 +41,7 @@ Some of these plugins are managed by lazy, but are not directly used by neovim (
 | [cmp-nvim-lsp](https://github.com/hrsh7th/cmp-nvim-lsp) | nvim-cmp source for LSP |
 | [cmp-path](https://github.com/hrsh7th/cmp-path) | nvim-cmp source for (relative) path |
 | [cmp_luasnip](https://github.com/saadparwaiz1/cmp_luasnip) | nvim-cmp interface with LuaSnip engine + snippets |
-| [csgithub.nvim](https://github.com/benjaminchristie/csgithub.nvim) | keybinding to search for <cword> in github |
+| [csgithub.nvim](https://github.com/benjaminchristie/csgithub.nvim) | keybinding to search for `cword` in github |
 | [diffview.nvim](https://github.com/sindrets/diffview.nvim) | useful git interface, overkill for most applications. useful for git repo history |
 | [fidget.nvim](https://github.com/j-hui/fidget.nvim) | LSP loading info |
 | [friendly-snippets](https://github.com/rafamadriz/friendly-snippets) | collection of snippets for various languages |
@@ -54,7 +54,7 @@ Some of these plugins are managed by lazy, but are not directly used by neovim (
 | [indent-blankline.nvim](https://github.com/lukas-reineke/indent-blankline.nvim) | indents the blankline! |
 | lazy.nvim | plugin manager and loading scheduler |
 | [line-number-interval.nvim](https://github.com/IMOKURI/line-number-interval.nvim) | change the color of the line number interval. unused (and unloaded) as of now |
-| [local-highlight.nvim](https://github.com/tzachar/local-highlight.nvim) | highlights matching <cword>s  |
+| [local-highlight.nvim](https://github.com/tzachar/local-highlight.nvim) | highlights matching `cword`s  |
 | [lsp-lens.nvim](https://github.com/VidocqH/lsp-lens.nvim) | displays reference counts, etc. inline (along with inlay hints, when enabled)  |
 | [LuaSnip](https://github.com/L3MON4D3/LuaSnip) | snippet engine |
 | [lush.nvim](https://github.com/rktjmp/lush.nvim) | prereq for some colorschemes |
