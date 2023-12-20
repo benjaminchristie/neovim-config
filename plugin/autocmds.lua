@@ -85,13 +85,13 @@ autocmd("TextYankPost", {
 })
 
 
-autocmd({"RecordingEnter"}, {
+autocmd({ "RecordingEnter" }, {
 	group = augroup("cmdheight0recenter"),
 	callback = function()
 		if vim.o.cmdheight == 0 then
 			vim.o.cmdheight = 1
-			-- only create this autocmd if cmdheight == 0 to begin with 
-			autocmd({"RecordingLeave"}, {
+			-- only create this autocmd if cmdheight == 0 to begin with
+			autocmd({ "RecordingLeave" }, {
 				group = augroup("cmdheight0recexit"),
 				callback = function()
 					if vim.o.cmdheight == 1 then
@@ -159,3 +159,13 @@ create_skeleton("sh")
 create_skeleton("gitignore")
 create_skeleton("sty")
 create_skeleton("tex")
+autocmd({ "BufWritePost" }, {
+	pattern = "*.sh",
+	group = augroup("chmod-shell"),
+	callback = function()
+		vim.schedule(function()
+			---@diagnostic disable-next-line: param-type-mismatch
+			pcall(vim.cmd, "Chmod +x", {})
+		end)
+	end
+})
