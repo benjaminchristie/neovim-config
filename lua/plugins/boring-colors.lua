@@ -130,6 +130,9 @@ return {
 				bg = "NONE",
 				bold = true,
 			})
+			vim.api.nvim_set_hl(0, "@text.literal.block.markdown", {
+				link = "CursorLine"
+			})
 		end,
 		enabled = true,
 		lazy = false,
@@ -148,7 +151,9 @@ return {
 			vim.api.nvim_set_hl(0, "CursorLine", {
 				link = "CursorIM"
 			})
-			vim.api.nvim_set_hl(0, "IndentBlanklineContextChar", { link = "CursorLineNR" })
+			vim.api.nvim_set_hl(0, "IndentBlanklineContextChar", { 
+				link = "CursorLineNR"
+			})
 		end,
 		enabled = true,
 		lazy = true,

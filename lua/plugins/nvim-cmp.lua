@@ -3,6 +3,7 @@ return {
     -- commit = '969c5a', -- for some reason, ghost test does not work for me after this commit
     dependencies = {
         'L3MON4D3/LuaSnip',
+		"jmbuhr/otter.nvim",
         'hrsh7th/cmp-buffer',
         'hrsh7th/cmp-cmdline',
         'saadparwaiz1/cmp_luasnip',
@@ -55,6 +56,7 @@ return {
             }),
             sources = cmp.config.sources({
                 { name = 'luasnip' }, -- For luasnip users.
+                { name = 'otter' }, -- for embedded languages
                 { name = 'nvim_lsp' },
                 { name = 'path' },
                 { name = 'buffer' },

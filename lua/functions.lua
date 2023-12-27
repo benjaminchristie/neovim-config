@@ -264,26 +264,26 @@ vim.api.nvim_create_user_command("Build", M.build_func, { desc = "select build t
 vim.api.nvim_create_user_command("Where", M.whereami, { desc = "highlight cursor position" })
 
 vim.api.nvim_create_user_command("LazyLoad", M.lazy_load, { desc = "attempt to lazy load ts and lsp" })
-autocmd({ "BufReadPost" }, {
-    group = augroup("LazyLoadLargeFiles"),
-    pattern = "*",
-    callback = function()
-        if vim.fn.getfsize(vim.api.nvim_buf_get_name(0)) > 65536 then
-            vim.notify("Lazy loading file...")
-            vim.schedule(M.lazy_load)
-        else
-			vim.schedule(function()
-				local success, res = pcall(vim.treesitter.language.get_lang, vim.bo.filetype)
-				if success then
-					if res ~= nil then
-						vim.bo.syntax = "on"
-						pcall(vim.treesitter.start)
-					end
-				end
-			end)
-        end
-    end
-})
+-- autocmd({ "BufReadPost" }, {
+--     group = augroup("LazyLoadLargeFiles"),
+--     pattern = "*",
+--     callback = function()
+--         if vim.fn.getfsize(vim.api.nvim_buf_get_name(0)) > 65536 then
+--             vim.notify("Lazy loading file...")
+--             vim.schedule(M.lazy_load)
+--         else
+-- 			vim.schedule(function()
+-- 				local success, res = pcall(vim.treesitter.language.get_lang, vim.bo.filetype)
+-- 				if success then
+-- 					if res ~= nil then
+-- 						vim.bo.syntax = "on"
+-- 						pcall(vim.treesitter.start)
+-- 					end
+-- 				end
+-- 			end)
+--         end
+--     end
+-- })
 
 vim.api.nvim_create_user_command("Aex", "AerialOpen!", { desc = "Open Aerial.nvim"})
 
