@@ -6,6 +6,9 @@
 \usepackage{xfp}
 \usepackage{siunitx}
 \usepackage{amssymb}
+\usepackage [english]{babel}
+\usepackage [autostyle, english = american]{csquotes}
+\MakeOuterQuote{"}
 \usepackage{bm}
 \usepackage{mhchem}
 % color
@@ -46,7 +49,7 @@
 % math formatting
 \renewcommand\qedsymbol{$\blacksquare$}
 \theoremstyle{definition}
-\numberwithin{equation}{enumi}
+% \numberwithin{equation}{enumi}
 \numberwithin{figure}{enumi}
 
 % listing formatting
@@ -148,8 +151,10 @@
   \abovedisplayskip=0pt\abovedisplayshortskip=0pt~\vspace*{-\baselineskip}}
 
 \DeclareMathOperator*{\argmax}{arg\,max}
+\DeclareMathOperator*{\argmin}{arg\,min}
 
 % \setlength{\abovedisplayskip}{0pt}
 % \setlength{\abovedisplayshortskip}{0pt}
 % \setlength{\belowdisplayskip}{0pt}
 % \setlength{\belowdisplayshortskip}{0pt}
+
