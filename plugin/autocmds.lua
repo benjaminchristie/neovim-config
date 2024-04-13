@@ -1,5 +1,6 @@
 --- menus
 vim.cmd([[
+autocmd TermOpen * setlocal nonu
 aunmenu PopUp
 vnoremenu PopUp.Cut                         "+x
 vnoremenu PopUp.Copy                        "+y
@@ -138,7 +139,6 @@ autocmd({ "TermClose" }, {
 	end
 })
 autocmd({ "TermOpen" }, {
-	pattern = "term://*",
 	group = augroup("AutoTermMappings"),
 	callback = function()
 		buf_keymap('t', '<esc>', [[<C-\><C-n>]], { noremap = true })
