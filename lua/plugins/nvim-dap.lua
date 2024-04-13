@@ -61,7 +61,6 @@ return {
                     },
                 },
             },
-            c = dap.configurations.cpp,
             rust = dap.configurations.cpp,
             lua = {
                 {

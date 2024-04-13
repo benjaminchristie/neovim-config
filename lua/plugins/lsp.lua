@@ -261,7 +261,6 @@ return {
                 "--cross-file-rename",
                 "--header-insertion=iwyu",
                 "--suggest-missing-includes",
-                "--compile-commands-dir='.'",
                 "--inlay-hints=true"
             }
         })
