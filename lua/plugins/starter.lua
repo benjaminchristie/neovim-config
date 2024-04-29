@@ -77,7 +77,7 @@ return {
     lazy = false,
     enabled = true,
     dev = false,
-    keys = {
-        { '<A-s>', function() return require("mini.starter").open() end },
-    }
+    -- keys = {
+    --     { '<A-s>', function() return require("mini.starter").open() end },
+    -- }
 }

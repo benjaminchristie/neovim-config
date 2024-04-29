@@ -25,6 +25,8 @@ keymap('n', 'dh', ':diffget //2<CR>')
 keymap('n', "<A-p>", ":cprev<CR>")
 keymap('n', "<A-n>", ":cnext<CR>")
 keymap('n', "<A-r>", ":%SnipRun<CR>")
+keymap("n", "<A-s>", ":CarbonNow<CR>")
+keymap("v", "<A-s>", ":'<,'>CarbonNow<CR>")
 
 -- keymap('n', 'n', function() funcs.increment_search(funcs.timed_color_change) end, { noremap = true, silent = true, nowait = true })
 -- keymap('n', 'N', function() funcs.decrement_search(funcs.timed_color_change) end, { noremap = true, silent = true, nowait = true })
