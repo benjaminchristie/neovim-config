@@ -55,8 +55,6 @@ return {
             require("utils").buf_keymap('n', '<C-h><C-q>', vim.diagnostic.open_float)
             require("utils").buf_keymap('n', '<C-k>', vim.diagnostic.goto_prev)
             require("utils").buf_keymap('n', '<C-j>', vim.diagnostic.goto_next)
-            require("utils").buf_keymap('n', 'gh', vim.diagnostic.setloclist)
-            require("utils").buf_keymap('n', 'gH', vim.diagnostic.setqflist)
             require("utils").buf_keymap('n', 'gd', vim.lsp.buf.definition)
             require("utils").buf_keymap('n', '<space>', vim.lsp.buf.hover)
             require("utils").buf_keymap('n', 'gi', vim.lsp.buf.implementation)
