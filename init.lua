@@ -55,7 +55,7 @@ require("lazy").setup(
 			rtp = {
 				-- disable some rtp plugins
 				disabled_plugins = {
-					"netrwPlugin",
+					-- "netrwPlugin",
 					"tutor",
 				},
 			},

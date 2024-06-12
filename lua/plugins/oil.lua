@@ -3,6 +3,7 @@ return {
     dependencies = 'nvim-tree/nvim-web-devicons',
     init = function()
         local opts = {
+			-- default_file_explorer=false,
             columns = {
                 "icon"
             },

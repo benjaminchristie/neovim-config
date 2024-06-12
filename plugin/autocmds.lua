@@ -52,6 +52,7 @@ autocmd({ "BufEnter" }, {
 				vim.bo.filetype ~= "toggleterm" and
 				vim.bo.filetype ~= "aerial" and
 				vim.bo.filetype ~= "lazy" and
+				vim.bo.filetype ~= "trouble" and
 				vim.bo.filetype ~= "Trouble" then
 				if not require("functions").zen_enabled() then
 					vim.wo[0][0].number = true

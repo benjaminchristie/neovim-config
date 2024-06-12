@@ -25,6 +25,7 @@ keymap('n', 'dh', ':diffget //2<CR>')
 keymap('n', "<A-p>", ":cprev<CR>")
 keymap('n', "<A-n>", ":cnext<CR>")
 keymap('n', "<A-r>", ":%SnipRun<CR>")
+keymap('v', "<A-r>", ":SnipRun<CR>")
 keymap("n", "<A-s>", ":CarbonNow<CR>")
 keymap("v", "<A-s>", ":'<,'>CarbonNow<CR>")
 

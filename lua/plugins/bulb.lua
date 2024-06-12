@@ -17,5 +17,6 @@ return {
                 "markdown",
             }
         }
-    }
+    },
+	enabled = false
 }

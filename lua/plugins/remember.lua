@@ -5,5 +5,6 @@ return {
         require("remember").setup({
             open_folds = true
         })
-    end
+    end,
+	enabled = false,
 }
