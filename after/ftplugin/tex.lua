@@ -5,3 +5,4 @@ vim.g.tex_flavor = 'latex'
 vim.g.tex_stylish = 1
 vim.g.tex_no_error = 0
 vim.g.tex_conceal="abmg"
+-- require("otter").activate({ "python", "cpp", "sh" })

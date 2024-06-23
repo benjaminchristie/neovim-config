@@ -39,3 +39,5 @@
 ([
   (task_list_marker_unchecked)
 ] @conceal (#set! conceal "☐"))
+
+(fenced_code_block)

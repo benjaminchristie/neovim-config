@@ -29,21 +29,8 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
-local merge_tables = require("custom-utils").merge_tables
-
-local spec = {}
-
-spec = merge_tables(spec, require("accessory-plugins"))
-spec = merge_tables(spec, require("cmp-plugins"))
-spec = merge_tables(spec, require("color-plugins"))
-spec = merge_tables(spec, require("dap-plugins"))
-spec = merge_tables(spec, require("external-plugins"))
-spec = merge_tables(spec, require("git-plugins"))
-spec = merge_tables(spec, require("lsp-plugins"))
-spec = merge_tables(spec, require("qol-plugins"))
-
 require("lazy").setup(
-	spec,
+	"plugins",
 	{
 		defaults = {
 			lazy = true
@@ -57,19 +44,19 @@ require("lazy").setup(
 		dev = {
 			path = vim.fn.stdpath("config") .. "/testing",
 		},
-		checker = { enabled = false }, -- automatically check for plugin updates
+		checker = {
+			enabled = false, -- automatically check for plugin updates
+		},
+		change_detection = {
+			enabled = false,
+			notify = false,
+		},
 		performance = {
 			rtp = {
 				-- disable some rtp plugins
 				disabled_plugins = {
-					-- "gzip",
-					-- "matchit",
-					-- "matchparen",
-					"netrwPlugin",
-					-- "tarPlugin",
-					-- "tohtml",
+					-- "netrwPlugin",
 					"tutor",
-					-- "zipPlugin",
 				},
 			},
 		},
@@ -78,3 +65,5 @@ require("lazy").setup(
 		},
 	}
 )
+require("functions")
+require("keymaps")

@@ -1,5 +1,6 @@
 --- menus
 vim.cmd([[
+autocmd TermOpen * setlocal nonu
 aunmenu PopUp
 vnoremenu PopUp.Cut                         "+x
 vnoremenu PopUp.Copy                        "+y
@@ -13,8 +14,8 @@ anoremenu PopUp.-1-                         <Nop>
 anoremenu PopUp.Exit                        <Nop>
 ]])
 
-local augroup = require("custom-utils").augroup
-local buf_keymap = require("custom-utils").buf_keymap
+local augroup = require("utils").augroup
+local buf_keymap = require("utils").buf_keymap
 local autocmd = vim.api.nvim_create_autocmd
 
 local function create_skeleton(ext)
@@ -50,8 +51,10 @@ autocmd({ "BufEnter" }, {
 				vim.bo.filetype ~= "" and
 				vim.bo.filetype ~= "toggleterm" and
 				vim.bo.filetype ~= "aerial" and
-				vim.bo.filetype ~= "lazy" then
-				if not require("custom-functions").zen_enabled() then
+				vim.bo.filetype ~= "lazy" and
+				vim.bo.filetype ~= "trouble" and
+				vim.bo.filetype ~= "Trouble" then
+				if not require("functions").zen_enabled() then
 					vim.wo[0][0].number = true
 					vim.wo[0][0].relativenumber = true
 				end
@@ -85,13 +88,13 @@ autocmd("TextYankPost", {
 })
 
 
-autocmd({"RecordingEnter"}, {
+autocmd({ "RecordingEnter" }, {
 	group = augroup("cmdheight0recenter"),
 	callback = function()
 		if vim.o.cmdheight == 0 then
 			vim.o.cmdheight = 1
-			-- only create this autocmd if cmdheight == 0 to begin with 
-			autocmd({"RecordingLeave"}, {
+			-- only create this autocmd if cmdheight == 0 to begin with
+			autocmd({ "RecordingLeave" }, {
 				group = augroup("cmdheight0recexit"),
 				callback = function()
 					if vim.o.cmdheight == 1 then
@@ -138,7 +141,6 @@ autocmd({ "TermClose" }, {
 	end
 })
 autocmd({ "TermOpen" }, {
-	pattern = "term://*",
 	group = augroup("AutoTermMappings"),
 	callback = function()
 		buf_keymap('t', '<esc>', [[<C-\><C-n>]], { noremap = true })
@@ -159,3 +161,13 @@ create_skeleton("sh")
 create_skeleton("gitignore")
 create_skeleton("sty")
 create_skeleton("tex")
+autocmd({ "BufWritePost" }, {
+	pattern = "*.sh",
+	group = augroup("chmod-shell"),
+	callback = function()
+		vim.schedule(function()
+			---@diagnostic disable-next-line: param-type-mismatch
+			pcall(vim.cmd, "Chmod +x", {})
+		end)
+	end
+})

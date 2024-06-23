@@ -1,4 +1,4 @@
-require("custom-utils").keymap('n', "<A-f>", function()
+require("utils").keymap('n', "<A-f>", function()
 	local params = {
 		command = 'pyright.organizeimports',
 		arguments = { vim.uri_from_bufnr(0) },
