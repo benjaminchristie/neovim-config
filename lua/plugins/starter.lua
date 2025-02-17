@@ -75,7 +75,7 @@ return {
         return require("mini.starter").setup(starter_opts)
     end,
     lazy = false,
-    enabled = true,
+    enabled = false,
     dev = false,
     -- keys = {
     --     { '<A-s>', function() return require("mini.starter").open() end },

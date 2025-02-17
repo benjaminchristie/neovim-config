@@ -102,7 +102,7 @@ return {
             },
             root_dir = require('lspconfig/util').root_pattern('.git'),
         }
-        lspconfig['tsserver'].setup {
+        lspconfig['ts_ls'].setup {
             on_attach = on_attach,
             flags = lsp_flags,
             capabilities = capabilities,

@@ -90,9 +90,31 @@
     identifierstyle=
 }
 
+\DeclareMathOperator*{\argmax}{arg\,max}
+\DeclareMathOperator*{\argmin}{arg\,min}
+
 \lstset{language=Python, style=mystyle}
-\lstMakeShortInline[columns=fixed, identifierstyle=\color{codepurple!20!blue}, basicstyle=\ttfamily]|
 \setlength\abovecaptionskip{-3pt}
+
+
+\numberwithin{equation}{enumi}
+\numberwithin{figure}{enumi}
+\captionsetup{format=custom, justification=centering}
+
+\AddToHook{cmd/appendix/before}{%
+  \setcounter{figure}{0}%
+  \renewcommand{\thefigure}{\thesection.\arabic{figure}}%
+  \setcounter{equation}{0}%
+  \renewcommand{\theequation}{\thesection.\arabic{equation}}%
+  \setcounter{table}{0}%
+  \renewcommand{\thetable}{\thesection.\arabic{table}}%
+}
+
+\newcommand{\figuretag}[1]{%
+  \addtocounter{figure}{-1}%
+  \renewcommand{\thefigure}{#1}%
+}
+
 \title{Presentation Skeleton}
 \author{Benjamin Christie}
 \date{\today}

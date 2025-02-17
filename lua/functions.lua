@@ -109,9 +109,9 @@ function M.toggle_zen()
             vim.api.nvim_win_call(winnr, function()
                 vim.o.cmdheight = 0
                 vim.o.laststatus = 0
-                if not vim.o.diff or not require("statuswinbar").in_diffview_nvim then
-                    vim.o.winbar = ""
-                end
+                -- if not vim.o.diff or not require("statuswinbar").in_diffview_nvim then
+                --     vim.o.winbar = ""
+                -- end
                 vim.o.number = false
                 vim.o.relativenumber = false
                 vim.o.signcolumn = "yes:3"
@@ -134,7 +134,7 @@ function M.toggle_zen()
 				vim.wo[winnr][0].linebreak = false
             end)
         end
-        require("statuswinbar").setup()
+        -- require("statuswinbar").setup()
         require("ibl").update({ enabled = true })
     end
 end
