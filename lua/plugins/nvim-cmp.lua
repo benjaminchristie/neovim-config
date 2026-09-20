@@ -15,6 +15,25 @@ return {
         -- Setup nvim-cmp.
         vim.o.completeopt = "menu,menuone,preview"
         local cmp = require('cmp')
+
+        -- cmp-path scans a directory synchronously (fs_scandir + an fs_stat per
+        -- entry) on the main loop. Whenever the text before the cursor resolves
+        -- to "/" -- a bare leading slash, or backspacing a path back past its
+        -- first component -- that means stat'ing every entry of the filesystem
+        -- root. libuv's fs_stat does not pass AT_NO_AUTOMOUNT, so a stale
+        -- automount there (e.g. an unreachable CIFS share) blocks nvim for the
+        -- full mount timeout. Root has nothing worth completing anyway; skip it.
+        local cmp_path = require('cmp_path')
+        local cmp_path_complete = cmp_path.complete
+        cmp_path.complete = function(self, params, callback)
+            local ok, dirname = pcall(function()
+                return self:_dirname(params, self:_validate_option(params))
+            end)
+            if not ok or dirname == '/' then
+                return callback()
+            end
+            return cmp_path_complete(self, params, callback)
+        end
         require("cmp_git").setup()
         local opts = {
             snippet = {
